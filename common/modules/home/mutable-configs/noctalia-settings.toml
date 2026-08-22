@@ -274,3 +274,6 @@ hide_when_no_unread = true
 
 [widget.volume]
 show_label = false
+
+[widget.workspaces]
+style = "focus_hint"

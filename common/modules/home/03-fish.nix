@@ -23,26 +23,8 @@
         echo
       '';
 
-      wait-ci = ''
-        if type -q gh
-          echo ""
-          echo "⏳ Attente du run CI sur $argv[1]..."
-          sleep 5
-          set -l run_id (gh run list --branch $argv[1] --workflow "NixOS CI" --limit 1 --json databaseId --jq '.[0].databaseId')
-          if test -n "$run_id"
-            gh run watch $run_id --exit-status
-            and echo "✅ CI terminée et poussée vers Cachix."
-            or echo "⚠️  CI échouée — un rebuild pourrait compiler en local."
-          else
-            echo "⚠️  Aucun run CI trouvé."
-          end
-        else
-          echo "ℹ️  gh absent, impossible d'attendre la CI automatiquement."
-        end
-      '';
-
       push = ''
-        cd ~/nixos-config
+        pushd ~/nixos-config
         git add .
         git diff --cached
         git status
@@ -85,19 +67,20 @@
           git push origin $target_branch
           and begin
             echo "✅ Push terminé sur $target_branch !"
-            wait-ci $target_branch
           end
           or echo "❌ Push échoué (commit local conservé)."
         end
         or echo "❌ Commit échoué."
+        popd
       '';
 
       update = ''
         echo "🔄 Mise à jour des Flakes..."
-        cd ~/nixos-config
+        pushd ~/nixos-config
         nix flake update
         and echo "✅ Flakes à jour !"
         or echo "❌ Mise à jour des flakes échouée."
+        popd
       '';
 
       rebuild = ''
@@ -118,7 +101,7 @@
             echo "ℹ️  cachix absent ou non authentifié."
           end
 
-          cd ~/nixos-config
+          pushd ~/nixos-config
           if test -z "$(git status --porcelain)"
             echo "ℹ️  Rien à commit."
           else
@@ -128,6 +111,7 @@
             else
               echo "⏸️  Push annulé."
             end
+          popd
           end
         end
         or echo "❌ Rebuild échoué."
@@ -138,6 +122,7 @@
         echo "ℹ️  Le flake.lock est déjà mis à jour chaque nuit par la CI."
         echo ""
         git -C ~/nixos-config pull
+        
         and rebuild
         and echo "🎉 Terminé !"
         or echo "❌ Upgrade interrompu."

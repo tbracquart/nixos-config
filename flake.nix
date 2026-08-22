@@ -51,7 +51,10 @@
     nixosConfigurations.ZenBook-13 = nixpkgs.lib.nixosSystem {
       specialArgs = { inherit inputs; };
       modules = [
-        { nixpkgs.overlays = [ nix-cachyos-kernel.overlays.pinned ]; }
+        {
+          nixpkgs.overlays = [ nix-cachyos-kernel.overlays.pinned ]
+            ++ (import ./common/overlays);
+        }
         ./hosts/ZenBook-13/hardware-configuration.nix
         ./common/configuration.nix
         sops-nix.nixosModules.sops
