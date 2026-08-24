@@ -60,7 +60,12 @@
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
           home-manager.extraSpecialArgs = { inherit inputs; };
-          home-manager.users.thibaut = import ./common/home.nix;
+          home-manager.users.thibaut = {
+            imports = [
+              ./common/home.nix
+              ./users/thibaut/home.nix
+            ];
+          };
         }
       ];
     };
