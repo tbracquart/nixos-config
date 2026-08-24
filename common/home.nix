@@ -4,7 +4,6 @@
   imports = [
     ./modules/home/00-options.nix
     ./modules/home/01-packages.nix
-    ./modules/home/02-git.nix
     ./modules/home/03-fish.nix
     ./modules/home/04-firefox.nix
     ./modules/home/05-hyprland-noctalia.nix
