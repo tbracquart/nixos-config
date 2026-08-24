@@ -4,7 +4,6 @@
   nix = {
     settings = {
       experimental-features = [ "nix-command" "flakes" ];
-      trusted-users = [ "root" ];
 
       substituters = [
         "https://tbracquart.cachix.org"
