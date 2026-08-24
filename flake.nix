@@ -54,6 +54,7 @@
         { nixpkgs.overlays = [ nix-cachyos-kernel.overlays.pinned ]; }
         ./hosts/ZenBook-13/hardware-configuration.nix
         ./common/configuration.nix
+        ./common/modules/system/laptop.nix
         sops-nix.nixosModules.sops
         home-manager.nixosModules.home-manager
         {
