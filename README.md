@@ -5,6 +5,18 @@
 Configuration personnelle NixOS gérée avec **Nix Flakes** et **Home Manager**.
 Le dépôt sépare la configuration système commune, les fonctionnalités réutilisables, les profils de machines, les particularités des hôtes et les environnements utilisateurs.
 
+## 💿 Télécharger l'installateur NixOS
+
+> **Vous cherchez l'ISO d'installation ? Pas besoin de parcourir toutes les releases.**
+
+### 🚀 [Télécharger la dernière ISO d'installation](https://github.com/tbracquart/nixos-config/releases/tag/installer-latest)
+
+Cette page pointe toujours vers **la dernière ISO générée depuis `main`**.
+
+📥 **[Téléchargement direct de l'ISO actuelle](https://github.com/tbracquart/nixos-config/releases/download/installer-latest/nixos-minimal-26.11.20260905.c043004-x86_64-linux.iso)**
+
+---
+
 ## 🖥️ Hôtes
 
 | Hôte | Configuration |
