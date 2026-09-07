@@ -12,6 +12,7 @@
     scrcpy
     vinegar
     nemo-with-extensions
+    gimp
   ]) ++ [
     inputs.freesmlauncher.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
