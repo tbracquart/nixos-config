@@ -11,5 +11,8 @@
     ssh-to-age
     tree
     usbutils
+    peazip
+    celluloid
+    udiskie
   ];
 }
