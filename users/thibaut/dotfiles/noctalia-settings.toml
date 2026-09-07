@@ -8,9 +8,9 @@ sound_volume = 0.99999997764825821
 [bar.default]
 background_opacity = 0.79999998211860657
 capsule = true
-center = [ "notifications", "clock", "media", "clipboard" ]
-end = [ "tray", "group:g1", "session" ]
-start = [ "launcher", "workspaces" ]
+center = [ "notifications", "notes", "clock", "media", "clipboard" ]
+end = [ "tray", "group:g1", "screenshot", "session", "status" ]
+start = [ "launcher", "workspaces", "nix-monitor", "group:g2" ]
 
     [bar.default.dead_zone.actions]
     middle = "settings-toggle"
@@ -25,6 +25,16 @@ start = [ "launcher", "workspaces" ]
     opacity = 1.0
     padding = 6.0
 
+    [[bar.default.capsule_group]]
+    accordion = false
+    accordion_direction = "end"
+    enabled = true
+    fill = "surface_variant"
+    id = "g2"
+    members = [ "cpu", "temp", "ram" ]
+    opacity = 1.0
+    padding = 6.0
+
 [battery]
 warning_threshold = 20
 
@@ -34,6 +44,17 @@ enabled = true
     [calendar.account.personal_google]
     name = "Calendrier personnel"
     type = "google"
+
+[desktop_widgets]
+schema_version = 2
+widget_order = []
+
+    [desktop_widgets.grid]
+    cell_size = 64
+    major_interval = 4
+    visible = true
+
+    [desktop_widgets.widget]
 
 [dock]
 active_monitor_only = true
@@ -143,8 +164,13 @@ widget_order = [ "lockscreen-login-box@winit", "lockscreen-login-box@eDP-1" ]
 [notification]
 position = "top_center"
 
+[plugin_settings."avivbintangaringga/nix-monitor"]
+clean_command = "sudo nix profile wipe-history --profile /nix/var/nix/profiles/system --older-than 14d && sudo nix store gc"
+optimize_command = "sudo nix store optimise -vv"
+update_command = "nix flake update --flake ~/nixos-config && sudo nixos-rebuild switch --flake ~/nixos-config#ZenBook-13"
+
 [plugins]
-enabled = []
+enabled = [ "avivbintangaringga/nix-monitor", "aristides/udiskie", "noctalia/notes", "liamwh/emoji-picker" ]
 
 [shell]
 corner_radius_scale = 1.5000000223517418
@@ -277,8 +303,18 @@ hide_when_no_media = true
 [widget.network]
 show_label = false
 
+[widget.nix-monitor]
+type = "avivbintangaringga/nix-monitor:nix-monitor"
+
+[widget.notes]
+type = "noctalia/notes:notes"
+
 [widget.notifications]
 hide_when_no_unread = true
+
+[widget.status]
+hide_when_empty = true
+type = "aristides/udiskie:status"
 
 [widget.volume]
 show_label = false
