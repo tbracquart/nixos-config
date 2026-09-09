@@ -4,8 +4,14 @@
     (modulesPath + "/installer/cd-dvd/installation-cd-minimal.nix")
     ./service.nix
   ];
+
   isoImage.volumeID = "NIXOS_CONFIG_INSTALLER";
-  isoImage.isoName = "nixos-config-installer.iso";
+  image.fileName = "nixos-config-installer.iso";
+
+  virtualisation.vmVariant = {
+    virtualisation.memorySize = 8192;
+    virtualisation.cores = 4;
+  };
 
   # Validation continue : toute modification de l'installateur déclenche la recette ISO.
   # Le profil minimal upstream construit une ISO démarrable ; nous ajoutons
