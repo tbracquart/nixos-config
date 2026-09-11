@@ -25,7 +25,11 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           REPOSITORY: ${{ github.repository }}
+          EVENT_NAME: ${{ github.event_name }}
           PR_NUMBER: ${{ github.event.pull_request.number || github.event.review.pull_request_url && github.event.review.pull_request_url || '' }}
+          REVIEW_AUTHOR: ${{ github.event.review.user.login || '' }}
+          REVIEW_STATE: ${{ github.event.review.state || '' }}
+          REVIEW_COMMIT: ${{ github.event.review.commit_id || '' }}
         run: |
           set -euo pipefail
 
@@ -54,6 +58,18 @@ jobs:
           echo "PR #$PR_NUMBER"
           echo "Auteur : $author"
           echo "Commit de tête : $head_sha"
+
+          # Pour une approbation qui vient juste d'être soumise, utiliser
+          # directement les informations de l'événement GitHub. Cela évite de
+          # dépendre de la disponibilité immédiate de cette review dans l'API.
+          if [ "$EVENT_NAME" = "pull_request_review" ] &&
+             [ "$REVIEW_AUTHOR" = "tbracquart" ] &&
+             [ "$REVIEW_STATE" = "approved" ] &&
+             [ -n "$REVIEW_COMMIT" ] &&
+             [ "$REVIEW_COMMIT" = "$head_sha" ]; then
+            echo "Autorisé : @tbracquart vient d'approuver le commit de tête actuel."
+            exit 0
+          fi
 
           # Le propriétaire du dépôt est toujours autorisé à fusionner ses propres PR.
           if [ "$author" = "tbracquart" ]; then
