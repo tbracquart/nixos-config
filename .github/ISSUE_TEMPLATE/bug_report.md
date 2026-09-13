@@ -1,8 +1,8 @@
 ---
-name: " Rapport de Bug"
+name: "🐛 Rapport de bug"
 about: Signaler un problème ou un comportement inattendu.
 title: "[BUG] "
-labels: ["bug"]
+labels: ["type: bug"]
 assignees: ""
 ---
 
