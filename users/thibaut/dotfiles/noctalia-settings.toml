@@ -6,11 +6,11 @@ enable_sounds = true
 sound_volume = 0.99999997764825821
 
 [bar.default]
-background_opacity = 0.79999998211860657
+background_opacity = 0.59999998658895493
 capsule = true
 center = [ "notifications", "notes", "clock", "media", "clipboard" ]
 end = [ "tray", "group:g1", "screenshot", "session", "status" ]
-start = [ "launcher", "workspaces", "nix-monitor", "group:g2" ]
+start = [ "launcher", "workspaces", "group:g3", "group:g2" ]
 
     [bar.default.dead_zone.actions]
     middle = "settings-toggle"
@@ -32,6 +32,16 @@ start = [ "launcher", "workspaces", "nix-monitor", "group:g2" ]
     fill = "surface_variant"
     id = "g2"
     members = [ "cpu", "temp", "ram" ]
+    opacity = 1.0
+    padding = 6.0
+
+    [[bar.default.capsule_group]]
+    accordion = false
+    accordion_direction = "end"
+    enabled = true
+    fill = "surface_variant"
+    id = "g3"
+    members = [ "nix-monitor", "widget" ]
     opacity = 1.0
     padding = 6.0
 
@@ -58,20 +68,18 @@ widget_order = []
 
 [dock]
 active_monitor_only = true
+background_opacity = 0.59999998658895493
 enabled = true
 pinned = [ "firefox", "nemo", "Alacritty", "geany" ]
 reserve_space = false
 show_dots = true
 smart_auto_hide = true
 
-[hot_corners]
-enabled = true
+[hot_corners.top_left]
+action = "launcher"
 
-    [hot_corners.top_left]
-    action = "launcher"
-
-    [hot_corners.top_right]
-    action = "window_switcher"
+[hot_corners.top_right]
+action = "window_switcher"
 
 [idle]
 behavior_order = [ "lock", "screen-off", "lock-and-suspend" ]
@@ -100,10 +108,10 @@ allow_empty_password = true
 [lockscreen_widgets]
 enabled = true
 schema_version = 2
-widget_order = [ "lockscreen-login-box@winit", "lockscreen-login-box@eDP-1" ]
+widget_order = [ "lockscreen-login-box@winit", "lockscreen-login-box@eDP-1", "lockscreen-widget-0000000000000001" ]
 
     [lockscreen_widgets.grid]
-    cell_size = 16
+    cell_size = 64
     major_interval = 4
     visible = true
 
@@ -161,24 +169,64 @@ widget_order = [ "lockscreen-login-box@winit", "lockscreen-login-box@eDP-1" ]
         show_unlock_hint = true
         show_weather = true
 
+    [lockscreen_widgets.widget.lockscreen-widget-0000000000000001]
+    box_height = 256.0
+    box_width = 832.0
+    cx = 960.0
+    cy = 412.0
+    output = "eDP-1"
+    placement_height = 1080.0
+    placement_width = 1920.0
+    rotation = 0.0
+    type = "clock"
+
+        [lockscreen_widgets.widget.lockscreen-widget-0000000000000001.settings]
+        background = false
+        center_text = true
+        clock_style = "digital"
+        color = "surface"
+        format = "{:%H:%M:%S}"
+        timezone = "Europe/Paris"
+
 [notification]
+background_opacity = 0.59999998658895493
 position = "top_center"
+
+[osd]
+background_opacity = 0.59999998658895493
 
 [plugin_settings."avivbintangaringga/nix-monitor"]
 clean_command = "sudo nix profile wipe-history --profile /nix/var/nix/profiles/system --older-than 14d && sudo nix store gc"
 optimize_command = "sudo nix store optimise -vv"
-update_command = "nix flake update --flake ~/nixos-config && sudo nixos-rebuild switch --flake ~/nixos-config#ZenBook-13"
+update_command = "git -C ~/nixos-config pull --ff-only && sudo nixos-rebuild switch --flake ~/nixos-config#ZenBook-13"
+
+[plugin_settings."tphilippot/git_companion"]
+repo = "tbracquart/nixos-config"
 
 [plugins]
-enabled = [ "avivbintangaringga/nix-monitor", "aristides/udiskie", "noctalia/notes", "liamwh/emoji-picker" ]
+enabled = [
+    "avivbintangaringga/nix-monitor",
+    "aristides/udiskie",
+    "noctalia/notes",
+    "liamwh/emoji-picker",
+    "tphilippot/git_companion"
+]
 
 [shell]
 corner_radius_scale = 1.5000000223517418
 launch_apps_as_systemd_services = true
 panel_anchor_bar = "default"
+password_style = "random"
 polkit_agent = true
 screen_time_enabled = true
 settings_show_advanced = false
+settings_window_translucent = true
+
+    [shell.greeter_sync]
+    auto_sync = true
+
+    [shell.launcher.providers.windows]
+    global = true
 
     [shell.panel]
     clipboard_placement = "attached"
@@ -187,18 +235,21 @@ settings_show_advanced = false
     open_near_click_control_center = true
     open_near_click_launcher = true
     open_near_click_wallpaper = true
+    transparency_mode = "glass"
 
     [shell.screen_corners]
     enabled = true
 
     [shell.screenshot]
+    confirm_region = true
     directory = "/home/thibaut/Images/Copies d'écran"
+    freeze_screen = false
 
 [theme]
 builtin = "Noctalia"
 community_palette = "Oxocarbon"
 custom_palette = "wp12329556-nixos-wallpapers-vib"
-mode = "dark"
+mode = "auto"
 source = "wallpaper"
 wallpaper_scheme = "vibrant"
 
@@ -287,6 +338,12 @@ transition_on_startup = true
     [wallpaper.monitors.eDP-1]
     path = "/home/thibaut/Images/Fonds d'écran/wp12329556-nixos-wallpapers.png"
 
+    [[wallpaper.favorite]]
+    palette_source = "wallpaper"
+    path = "/home/thibaut/Images/Fonds d'écran/wp12329556-nixos-wallpapers.png"
+    theme_mode = "auto"
+    wallpaper_scheme = "vibrant"
+
 [widget.battery]
 show_label = false
 
@@ -318,3 +375,6 @@ type = "aristides/udiskie:status"
 
 [widget.volume]
 show_label = false
+
+[widget.widget]
+type = "tphilippot/git_companion:widget"
