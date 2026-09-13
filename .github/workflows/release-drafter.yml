@@ -2,10 +2,8 @@ name: Release
 
 on:
   pull_request:
-    types:
-      - closed
-    branches:
-      - main
+    types: [closed]
+    branches: [main]
 
 concurrency:
   group: release-${{ github.event.pull_request.number }}
@@ -15,7 +13,9 @@ permissions: {}
 
 jobs:
   publish:
-    if: github.event.pull_request.merged == true
+    if: >-
+      github.event.pull_request.merged == true &&
+      !contains(github.event.pull_request.labels.*.name, 'release: skip')
     permissions:
       contents: write
       pull-requests: write
