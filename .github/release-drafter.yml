@@ -13,6 +13,7 @@ version-resolver:
     labels:
       - 'type: bug'
       - 'type: maintenance'
+      - 'type: security'
       - 'semver: patch'
   default: patch
 
