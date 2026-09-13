@@ -54,6 +54,19 @@ classify_type() {
   echo "type: maintenance"
 }
 
+
+classify_title_areas() {
+  local title="${1,,}"
+
+  [[ "$title" =~ (^|[^[:alpha:]])(ci|github.actions|github-actions|workflow)([^[:alpha:]]|$) ]] && echo "area: ci" || true
+  [[ "$title" =~ (^|[^[:alpha:]])(installer|installateur|iso)([^[:alpha:]]|$) ]] && echo "area: installer" || true
+  [[ "$title" =~ (^|[^[:alpha:]])(noctalia|hyprland|niri|waybar|desktop)([^[:alpha:]]|$) ]] && echo "area: desktop" || true
+  [[ "$title" =~ (^|[^[:alpha:]])(fish|shell)([^[:alpha:]]|$) ]] && echo "area: shell" || true
+  [[ "$title" =~ (^|[^[:alpha:]])(nix|nixos|flake|polkit|pkexec|cachix)([^[:alpha:]]|$) ]] && echo "area: nix" || true
+  [[ "$title" =~ zenbook[-[:space:]]?13 ]] && echo "host: zenbook-13" || true
+  [[ "$title" =~ v145[-[:space:]]?15ast ]] && echo "host: v145-15ast" || true
+}
+
 classify_areas() {
   local files="$1"
 
@@ -77,6 +90,9 @@ while IFS= read -r encoded; do
   files="$(jq -r '.files[].path' <<<"$pr")"
 
   labels=("$(classify_type "$title")")
+  while IFS= read -r label; do
+    [[ -n "$label" ]] && labels+=("$label")
+  done < <(classify_title_areas "$title")
   while IFS= read -r label; do
     [[ -n "$label" ]] && labels+=("$label")
   done < <(classify_areas "$files")
