@@ -1,72 +1,83 @@
 name-template: 'Version $RESOLVED_VERSION'
 tag-template: 'v$RESOLVED_VERSION'
 
-# La version CalVer (YY.MM.DD, avec suffixe -N si plusieurs merges le même
-# jour) est calculée directement dans le workflow .github/workflows/release-drafter.yml
-# et transmise via les inputs "tag" et "name". Pas de version-template/version-resolver
-# ici : Release Drafter ne doit pas recalculer la version lui-même.
+version-resolver:
+  major:
+    labels:
+      - 'semver: major'
+  minor:
+    labels:
+      - 'type: feature'
+      - 'semver: minor'
+  patch:
+    labels:
+      - 'type: bug'
+      - 'type: maintenance'
+      - 'semver: patch'
+  default: patch
+
+exclude-labels:
+  - 'release: skip'
+  - 'duplicate'
+  - 'invalid'
+  - 'wontfix'
 
 categories:
-  - type: 'pre-exclude'
-    when:
-      labels:
-        - 'ignore-for-release'
-        - 'skip-changelog'
-        - 'duplicate'
-        - 'invalid'
-        - 'wontfix'
-        - 'question'
-  - title: '🚀 Fonctionnalités'
-    when:
-      labels:
-        - 'type: enhancement'
+  - title: '💥 Changements incompatibles'
+    labels:
+      - 'semver: major'
+  - title: '✨ Fonctionnalités'
+    labels:
+      - 'type: feature'
   - title: '🐛 Corrections'
-    when:
-      labels:
-        - 'type: bug'
-  - title: '🔧 CI / Tooling'
-    when:
-      labels:
-        - 'ci-please'
-        - 'area: ci'
-  - title: '🧹 Maintenance'
-    when:
-      labels:
-        - 'type: chore'
-  - title: '📦 Dépendances'
-    when:
-      labels:
-        - 'area: nix-config'
-  - title: '🖥️ Config hosts'
-    when:
-      labels:
-        - 'host: zenbook-13'
-        - 'host: v145-15ast'
-  - title: '📝 Autres'
-    when:
-      labels:
-        - '*'
+    labels:
+      - 'type: bug'
+  - title: '🔧 Maintenance'
+    labels:
+      - 'type: maintenance'
+  - title: '🛡️ Sécurité'
+    labels:
+      - 'type: security'
+  - title: '📝 Documentation'
+    labels:
+      - 'type: documentation'
+  - title: '📦 Autres changements'
+    labels:
+      - '*'
 
 change-template: '- $TITLE (#$NUMBER)'
-change-title-escapes: '\<*_&'
+change-title-escapes: '\\<*_&'
 no-changes-template: '- Aucun changement'
 
 template: |
-  > Cette release est préparée automatiquement. Elle est publiée lorsqu'un jalon du projet est considéré comme terminé.
-
+  > Cette release est publiée automatiquement après la fusion d'une pull request publiable.
 
   ## Changements
 
   $CHANGES
 
 autolabeler:
-  - label: 'ci-please'
+  - label: 'area: ci'
     files:
       - '.github/workflows/**'
       - '.github/actions/**'
       - '.github/scripts/**'
-  - label: 'area: nix-config'
-    branch:
-      - '/^auto\/.+/'
-    title:
-      - '/flake.lock/i'
+  - label: 'area: installer'
+    files:
+      - 'installer/**'
+  - label: 'area: nix'
+    files:
+      - 'flake.nix'
+      - 'flake.lock'
+      - 'common/**'
+      - 'modules/**'
+      - 'profiles/**'
+      - 'hosts/**'
+  - label: 'area: shell'
+    files:
+      - 'users/**/fish/**'
+      - 'users/**/dotfiles/fish/**'
+  - label: 'type: documentation'
+    files:
+      - '**/*.md'
+      - 'docs/**'
