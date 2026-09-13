@@ -22,6 +22,8 @@ exclude-labels:
   - 'duplicate'
   - 'invalid'
   - 'wontfix'
+  - 'type: documentation'
+  - 'area: ci'
 
 categories:
   - title: '💥 Changements incompatibles'
