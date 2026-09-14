@@ -14,5 +14,6 @@
     peazip
     celluloid
     udiskie
+    libreoffice
   ];
 }
