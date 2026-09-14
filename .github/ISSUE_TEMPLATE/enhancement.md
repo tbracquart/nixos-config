@@ -2,7 +2,7 @@
 name: "💡 Suggestion d'évolution"
 about: Proposer une nouvelle idée, une amélioration ou une fonctionnalité.
 title: "[FEAT] "
-labels: ["enhancement"]
+labels: ["type: feature"]
 assignees: ""
 ---
 

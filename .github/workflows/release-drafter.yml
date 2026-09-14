@@ -1,61 +1,31 @@
-name: Release Drafter
+name: Release
 
 on:
-  push:
-    branches:
-      - main
+  pull_request:
+    types: [closed]
+    branches: [main]
 
 concurrency:
-  group: release-drafter-${{ github.ref }}
+  group: release-${{ github.event.pull_request.number }}
   cancel-in-progress: false
 
 permissions: {}
 
 jobs:
-  update_release_draft:
+  publish:
+    if: >-
+      github.event.pull_request.merged == true &&
+      !contains(github.event.pull_request.labels.*.name, 'release: skip')
     permissions:
       contents: write
       pull-requests: write
     runs-on: ubuntu-latest
     timeout-minutes: 10
+
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          fetch-depth: 1
-          fetch-tags: true
-          persist-credentials: false
-
-      # Calcule la version CalVer du jour : YY.MM.DD, avec un compteur
-      # séparé par "-" qui s'incrémente s'il y a déjà un tag pour aujourd'hui.
-      # Les numéros sans zéro initial sont utilisés dans le tag/version pour
-      # rester compatibles SemVer ; le nom conserve le format CalVer lisible.
-      # 1er merge du jour -> tag v26.9.5 / nom v26.09.05
-      # 2e merge du jour  -> tag v26.9.5-2 / nom v26.09.05-2
-      - name: Compute CalVer
-        id: calver
-        run: |
-          set -euo pipefail
-          DISPLAY_BASE=$(date +'%y.%m.%d')
-          SEMVER_BASE=$(date +'%y.%-m.%-d')
-          COUNT=$(git tag -l "v${DISPLAY_BASE}" "v${DISPLAY_BASE}-*" "v${SEMVER_BASE}" "v${SEMVER_BASE}-*" | wc -l)
-          if [ "$COUNT" -eq 0 ]; then
-            VERSION="$SEMVER_BASE"
-            NAME="$DISPLAY_BASE"
-          else
-            VERSION="${SEMVER_BASE}-$((COUNT + 1))"
-            NAME="${DISPLAY_BASE}-$((COUNT + 1))"
-          fi
-          echo "Computed version: $VERSION"
-          echo "Computed release name: v$NAME"
-          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
-          echo "name=$NAME" >> "$GITHUB_OUTPUT"
-
       - uses: release-drafter/release-drafter@34d80673e067bdc0c24568d3af899c216adcfaa9 # v7.7.0
         with:
-          tag: v${{ steps.calver.outputs.version }}
-          name: v${{ steps.calver.outputs.name }}
-          version: ${{ steps.calver.outputs.version }}
-          publish: false
-          # Maintient une prochaine release en brouillon. La publication est volontaire.
+          config-name: release-drafter.yml
+          publish: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
