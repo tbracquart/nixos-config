@@ -6,7 +6,7 @@ on:
     branches: [main]
 
 concurrency:
-  group: release-${{ github.event.pull_request.number }}
+  group: release-main
   cancel-in-progress: false
 
 permissions: {}
@@ -23,9 +23,49 @@ jobs:
     timeout-minutes: 10
 
     steps:
-      - uses: release-drafter/release-drafter@34d80673e067bdc0c24568d3af899c216adcfaa9 # v7.7.0
+      - id: release-drafter
+        uses: release-drafter/release-drafter@34d80673e067bdc0c24568d3af899c216adcfaa9 # v7.7.0
         with:
           config-name: release-drafter.yml
           publish: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Utiliser le titre pour les PR sans description
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b # v9.0.0
+        env:
+          RELEASE_ID: ${{ steps.release-drafter.outputs.id }}
+          RELEASE_BODY: ${{ steps.release-drafter.outputs.body }}
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const releaseId = Number(process.env.RELEASE_ID);
+            let body = process.env.RELEASE_BODY;
+
+            const emptyEntries = [...body.matchAll(/^- +\(#(\d+)\)$/gm)];
+
+            if (emptyEntries.length === 0) {
+              console.log('Aucune PR sans description à compléter.');
+              return;
+            }
+
+            for (const match of emptyEntries) {
+              const number = Number(match[1]);
+              const { data: pullRequest } = await github.rest.pulls.get({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: number,
+              });
+
+              const title = pullRequest.title.replace(/[<*_&]/g, '\\$&');
+              body = body.replace(match[0], `- ${title} (#${number})`);
+            }
+
+            await github.rest.repos.updateRelease({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              release_id: releaseId,
+              body,
+            });
+
+            console.log(`Descriptions manquantes remplacées par le titre pour ${emptyEntries.length} PR.`);
