@@ -241,9 +241,7 @@ settings_window_translucent = true
     enabled = true
 
     [shell.screenshot]
-    confirm_region = true
     directory = "/home/thibaut/Images/Copies d'écran"
-    freeze_screen = false
 
 [theme]
 builtin = "Noctalia"
@@ -279,30 +277,42 @@ wallpaper_scheme = "vibrant"
     ]
     community_ids = [
         "antigravity",
+        "claude-code",
+        "codex",
         "opencode",
         "pi-agent",
         "feishin",
         "pear-desktop",
         "spicetify",
+        "supersonic",
         "tauon",
         "ytm-player",
+        "brave",
+        "brave-origin",
         "pywalfox",
+        "pywalfox-beta4",
+        "qutebrowser",
+        "ungoogled-chromium",
         "zen-browser",
         "discord",
+        "halloy",
         "nchat",
         "senpai",
         "telegram",
         "driftwm",
+        "jay",
         "blender",
         "darktable",
         "gimp",
         "inkscape",
         "libreoffice",
         "micro",
+        "musescore",
         "neovim",
         "obsidian",
         "vscode",
         "zed",
+        "archetype-pokemmo",
         "heroiclauncher",
         "prismlauncher",
         "steam",
@@ -312,16 +322,24 @@ wallpaper_scheme = "vibrant"
         "vicinae",
         "walker",
         "fastfetch",
+        "mailspring",
         "obs",
         "siyuan",
         "zathura",
         "zellij",
+        "fcitx5",
         "hyprtoolkit",
         "papirus-icons",
         "snappy-switcher",
+        "whitesur-icons",
         "bat",
+        "fzf",
+        "glow",
+        "herdr",
+        "konsole",
         "lazygit",
         "rio",
+        "tmux",
         "yazi"
     ]
 
