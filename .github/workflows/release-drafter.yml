@@ -32,40 +32,31 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Utiliser le titre pour les PR sans description
-        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b # v9.0.0
         env:
-          RELEASE_ID: ${{ steps.release-drafter.outputs.id }}
-          RELEASE_BODY: ${{ steps.release-drafter.outputs.body }}
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const releaseId = Number(process.env.RELEASE_ID);
-            let body = process.env.RELEASE_BODY;
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
 
-            const emptyEntries = [...body.matchAll(/^- +\(#(\d+)\)$/gm)];
+          release_json="$(gh api "repos/${GITHUB_REPOSITORY}/releases?per_page=1")"
+          release_id="$(jq -r '.[0].id' <<<"$release_json")"
+          body="$(jq -r '.[0].body' <<<"$release_json")"
 
-            if (emptyEntries.length === 0) {
-              console.log('Aucune PR sans description à compléter.');
-              return;
-            }
+          if [[ -z "$release_id" || "$release_id" == "null" ]]; then
+            echo "Impossible de déterminer la release publiée."
+            exit 1
+          fi
 
-            for (const match of emptyEntries) {
-              const number = Number(match[1]);
-              const { data: pullRequest } = await github.rest.pulls.get({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                pull_number: number,
-              });
+          while IFS= read -r match; do
+            number="${match#*#}"
+            number="${number%)}"
 
-              const title = pullRequest.title.replace(/[<*_&]/g, '\\$&');
-              body = body.replace(match[0], `- ${title} (#${number})`);
-            }
+            title="$(gh api "repos/${GITHUB_REPOSITORY}/pulls/${number}" --jq '.title')"
+            body="$(printf '%s\n' "$body" | sed "s#^- *(#${number})$#- ${title} (#${number})#")"
+          done < <(grep -oE '^- \(#([0-9]+)\)$' <<<"$body" || true)
 
-            await github.rest.repos.updateRelease({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              release_id: releaseId,
-              body,
-            });
+          jq -n --arg body "$body" '{body: $body}' \
+            | gh api "repos/${GITHUB_REPOSITORY}/releases/${release_id}" \
+                --method PATCH \
+                --input - >/dev/null
 
-            console.log(`Descriptions manquantes remplacées par le titre pour ${emptyEntries.length} PR.`);
+          echo "Descriptions manquantes remplacées par le titre des PR concernées."
