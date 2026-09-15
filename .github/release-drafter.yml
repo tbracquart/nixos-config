@@ -46,7 +46,7 @@ categories:
     labels:
       - '*'
 
-change-template: '- $TITLE (#$NUMBER)'
+change-template: '- $BODY (#$NUMBER)'
 change-title-escapes: '\\<*_&'
 no-changes-template: '- Aucun changement'
 
