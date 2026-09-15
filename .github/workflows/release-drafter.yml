@@ -6,7 +6,7 @@ on:
     branches: [main]
 
 concurrency:
-  group: release-${{ github.event.pull_request.number }}
+  group: release-main
   cancel-in-progress: false
 
 permissions: {}
@@ -23,9 +23,40 @@ jobs:
     timeout-minutes: 10
 
     steps:
-      - uses: release-drafter/release-drafter@34d80673e067bdc0c24568d3af899c216adcfaa9 # v7.7.0
+      - id: release-drafter
+        uses: release-drafter/release-drafter@34d80673e067bdc0c24568d3af899c216adcfaa9 # v7.7.0
         with:
           config-name: release-drafter.yml
           publish: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Utiliser le titre pour les PR sans description
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+
+          release_json="$(gh api "repos/${GITHUB_REPOSITORY}/releases?per_page=1")"
+          release_id="$(jq -r '.[0].id' <<<"$release_json")"
+          body="$(jq -r '.[0].body' <<<"$release_json")"
+
+          if [[ -z "$release_id" || "$release_id" == "null" ]]; then
+            echo "Impossible de déterminer la release publiée."
+            exit 1
+          fi
+
+          while IFS= read -r match; do
+            number="${match#*#}"
+            number="${number%)}"
+
+            title="$(gh api "repos/${GITHUB_REPOSITORY}/pulls/${number}" --jq '.title')"
+            body="$(printf '%s\n' "$body" | sed "s#^- *(#${number})$#- ${title} (#${number})#")"
+          done < <(grep -oE '^- \(#([0-9]+)\)$' <<<"$body" || true)
+
+          jq -n --arg body "$body" '{body: $body}' \
+            | gh api "repos/${GITHUB_REPOSITORY}/releases/${release_id}" \
+                --method PATCH \
+                --input - >/dev/null
+
+          echo "Descriptions manquantes remplacées par le titre des PR concernées."
