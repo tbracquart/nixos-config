@@ -3,6 +3,13 @@
 {
   nixpkgs.config.allowUnfree = true;
 
+  # Compatibilité temporaire avec sops-nix qui référence encore ce builder.
+  nixpkgs.overlays = [
+    (final: prev: {
+      buildGo125Module = final.buildGoModule;
+    })
+  ];
+
   nix = {
     settings = {
       experimental-features = [ "nix-command" "flakes" ];
