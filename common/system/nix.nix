@@ -3,6 +3,12 @@
 {
   nixpkgs.config.allowUnfree = true;
 
+  nixpkgs.overlays = [
+    (final: prev: {
+      buildGo125Module = final.buildGoModule;
+    })
+  ];
+
   nix = {
     settings = {
       experimental-features = [ "nix-command" "flakes" ];
