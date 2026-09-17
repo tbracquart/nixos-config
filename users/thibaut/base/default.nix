@@ -14,5 +14,6 @@
     ./01-packages.nix
     ./02-git.nix
     ./03-fish.nix
+    ../../../modules/sops-compat.nix
   ];
 }
