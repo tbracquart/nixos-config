@@ -369,7 +369,7 @@ show_label = false
 show_label = false
 
 [widget.clock]
-format = "{:%H:%M %D}"
+format = "{:%H:%M | %x}"
 timezone = "Europe/Paris"
 
 [widget.media]
