@@ -2,7 +2,8 @@ name: Update flake
 
 on:
   schedule:
-    - cron: '0 3 * * *'  # tous les jours à 3h UTC (5h en France en heure d'été)
+    - cron: '17 6 * * *'  # tous les jours à 6h17 en Europe/Paris
+      timezone: 'Europe/Paris'
   workflow_dispatch:
 
 concurrency:
