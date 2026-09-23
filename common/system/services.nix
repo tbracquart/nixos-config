@@ -23,4 +23,11 @@
       drivers = [ pkgs.hplip ];
     };
   };
+
+  # fwupd-refresh can be triggered by its timer while a NixOS activation is
+  # still starting polkit. fwupdmgr refresh requires the PolicyKit daemon.
+  systemd.services.fwupd-refresh = {
+    wants = [ "polkit.service" ];
+    after = [ "polkit.service" ];
+  };
 }
