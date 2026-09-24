@@ -13,7 +13,6 @@
       "char-rtc r"
       "/dev/null rw"
       "/dev/video2 rw"
-      "/dev/uinput rw"
     ];
   };
 }
