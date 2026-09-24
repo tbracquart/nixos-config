@@ -13,11 +13,10 @@ let
     ) old.mesonFlags;
   });
 
-  howdyPolkitConfig = pkgs.writeText "howdy-polkit-config.ini" (
-    lib.generators.toINI { } (lib.recursiveUpdate config.services.howdy.settings {
+  howdyPolkitConfig = pkgs.formats.ini { }.generate "howdy-polkit-config.ini"
+    (lib.recursiveUpdate config.services.howdy.settings {
       core.workaround = "input";
-    })
-  );
+    });
 in
 {
   options.my.authentication.howdy = {
