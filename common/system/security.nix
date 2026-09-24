@@ -4,9 +4,9 @@
   security.rtkit.enable = true;
   security.polkit.enablePkexecWrapper = true;
 
-  # pam_howdy is used by polkit's socket-activated PAM helper.
-  # The helper is otherwise sandboxed with a private /dev and cannot open
-  # the configured face-recognition camera or create Howdy's input device.
+  # polkit 127 runs its PAM helper socket-activated and sandboxed with
+  # PrivateDevices=yes and DevicePolicy=strict. Howdy needs access to the
+  # camera and /dev/uinput from that helper.
   systemd.services."polkit-agent-helper@".serviceConfig = {
     PrivateDevices = false;
     DeviceAllow = [
