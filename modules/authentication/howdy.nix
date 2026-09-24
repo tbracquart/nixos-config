@@ -11,7 +11,6 @@ in
     services.howdy = {
       enable = true;
       control = "sufficient";
-      settings.core.workaround = "input";
     };
   };
 }
