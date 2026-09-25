@@ -16,5 +16,6 @@
     udiskie
     libreoffice
     inputs.omnibin.packages.${pkgs.system}.omnibin-shell
+    inputs.multiverse.packages.${pkgs.system}.mvs
   ];
 }
