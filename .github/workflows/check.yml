@@ -121,7 +121,7 @@ jobs:
         with:
           persist-credentials: false
 
-      - uses: $/.github/actions/setup-nix-cachix
+      - uses: ./.github/actions/setup-nix-cachix # zizmor: ignore[self-repository] actionlint 1.7.12 ne reconnaît pas encore $/
         if: needs.changes.outputs.flake == 'true' || needs.changes.outputs['ci-build'] == 'true'
 
       - name: Vérification de la flake (évaluation seule, pas de build)
@@ -174,7 +174,7 @@ jobs:
     if: always()
     permissions:
       contents: read
-    uses: $/.github/workflows/build-host.yml
+    uses: ./.github/workflows/build-host.yml # zizmor: ignore[self-repository] actionlint 1.7.12 ne reconnaît pas encore $/
     with:
       host: ZenBook-13
       should-build: >-
@@ -188,7 +188,7 @@ jobs:
     if: always()
     permissions:
       contents: read
-    uses: $/.github/workflows/build-host.yml
+    uses: ./.github/workflows/build-host.yml # zizmor: ignore[self-repository] actionlint 1.7.12 ne reconnaît pas encore $/
     with:
       host: V145-15AST
       should-build: >-
