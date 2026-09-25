@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 
 {
   environment.systemPackages = with pkgs; [
@@ -15,5 +15,6 @@
     celluloid
     udiskie
     libreoffice
+    inputs.omnibin.packages.${pkgs.system}.omnibin-shell
   ];
 }
