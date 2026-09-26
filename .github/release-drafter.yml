@@ -1,13 +1,15 @@
 name-template: 'Version $RESOLVED_VERSION'
 tag-template: 'v$RESOLVED_VERSION'
 
-exclude-labels:
-  - 'release: skip'
-  - 'duplicate'
-  - 'invalid'
-  - 'wontfix'
-
 categories:
+  - type: 'pre-exclude'
+    when:
+      labels:
+        - 'release: skip'
+        - 'duplicate'
+        - 'invalid'
+        - 'wontfix'
+
   - title: '💥 Changements incompatibles'
     when:
       label: 'type: breaking'
@@ -31,11 +33,15 @@ categories:
   - type: version-resolver
     semver-increment: 'major'
     when:
-      label: 'type: breaking'
+      labels:
+        - 'type: breaking'
+        - 'semver: major'
   - type: version-resolver
     semver-increment: 'minor'
     when:
-      label: 'type: feature'
+      labels:
+        - 'type: feature'
+        - 'semver: minor'
   - type: version-resolver
     semver-increment: 'patch'
     when:
@@ -45,6 +51,7 @@ categories:
         - 'type: security'
         - 'type: documentation'
         - 'dependencies'
+        - 'semver: patch'
   - type: version-resolver
     semver-increment: 'patch'
 
