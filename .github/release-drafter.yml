@@ -1,50 +1,59 @@
 name-template: 'Version $RESOLVED_VERSION'
 tag-template: 'v$RESOLVED_VERSION'
 
-version-resolver:
-  major:
-    labels:
-      - 'semver: major'
-  minor:
-    labels:
-      - 'type: feature'
-      - 'semver: minor'
-  patch:
-    labels:
-      - 'type: bug'
-      - 'type: maintenance'
-      - 'type: security'
-      - 'semver: patch'
-  default: patch
-
-exclude-labels:
-  - 'release: skip'
-  - 'duplicate'
-  - 'invalid'
-  - 'wontfix'
-
 categories:
+  - type: 'pre-exclude'
+    when:
+      labels:
+        - 'release: skip'
+        - 'duplicate'
+        - 'invalid'
+        - 'wontfix'
+
   - title: '💥 Changements incompatibles'
-    labels:
-      - 'semver: major'
+    when:
+      label: 'type: breaking'
   - title: '✨ Fonctionnalités'
-    labels:
-      - 'type: feature'
+    when:
+      label: 'type: feature'
   - title: '🐛 Corrections'
-    labels:
-      - 'type: bug'
+    when:
+      label: 'type: bug'
   - title: '🔧 Maintenance'
-    labels:
-      - 'type: maintenance'
+    when:
+      label: 'type: maintenance'
   - title: '🛡️ Sécurité'
-    labels:
-      - 'type: security'
+    when:
+      label: 'type: security'
   - title: '📝 Documentation'
-    labels:
-      - 'type: documentation'
+    when:
+      label: 'type: documentation'
   - title: '📦 Autres changements'
-    labels:
-      - '*'
+
+  - type: version-resolver
+    semver-increment: 'major'
+    when:
+      labels:
+        - 'type: breaking'
+        - 'semver: major'
+  - type: version-resolver
+    semver-increment: 'minor'
+    when:
+      labels:
+        - 'type: feature'
+        - 'semver: minor'
+  - type: version-resolver
+    semver-increment: 'patch'
+    when:
+      labels:
+        - 'type: bug'
+        - 'type: maintenance'
+        - 'type: security'
+        - 'type: documentation'
+        - 'dependencies'
+        - 'semver: patch'
+  - type: version-resolver
+    semver-increment: 'patch'
 
 change-template: '- $BODY (#$NUMBER)'
 change-title-escapes: '\\<*_&'

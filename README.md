@@ -17,6 +17,21 @@ Cette page pointe toujours vers **la dernière ISO générée depuis `main`**.
 
 ---
 
+## 📦 Versionnement
+
+Le dépôt suit désormais **Semantic Versioning (SemVer)** à partir de la version **\`v1.0.0\`**.
+
+La version \`v1.0.0\` est historiquement ancrée sur le commit de fusion de la PR **#188**, qui marque le point où l'architecture actuelle du dépôt est en place et où les évolutions suivantes sont devenues principalement additives ou correctives.
+
+À partir de cette base :
+
+- **major** : changement incompatible avec l'interface ou les conventions stables du dépôt ;
+- **minor** : nouvelle fonctionnalité compatible ;
+- **patch** : correction, maintenance, sécurité ou documentation ;
+- **\`release: skip\`** : changement explicitement exclu du versionnement automatique.
+
+Chaque PR destinée à être publiée doit donc porter un label indiquant explicitement son impact SemVer. Les labels \`area:*\`, \`host:*\` et \`dependencies\` décrivent le changement mais ne remplacent pas ce classement.
+
 ## 🖥️ Hôtes
 
 | Hôte | Configuration |
