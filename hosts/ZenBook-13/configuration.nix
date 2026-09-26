@@ -5,6 +5,7 @@
     ./hardware-configuration.nix
     ./boot.nix
     ../../common
+    ../../users/thibaut/storage.nix
   ];
 
   networking.hostName = "ZenBook-13";
