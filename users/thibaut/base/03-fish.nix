@@ -105,19 +105,6 @@
         sudo nixos-rebuild switch --flake $NIXCFG#$host
         and begin
           echo "✅ Fini !"
-
-          if type -q cachix; and test -f ~/.config/cachix/cachix.dhall
-            read -l -P "📦 Pousser vers le cache tbracquart ? [y/N] " confirm_cachix
-            if test "$confirm_cachix" = "y" -o "$confirm_cachix" = "Y"
-              nix path-info --derivation /run/current-system | cachix push tbracquart
-              or echo "⚠️  Push Cachix échoué (non bloquant)."
-            else
-              echo "⏸️  Push Cachix annulé."
-            end
-          else
-            echo "ℹ️  cachix absent ou non authentifié."
-          end
-
           cd $NIXCFG
           if test -z "$(git status --porcelain)"
             echo "ℹ️  Rien à commit."
