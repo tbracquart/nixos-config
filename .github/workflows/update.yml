@@ -113,3 +113,7 @@ jobs:
             Les hosts affectés ont déjà été buildés et poussés vers Cachix ; les checks de PR devraient donc pouvoir réutiliser ces résultats.
           branch: auto/flake-update
           delete-branch: true
+          labels: |
+            dependencies
+            type: maintenance
+            area: nix
