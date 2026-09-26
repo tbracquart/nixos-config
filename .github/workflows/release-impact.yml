@@ -21,12 +21,10 @@ jobs:
 
     steps:
       - name: Vérifier l'impact SemVer
-        env:
-          EVENT_PATH: ${{ github.event_path }}
         run: |
           set -euo pipefail
 
-          mapfile -t labels < <(jq -r '.pull_request.labels[].name' "$EVENT_PATH")
+          mapfile -t labels < <(jq -r '.pull_request.labels[].name' "$GITHUB_EVENT_PATH")
 
           has_skip=false
           has_breaking=false
