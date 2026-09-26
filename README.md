@@ -13,8 +13,6 @@ Le dépôt sépare la configuration système commune, les fonctionnalités réut
 
 Cette page pointe toujours vers **la dernière ISO générée depuis `main`**.
 
-📥 **[Téléchargement direct de l'ISO actuelle](https://github.com/tbracquart/nixos-config/releases/download/installer-latest/nixos-minimal-26.11.20260905.c043004-x86_64-linux.iso)**
-
 ---
 
 ## 📦 Versionnement
