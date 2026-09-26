@@ -1,0 +1,79 @@
+name: Release impact
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, labeled, unlabeled]
+
+concurrency:
+  group: release-impact-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+permissions:
+  pull-requests: read
+
+jobs:
+  validate:
+    if: >-
+      github.event.pull_request.draft == false &&
+      !contains(github.event.pull_request.labels.*.name, 'release: skip')
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Vérifier l'impact SemVer
+        env:
+          EVENT_PATH: ${{ github.event_path }}
+        run: |
+          set -euo pipefail
+
+          mapfile -t labels < <(jq -r '.pull_request.labels[].name' "$EVENT_PATH")
+
+          has_skip=false
+          has_breaking=false
+          has_minor=false
+          has_patch=false
+
+          for label in "${labels[@]}"; do
+            case "$label" in
+              'release: skip')
+                has_skip=true
+                ;;
+              'type: breaking'|'semver: major')
+                has_breaking=true
+                ;;
+              'type: feature'|'semver: minor')
+                has_minor=true
+                ;;
+              'type: bug'|'type: maintenance'|'type: security'|'type: documentation'|'dependencies'|'semver: patch')
+                has_patch=true
+                ;;
+            esac
+          done
+
+          if [[ "$has_skip" == true ]]; then
+            echo "release: skip est présent : aucun impact SemVer n'est requis."
+            exit 0
+          fi
+
+          levels=0
+          [[ "$has_breaking" == true ]] && levels=$((levels + 1))
+          [[ "$has_minor" == true ]] && levels=$((levels + 1))
+          [[ "$has_patch" == true ]] && levels=$((levels + 1))
+
+          if (( levels == 0 )); then
+            echo "::error::La PR doit avoir un impact SemVer explicite : type: breaking, type: feature, type: bug, type: maintenance, type: security ou type: documentation."
+            exit 1
+          fi
+
+          if (( levels > 1 )); then
+            echo "::error::La PR possède des labels d'impact SemVer contradictoires. Une PR ne doit mélanger que des labels correspondant au même niveau (major, minor ou patch)."
+            exit 1
+          fi
+
+          if [[ "$has_breaking" == true ]]; then
+            echo "Impact SemVer : major"
+          elif [[ "$has_minor" == true ]]; then
+            echo "Impact SemVer : minor"
+          else
+            echo "Impact SemVer : patch"
+          fi
