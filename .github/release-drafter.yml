@@ -35,13 +35,11 @@ categories:
     when:
       labels:
         - 'type: breaking'
-        - 'semver: major'
   - type: version-resolver
     semver-increment: 'minor'
     when:
       labels:
         - 'type: feature'
-        - 'semver: minor'
   - type: version-resolver
     semver-increment: 'patch'
     when:
@@ -51,7 +49,6 @@ categories:
         - 'type: security'
         - 'type: documentation'
         - 'dependencies'
-        - 'semver: patch'
   - type: version-resolver
     semver-increment: 'patch'
 
