@@ -249,7 +249,7 @@ community_palette = "Oxocarbon"
 custom_palette = "wp12329556-nixos-wallpapers-vib"
 mode = "auto"
 source = "wallpaper"
-wallpaper_scheme = "vibrant"
+wallpaper_scheme = "faithful"
 
     [theme.templates]
     builtin_ids = [
@@ -284,6 +284,7 @@ wallpaper_scheme = "vibrant"
         "feishin",
         "pear-desktop",
         "spicetify",
+        "spotifast",
         "supersonic",
         "tauon",
         "ytm-player",
@@ -296,6 +297,7 @@ wallpaper_scheme = "vibrant"
         "zen-browser",
         "discord",
         "halloy",
+        "karere",
         "nchat",
         "senpai",
         "telegram",
@@ -324,6 +326,7 @@ wallpaper_scheme = "vibrant"
         "fastfetch",
         "mailspring",
         "obs",
+        "sioyek",
         "siyuan",
         "zathura",
         "zellij",
@@ -339,6 +342,7 @@ wallpaper_scheme = "vibrant"
         "konsole",
         "lazygit",
         "rio",
+        "surgedm",
         "tmux",
         "yazi"
     ]
@@ -348,13 +352,13 @@ directory = "/home/thibaut/Images/Fonds d'écran"
 transition_on_startup = true
 
     [wallpaper.default]
-    path = "/home/thibaut/Images/Fonds d'écran/wp12329556-nixos-wallpapers.png"
+    path = "/home/thibaut/Images/Fonds d'écran/aig27h1meoq11.jpg"
 
     [wallpaper.last]
-    path = "/home/thibaut/Images/Fonds d'écran/wp12329556-nixos-wallpapers.png"
+    path = "/home/thibaut/Images/Fonds d'écran/aig27h1meoq11.jpg"
 
     [wallpaper.monitors.eDP-1]
-    path = "/home/thibaut/Images/Fonds d'écran/wp12329556-nixos-wallpapers.png"
+    path = "/home/thibaut/Images/Fonds d'écran/aig27h1meoq11.jpg"
 
     [[wallpaper.favorite]]
     palette_source = "wallpaper"
