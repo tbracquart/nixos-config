@@ -36,13 +36,13 @@ jobs:
               'release: skip')
                 has_skip=true
                 ;;
-              'type: breaking'|'semver: major')
+              'type: breaking')
                 has_breaking=true
                 ;;
-              'type: feature'|'semver: minor')
+              'type: feature')
                 has_minor=true
                 ;;
-              'type: bug'|'type: maintenance'|'type: security'|'type: documentation'|'dependencies'|'semver: patch')
+              'type: bug'|'type: maintenance'|'type: security'|'type: documentation'|'dependencies')
                 has_patch=true
                 ;;
             esac
@@ -59,7 +59,7 @@ jobs:
           [[ "$has_patch" == true ]] && levels=$((levels + 1))
 
           if (( levels == 0 )); then
-            echo "::error::La PR doit avoir un impact SemVer explicite : type: breaking/feature/bug/maintenance/security/documentation ou semver: major/minor/patch."
+            echo "::error::La PR doit avoir un label d’impact : type: breaking/feature/bug/maintenance/security/documentation ou dependencies."
             exit 1
           fi
 
