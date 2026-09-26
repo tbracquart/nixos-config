@@ -63,7 +63,7 @@ jobs:
               - 'common/**'
               - 'modules/**'
               - 'profiles/**'
-              - 'users/**'
+              - 'users/**/*.nix'
               - 'flake.nix'
               - 'flake.lock'
             flake-lock:
