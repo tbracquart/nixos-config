@@ -15,7 +15,7 @@
     celluloid
     udiskie
     libreoffice
-    inputs.omnibin.packages.${pkgs.system}.omnibin-shell
-    inputs.multiverse.packages.${pkgs.system}.mvs
+    inputs.omnibin.packages.${pkgs.stdenv.hostPlatform.system}.omnibin-shell
+    inputs.multiverse.packages.${pkgs.stdenv.hostPlatform.system}.mvs
   ];
 }
