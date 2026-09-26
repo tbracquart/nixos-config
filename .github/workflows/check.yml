@@ -182,6 +182,12 @@ jobs:
             needs.changes.outputs['ci-build'] == 'true' ||
             (needs['analyze-impact'].result == 'success' && contains(needs['analyze-impact'].outputs['build-hosts'], '\"ZenBook-13\"')) ||
             (needs.changes.outputs.flake-lock == 'true' && needs.changes.outputs.flake-definition != 'true' && needs['analyze-impact'].result != 'success') }}
+      push-to-cachix: true
+    secrets:
+      CACHIX_AUTH_TOKEN: ${{ secrets.CACHIX_AUTH_TOKEN }}
+      push-to-cachix: true
+    secrets:
+      CACHIX_AUTH_TOKEN: ${{ secrets.CACHIX_AUTH_TOKEN }}
 
   build-V145-15AST:
     needs: [changes, analyze-impact]
