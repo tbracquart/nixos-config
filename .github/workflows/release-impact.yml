@@ -54,9 +54,9 @@ jobs:
           fi
 
           levels=0
-          [[ "$has_breaking" == true ]] && ((levels += 1))
-          [[ "$has_minor" == true ]] && ((levels += 1))
-          [[ "$has_patch" == true ]] && ((levels += 1))
+          [[ "$has_breaking" == true ]] && levels=$((levels + 1))
+          [[ "$has_minor" == true ]] && levels=$((levels + 1))
+          [[ "$has_patch" == true ]] && levels=$((levels + 1))
 
           if (( levels == 0 )); then
             echo "::error::La PR doit avoir un impact SemVer explicite : type: breaking, type: feature, type: bug, type: maintenance, type: security ou type: documentation."
