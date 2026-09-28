@@ -3,7 +3,6 @@ config_version = 14
 [audio]
 enable_overdrive = true
 enable_sounds = true
-sound_volume = 0.99999997764825821
 
 [bar.default]
 background_opacity = 0.59999998658895493
