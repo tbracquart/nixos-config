@@ -4,9 +4,6 @@
   fullName = "Thibaut Bracquart";
   email = "202062783+tbracquart@users.noreply.github.com";
 
-  hostname = "ZenBook-13";
-  githubRepository = "tbracquart/nixos-config";
-
   cachix = {
     name = "tbracquart";
     publicKey = "eTT16nwdreuvu4yagVFB1p+PeRg8ZCZsCA8648IJCZU=";
