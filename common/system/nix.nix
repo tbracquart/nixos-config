@@ -1,4 +1,10 @@
-{ config, myConfig, pkgs, ... }:\n\nlet\n  cachixUrl = "https://${myConfig.cachix.name}.cachix.org";\n  cachixKey = "${myConfig.cachix.name}.cachix.org-1:${myConfig.cachix.publicKey}";\n  homeDirectory = config.users.users.${myConfig.username}.home;\nin
+{ config, myConfig, pkgs, ... }:
+
+let
+  cachixUrl = "https://${myConfig.cachix.name}.cachix.org";
+  cachixKey = "${myConfig.cachix.name}.cachix.org-1:${myConfig.cachix.publicKey}";
+  homeDirectory = config.users.users.${myConfig.username}.home;
+in
 
 {
   nixpkgs.config.allowUnfree = true;
