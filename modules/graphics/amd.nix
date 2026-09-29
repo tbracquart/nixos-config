@@ -35,8 +35,8 @@ in
 
     # Force le pilote VA-API Mesa pour la lecture vidéo accélérée
     environment.sessionVariables = {
-      LIBVA_DRIVER_NAME = "radeonsi";
-      VDPAU_DRIVER = "radeonsi";
+      LIBVA_DRIVER_NAME = lib.mkDefault "radeonsi";
+      VDPAU_DRIVER = lib.mkDefault "radeonsi";
     };
 
     # Chemin HIP attendu par certains logiciels (Blender, PyTorch ROCm, etc.)
