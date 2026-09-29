@@ -9,6 +9,9 @@
         email = "202062783+tbracquart@users.noreply.github.com";
       };
       init.defaultBranch = "main";
+      pull = {
+        rebase = false;
+      };
     };
   };
 
