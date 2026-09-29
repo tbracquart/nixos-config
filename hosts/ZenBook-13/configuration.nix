@@ -16,7 +16,7 @@
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
-    extraSpecialArgs = { inherit inputs; };
+    extraSpecialArgs = { inherit inputs myConfig; };
 
     users.thibaut = {
       imports = [
