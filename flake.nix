@@ -43,7 +43,10 @@
     };
   };
 
-  outputs = { nixpkgs, ... }@inputs:\n  let\n    myConfig = import ./config.nix;\n  in {
+  outputs = { nixpkgs, ... }@inputs:
+  let
+    myConfig = import ./config.nix;
+  in {
     nixosConfigurations.installer = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       specialArgs = {
