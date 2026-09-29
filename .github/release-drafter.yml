@@ -89,6 +89,8 @@ autolabeler:
   - label: 'area: shell'
     files:
       - 'users/**/03-fish.nix'
+      - 'users/**/fish/**'
+      - 'users/**/dotfiles/fish/**'
   - label: 'area: secrets'
     files:
       - 'secrets/**'
