@@ -197,7 +197,7 @@ background_opacity = 0.59999998658895493
 [plugin_settings."avivbintangaringga/nix-monitor"]
 clean_command = "sudo nix profile wipe-history --profile /nix/var/nix/profiles/system --older-than 14d && sudo nix store gc"
 optimize_command = "sudo nix store optimise -vv"
-update_command = "git -C ~/nixos-config pull --ff-only && sudo nixos-rebuild switch --flake ~/nixos-config#ZenBook-13"
+update_command = "git -C ~/nixos-config pull --ff-only && sudo nixos-rebuild switch --flake ~/nixos-config"
 
 [plugin_settings."nzlov/daily-wallpaper"]
 locale = "fr-FR"
@@ -241,7 +241,7 @@ settings_window_translucent = true
     enabled = true
 
     [shell.screenshot]
-    directory = "/home/thibaut/Images/Copies d'écran"
+    directory = "~/Images/Copies d'écran"
 
 [theme]
 builtin = "Noctalia"
@@ -349,21 +349,21 @@ wallpaper_scheme = "faithful"
     ]
 
 [wallpaper]
-directory = "/home/thibaut/Images/Fonds d'écran"
+directory = "~/Images/Fonds d'écran"
 transition_on_startup = true
 
     [wallpaper.default]
-    path = "/home/thibaut/Images/Fonds d'écran/daily-wallpaper/bing-fr-fr-2026-09-29.jpg"
+    path = "~/Images/Fonds d'écran/daily-wallpaper/bing-fr-fr-2026-09-29.jpg"
 
     [wallpaper.last]
-    path = "/home/thibaut/Images/Fonds d'écran/daily-wallpaper/bing-fr-fr-2026-09-29.jpg"
+    path = "~/Images/Fonds d'écran/daily-wallpaper/bing-fr-fr-2026-09-29.jpg"
 
     [wallpaper.monitors.eDP-1]
-    path = "/home/thibaut/Images/Fonds d'écran/daily-wallpaper/bing-fr-fr-2026-09-29.jpg"
+    path = "~/Images/Fonds d'écran/daily-wallpaper/bing-fr-fr-2026-09-29.jpg"
 
     [[wallpaper.favorite]]
     palette_source = "wallpaper"
-    path = "/home/thibaut/Images/Fonds d'écran/wp12329556-nixos-wallpapers.png"
+    path = "~/Images/Fonds d'écran/wp12329556-nixos-wallpapers.png"
     theme_mode = "auto"
     wallpaper_scheme = "vibrant"
 

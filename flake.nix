@@ -2,15 +2,15 @@
   description = "NixOS + Home Manager Flake pour ZenBook 13 et V145-15AST";
 
   nixConfig = {
+    # Le cache personnel est configuré dans common/system/nix.nix via config.nix.
+    # nixConfig ne peut pas lire config.nix : il n'est donc actif qu'après activation du système.
     extra-substituters = [
-      "https://tbracquart.cachix.org"
       "https://nix-community.cachix.org"
       "https://attic.xuyh0120.win/lantian"
       "https://freesmlauncher.cachix.org"
       "https://noctalia.cachix.org"
     ];
     extra-trusted-public-keys = [
-      "tbracquart.cachix.org-1:eTT16nwdreuvu4yagVFB1p+PeRg8ZCZsCA8648IJCZU="
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       "lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc="
       "freesmlauncher.cachix.org-1:Jcp5Q9wiLL+EDv8Mh7c6L9xGk+lXr7/otpKxMOuBuDs="
@@ -43,25 +43,36 @@
     };
   };
 
-  outputs = { nixpkgs, ... }@inputs: {
-    nixosConfigurations.installer = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
-      specialArgs = {
-        inherit inputs;
-        modulesPath = "${nixpkgs}/nixos/modules";
-        repoSource = ./.;
+  outputs = { nixpkgs, ... }@inputs:
+    let
+      myConfig = import ./config.nix;
+      repoSource = nixpkgs.lib.fileset.toSource {
+        root = ./.;
+        # Cette liste doit rester alignée avec les paths-ignore de
+        # .github/workflows/build-installer-iso.yml.
+        fileset = nixpkgs.lib.fileset.difference ./.
+          (nixpkgs.lib.fileset.unions [ ./.github ./README.md ./.gitignore ]);
       };
-      modules = [ ./installer/iso.nix ];
-    };
+    in
+    {
+      nixosConfigurations.installer = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = {
+          inherit inputs;
+          modulesPath = "${nixpkgs}/nixos/modules";
+          inherit repoSource;
+        };
+        modules = [ ./installer/iso.nix ];
+      };
 
-    nixosConfigurations.ZenBook-13 = nixpkgs.lib.nixosSystem {
-      specialArgs = { inherit inputs; };
-      modules = [ ./hosts/ZenBook-13/configuration.nix ];
-    };
+      nixosConfigurations.ZenBook-13 = nixpkgs.lib.nixosSystem {
+        specialArgs = { inherit inputs myConfig; };
+        modules = [ ./hosts/ZenBook-13/configuration.nix ];
+      };
 
-    nixosConfigurations.V145-15AST = nixpkgs.lib.nixosSystem {
-      specialArgs = { inherit inputs; };
-      modules = [ ./hosts/V145-15AST/configuration.nix ];
+      nixosConfigurations.V145-15AST = nixpkgs.lib.nixosSystem {
+        specialArgs = { inherit inputs myConfig; };
+        modules = [ ./hosts/V145-15AST/configuration.nix ];
+      };
     };
-  };
 }

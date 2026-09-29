@@ -1,14 +1,17 @@
-{ pkgs, ... }:
+{ myConfig, pkgs, ... }:
 
 {
   programs.git = {
     enable = true;
     settings = {
       user = {
-        name = "Thibaut Bracquart";
-        email = "202062783+tbracquart@users.noreply.github.com";
+        name = myConfig.fullName;
+        email = myConfig.email;
       };
       init.defaultBranch = "main";
+      pull = {
+        rebase = false;
+      };
     };
   };
 

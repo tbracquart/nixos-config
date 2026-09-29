@@ -1,4 +1,4 @@
-{ inputs, ... }:
+{ inputs, myConfig, ... }:
 
 {
   imports = [
@@ -16,9 +16,9 @@
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
-    extraSpecialArgs = { inherit inputs; };
+    extraSpecialArgs = { inherit inputs myConfig; };
 
-    users.thibaut = {
+    users.${myConfig.username} = {
       imports = [
         ../../users/thibaut/base
         ../../users/thibaut/variants/zenbook.nix
@@ -34,5 +34,5 @@
   my.graphics.intel.enable = true;
   my.location.geoclue2.enable = true;
   my.virtualisation.libvirt.enable = true;
-  my.virtualisation.libvirt.user = "thibaut";
+  my.virtualisation.libvirt.user = myConfig.username;
 }

@@ -83,10 +83,18 @@ autolabeler:
       - 'modules/**'
       - 'profiles/**'
       - 'hosts/**'
+      - 'users/**'
+      - 'config.nix'
+      - 'patches/**'
   - label: 'area: shell'
     files:
+      - 'users/**/03-fish.nix'
       - 'users/**/fish/**'
       - 'users/**/dotfiles/fish/**'
+  - label: 'area: secrets'
+    files:
+      - 'secrets/**'
+      - '.sops.yaml'
   - label: 'type: documentation'
     files:
       - '**/*.md'

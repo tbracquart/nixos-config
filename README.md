@@ -52,13 +52,30 @@ Home Manager est intégré aux deux configurations. Thibaut est configuré sur l
 ├── modules/                 # Fonctionnalités NixOS réutilisables et leurs options my.*
 ├── profiles/                # Profils de machines composant plusieurs fonctionnalités
 │   └── laptop.nix           # Profil commun aux ordinateurs portables
+├── .github/                 # Workflows, actions et métadonnées GitHub
+├── installer/               # Fichiers nécessaires à la génération de l'ISO d'installation
+├── patches/                 # Correctifs appliqués aux sources
 ├── users/
 │   ├── thibaut/             # Configuration Home Manager de Thibaut
 │   └── quentin/             # Configuration Home Manager de Quentin
+├── config.nix               # Valeurs personnelles centralisées
 ├── flake.nix
 ├── flake.lock
 └── secrets/
 ```
+
+Le fichier `config.nix` centralise les valeurs personnelles à adapter, notamment le compte utilisateur, l'identité Git, le cache Cachix personnel et l'UUID du stockage externe. Il constitue le point de départ pour un fork ; les chemins et éléments propres à la structure du dépôt restent dans leurs emplacements respectifs.
+
+`config.nix` n'est pas suffisant à lui seul pour un fork. Il faut également adapter les éléments propres au dépôt ou à l'utilisateur, notamment :
+
+- `.github/actions/setup-nix-cachix/action.yml` pour le nom du cache ;
+- `.github/workflows/authorization.yml` ;
+- `.github/CODEOWNERS` ;
+- `common/users/thibaut.nix` ;
+- `users/thibaut/` ;
+- `secrets/`.
+
+Dans un module NixOS, `myConfig` est reçu comme argument avec `{ myConfig, ... }:`. Dans un module Home Manager, il est transmis via `extraSpecialArgs`.
 
 La règle générale est de placer chaque élément là où se trouve sa responsabilité :
 
