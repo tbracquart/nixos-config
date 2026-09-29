@@ -5,8 +5,8 @@
     enable = true;
     settings = {
       user = {
-        name = "Thibaut Bracquart";
-        email = "202062783+tbracquart@users.noreply.github.com";
+        name = "Louis Duhamel";
+        email = "254676257+LouisDuhamel1@users.noreply.github.com";
       };
       init.defaultBranch = "main";
     };
