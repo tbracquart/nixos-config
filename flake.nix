@@ -1,7 +1,9 @@
-{
+let
+  myConfig = import ./config.nix;
+in {
   description = "NixOS + Home Manager Flake pour ZenBook 13 et V145-15AST";
 
-  nixConfig = let myConfig = import ./config.nix; in {
+  nixConfig = {
     extra-substituters = [
       "https://${myConfig.cachix.name}.cachix.org"
       "https://nix-community.cachix.org"
@@ -43,10 +45,7 @@
     };
   };
 
-  outputs = { nixpkgs, ... }@inputs:
-  let
-    myConfig = import ./config.nix;
-  in {
+  outputs = { nixpkgs, ... }@inputs: {
     nixosConfigurations.installer = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       specialArgs = {
