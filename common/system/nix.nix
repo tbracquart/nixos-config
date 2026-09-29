@@ -1,7 +1,7 @@
 { config, lib, myConfig, pkgs, ... }:
 
 let
-  homeDirectory = config.users.users.\${myConfig.username}.home;
+  homeDirectory = config.users.users.${myConfig.username}.home;
 in
 
 {
@@ -26,7 +26,7 @@ in
           "https://freesmlauncher.cachix.org"
           "https://noctalia.cachix.org"
         ]
-        ++ lib.optional myConfig.cachix.enable "https://\${myConfig.cachix.name}.cachix.org";
+        ++ lib.optional myConfig.cachix.enable "https://${myConfig.cachix.name}.cachix.org";
 
       trusted-public-keys =
         [
@@ -37,7 +37,7 @@ in
           "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="
         ]
         ++ lib.optional myConfig.cachix.enable
-          "\${myConfig.cachix.name}.cachix.org-1:\${myConfig.cachix.publicKey}";
+          "${myConfig.cachix.name}.cachix.org-1:${myConfig.cachix.publicKey}";
 
       netrc-file = "/run/secrets/github-netrc";
     };
@@ -69,12 +69,12 @@ in
   system.activationScripts.cachixAuthtoken = lib.mkIf myConfig.cachix.enable {
     text = ''
       if [ -f /run/secrets/cachix-auth-token ]; then
-        if id -u \${myConfig.username} >/dev/null 2>&1; then
-          mkdir -p \${homeDirectory}/.config/cachix
-          if ! cat /run/secrets/cachix-auth-token | runuser -u \${myConfig.username} -- \${pkgs.cachix}/bin/cachix authtoken --stdin; then
-            echo "Avertissement : impossible d'activer le token Cachix pour \${myConfig.username}." >&2
+        if id -u ${myConfig.username} >/dev/null 2>&1; then
+          mkdir -p ${homeDirectory}/.config/cachix
+          if ! cat /run/secrets/cachix-auth-token | runuser -u ${myConfig.username} -- ${pkgs.cachix}/bin/cachix authtoken --stdin; then
+            echo "Avertissement : impossible d'activer le token Cachix pour ${myConfig.username}." >&2
           fi
-          chown -R \${myConfig.username}:users \${homeDirectory}/.config/cachix
+          chown -R ${myConfig.username}:users ${homeDirectory}/.config/cachix
         fi
       fi
     '';
