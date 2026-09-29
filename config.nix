@@ -1,5 +1,5 @@
 {
-  # Valeurs personnelles à adapter après un fork.
+  # Valeurs personnelles à adapter après un fork du dépôt.
   username = "thibaut";
   fullName = "Thibaut Bracquart";
   email = "202062783+tbracquart@users.noreply.github.com";
