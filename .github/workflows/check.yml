@@ -67,6 +67,7 @@ jobs:
               - 'profiles/**'
               - 'users/**/*.nix'
               - 'secrets/**'
+              - 'config.nix'
               - 'flake.nix'
               - 'flake.lock'
             flake-lock:
