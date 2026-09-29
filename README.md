@@ -50,6 +50,9 @@ Home Manager est intégré aux deux configurations. Thibaut est configuré sur l
 │   ├── ZenBook-13/          # Particularités matérielles et système du ZenBook
 │   └── V145-15AST/          # Particularités matérielles et système du V145
 ├── modules/                 # Fonctionnalités NixOS réutilisables et leurs options my.*
+├── installer/               # Fichiers nécessaires à la génération de l'ISO d'installation
+├── patches/                 # Correctifs appliqués aux sources
+├── .github/                 # Workflows, actions et métadonnées GitHub
 ├── profiles/                # Profils de machines composant plusieurs fonctionnalités
 │   └── laptop.nix           # Profil commun aux ordinateurs portables
 ├── users/
@@ -61,7 +64,18 @@ Home Manager est intégré aux deux configurations. Thibaut est configuré sur l
 └── secrets/
 ```
 
-Le fichier `config.nix` centralise les valeurs personnelles réutilisées par plusieurs parties de la configuration, notamment le compte utilisateur, l'identité Git, le cache Cachix personnel et l'UUID du stockage externe. Il constitue le premier fichier à adapter lors d'un fork ; les chemins et éléments propres à la structure du dépôt restent dans leurs emplacements respectifs.
+Le fichier `config.nix` centralise les valeurs personnelles à adapter, notamment le compte utilisateur, l'identité Git, le cache Cachix personnel et l'UUID du stockage externe. Il constitue le point de départ pour un fork ; les chemins et éléments propres à la structure du dépôt restent dans leurs emplacements respectifs.
+
+`config.nix` n'est pas suffisant à lui seul pour un fork. Il faut également adapter les éléments propres au dépôt ou à l'utilisateur, notamment :
+
+- `.github/actions/setup-nix-cachix/action.yml` pour le nom du cache ;
+- `.github/workflows/authorization.yml` ;
+- `.github/CODEOWNERS` ;
+- `common/users/thibaut.nix` ;
+- `users/thibaut/` ;
+- `secrets/`.
+
+Dans un module NixOS, `myConfig` est reçu comme argument avec `{ myConfig, ... }:`. Dans un module Home Manager, il est transmis via `extraSpecialArgs`.
 
 La règle générale est de placer chaque élément là où se trouve sa responsabilité :
 
