@@ -50,10 +50,10 @@ Home Manager est intégré aux deux configurations. Thibaut est configuré sur l
 │   ├── ZenBook-13/          # Particularités matérielles et système du ZenBook
 │   └── V145-15AST/          # Particularités matérielles et système du V145
 ├── modules/                 # Fonctionnalités NixOS réutilisables et leurs options my.*
+├── profiles/                # Profils de machines composant plusieurs fonctionnalités
+├── .github/                 # Workflows, actions et métadonnées GitHub
 ├── installer/               # Fichiers nécessaires à la génération de l'ISO d'installation
 ├── patches/                 # Correctifs appliqués aux sources
-├── .github/                 # Workflows, actions et métadonnées GitHub
-├── profiles/                # Profils de machines composant plusieurs fonctionnalités
 │   └── laptop.nix           # Profil commun aux ordinateurs portables
 ├── users/
 │   ├── thibaut/             # Configuration Home Manager de Thibaut
