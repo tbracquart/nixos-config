@@ -55,10 +55,13 @@ Home Manager est intégré aux deux configurations. Thibaut est configuré sur l
 ├── users/
 │   ├── thibaut/             # Configuration Home Manager de Thibaut
 │   └── quentin/             # Configuration Home Manager de Quentin
+├── config.nix               # Valeurs personnelles centralisées
 ├── flake.nix
 ├── flake.lock
 └── secrets/
 ```
+
+Le fichier `config.nix` centralise les valeurs personnelles réutilisées par plusieurs parties de la configuration, notamment le compte utilisateur, l'identité Git, le cache Cachix personnel et l'UUID du stockage externe. Il constitue le premier fichier à adapter lors d'un fork ; les chemins et éléments propres à la structure du dépôt restent dans leurs emplacements respectifs.
 
 La règle générale est de placer chaque élément là où se trouve sa responsabilité :
 
