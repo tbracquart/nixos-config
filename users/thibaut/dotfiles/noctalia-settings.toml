@@ -197,7 +197,7 @@ background_opacity = 0.59999998658895493
 [plugin_settings."avivbintangaringga/nix-monitor"]
 clean_command = "sudo nix profile wipe-history --profile /nix/var/nix/profiles/system --older-than 14d && sudo nix store gc"
 optimize_command = "sudo nix store optimise -vv"
-update_command = "git -C ~/nixos-config pull --ff-only && sudo nixos-rebuild switch --flake ~/nixos-config#$(hostname)"
+update_command = "git -C ~/nixos-config pull --ff-only && sudo nixos-rebuild switch --flake ~/nixos-config"
 
 [plugin_settings."nzlov/daily-wallpaper"]
 locale = "fr-FR"
