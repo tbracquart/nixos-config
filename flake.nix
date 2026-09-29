@@ -1,6 +1,4 @@
-let
-  myConfig = import ./config.nix;
-in {
+{
   description = "NixOS + Home Manager Flake pour ZenBook 13 et V145-15AST";
 
   nixConfig = {
@@ -45,7 +43,10 @@ in {
     };
   };
 
-  outputs = { nixpkgs, ... }@inputs: {
+  outputs = { nixpkgs, ... }@inputs:
+    let
+      myConfig = import ./config.nix;
+    in {
     nixosConfigurations.installer = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       specialArgs = {
