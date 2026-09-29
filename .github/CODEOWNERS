@@ -1,6 +1,0 @@
-# Default owner for all repository content.
-* @tbracquart
-
-# Explicitly delegated areas.
-/hosts/V145-15AST/ @qbracquart
-/users/quentin/ @qbracquart
