@@ -10,7 +10,7 @@
       };
       init.defaultBranch = "main";
       pull = {
-        rebase = false;
+        rebase = true;
       };
     };
   };
