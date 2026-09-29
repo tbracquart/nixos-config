@@ -1,9 +1,7 @@
-{ config, myConfig, pkgs, ... }:
+{ config, lib, myConfig, pkgs, ... }:
 
 let
-  cachixUrl = "https://${myConfig.cachix.name}.cachix.org";
-  cachixKey = "${myConfig.cachix.name}.cachix.org-1:${myConfig.cachix.publicKey}";
-  homeDirectory = config.users.users.${myConfig.username}.home;
+  homeDirectory = config.users.users.\${myConfig.username}.home;
 in
 
 {
@@ -20,23 +18,26 @@ in
     settings = {
       experimental-features = [ "nix-command" "flakes" ];
 
-      substituters = [
-        cachixUrl
-        "https://cache.nixos.org"
-        "https://nix-community.cachix.org"
-        "https://attic.xuyh0120.win/lantian"
-        "https://freesmlauncher.cachix.org"
-        "https://noctalia.cachix.org"
-      ];
+      substituters =
+        [
+          "https://cache.nixos.org"
+          "https://nix-community.cachix.org"
+          "https://attic.xuyh0120.win/lantian"
+          "https://freesmlauncher.cachix.org"
+          "https://noctalia.cachix.org"
+        ]
+        ++ lib.optional myConfig.cachix.enable "https://\${myConfig.cachix.name}.cachix.org";
 
-      trusted-public-keys = [
-        cachixKey
-        "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
-        "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-        "lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc="
-        "freesmlauncher.cachix.org-1:Jcp5Q9wiLL+EDv8Mh7c6L9xGk+lXr7/otpKxMOuBuDs="
-        "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="
-      ];
+      trusted-public-keys =
+        [
+          "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+          "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+          "lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc="
+          "freesmlauncher.cachix.org-1:Jcp5Q9wiLL+EDv8Mh7c6L9xGk+lXr7/otpKxMOuBuDs="
+          "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="
+        ]
+        ++ lib.optional myConfig.cachix.enable
+          "\${myConfig.cachix.name}.cachix.org-1:\${myConfig.cachix.publicKey}";
 
       netrc-file = "/run/secrets/github-netrc";
     };
@@ -59,21 +60,21 @@ in
       mode = "0400";
     };
 
-    secrets."cachix-auth-token" = {
+    secrets."cachix-auth-token" = lib.mkIf myConfig.cachix.enable {
       path = "/run/secrets/cachix-auth-token";
       mode = "0400";
     };
   };
 
-  system.activationScripts.cachixAuthtoken = {
+  system.activationScripts.cachixAuthtoken = lib.mkIf myConfig.cachix.enable {
     text = ''
       if [ -f /run/secrets/cachix-auth-token ]; then
-        if id -u ${myConfig.username} >/dev/null 2>&1; then
-          mkdir -p ${homeDirectory}/.config/cachix
-          if ! cat /run/secrets/cachix-auth-token | runuser -u ${myConfig.username} -- ${pkgs.cachix}/bin/cachix authtoken --stdin; then
-            echo "Avertissement : impossible d'activer le token Cachix pour ${myConfig.username}." >&2
+        if id -u \${myConfig.username} >/dev/null 2>&1; then
+          mkdir -p \${homeDirectory}/.config/cachix
+          if ! cat /run/secrets/cachix-auth-token | runuser -u \${myConfig.username} -- \${pkgs.cachix}/bin/cachix authtoken --stdin; then
+            echo "Avertissement : impossible d'activer le token Cachix pour \${myConfig.username}." >&2
           fi
-          chown -R ${myConfig.username}:users ${homeDirectory}/.config/cachix
+          chown -R \${myConfig.username}:users \${homeDirectory}/.config/cachix
         fi
       fi
     '';
