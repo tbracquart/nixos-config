@@ -1,6 +1,13 @@
 { config, lib, pkgs, ... }:
 
+let
+  cfg = config.my.graphics.amd;
+in
 {
+  options.my.graphics.amd.enable = lib.mkEnableOption
+    "le support graphique AMD";
+
+  config = lib.mkIf cfg.enable {
   # Pilote noyau chargé tôt (évite l'écran noir/flash au démarrage)
   boot.initrd.kernelModules = [ "amdgpu" ];
 
@@ -51,4 +58,5 @@
 
   # Optionnel : débloquer overclocking / contrôle des ventilateurs
   # boot.kernelParams = [ "amdgpu.ppfeaturemask=0xffffffff" ];
+  }
 }
