@@ -44,35 +44,33 @@
   outputs = { nixpkgs, ... }@inputs:
     let
       myConfig = import ./config.nix;
-      repoSource = nixpkgs.lib.cleanSourceWith {
-        src = ./.;
-        filter = path: type:
-          let
-            relativePath = nixpkgs.lib.removePrefix (toString ./. + "/") (toString path);
-          in
-          !nixpkgs.lib.hasPrefix ".github/" relativePath
-          && relativePath != "README.md"
-          && relativePath != ".gitignore";
+      repoSource = nixpkgs.lib.fileset.toSource {
+        root = ./.;
+        # Cette liste doit rester alignée avec les paths-ignore de
+        # .github/workflows/build-installer-iso.yml.
+        fileset = nixpkgs.lib.fileset.difference ./.
+          (nixpkgs.lib.fileset.unions [ ./.github ./README.md ./.gitignore ]);
       };
-    in {
-    nixosConfigurations.installer = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
-      specialArgs = {
-        inherit inputs;
-        modulesPath = "${nixpkgs}/nixos/modules";
-        inherit repoSource;
+    in
+    {
+      nixosConfigurations.installer = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = {
+          inherit inputs;
+          modulesPath = "${nixpkgs}/nixos/modules";
+          inherit repoSource;
+        };
+        modules = [ ./installer/iso.nix ];
       };
-      modules = [ ./installer/iso.nix ];
-    };
 
-    nixosConfigurations.ZenBook-13 = nixpkgs.lib.nixosSystem {
-      specialArgs = { inherit inputs myConfig; };
-      modules = [ ./hosts/ZenBook-13/configuration.nix ];
-    };
+      nixosConfigurations.ZenBook-13 = nixpkgs.lib.nixosSystem {
+        specialArgs = { inherit inputs myConfig; };
+        modules = [ ./hosts/ZenBook-13/configuration.nix ];
+      };
 
-    nixosConfigurations.V145-15AST = nixpkgs.lib.nixosSystem {
-      specialArgs = { inherit inputs myConfig; };
-      modules = [ ./hosts/V145-15AST/configuration.nix ];
-    };
+      nixosConfigurations.V145-15AST = nixpkgs.lib.nixosSystem {
+        specialArgs = { inherit inputs myConfig; };
+        modules = [ ./hosts/V145-15AST/configuration.nix ];
+      };
   };
 }
