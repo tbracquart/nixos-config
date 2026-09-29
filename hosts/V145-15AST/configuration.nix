@@ -1,5 +1,3 @@
-{ inputs, myConfig, ... }:
-
 {
   imports = [
     ./hardware-configuration.nix
@@ -34,6 +32,7 @@
   my.authentication.howdy.enable = true;
   my.desktop.plasma.enable = true;
   my.flatpak.enable = true;
+  my.graphics.amd.enable = true;
 
   # Le profil laptop définit 80 % par défaut, mais cette machine ne doit pas
   # appliquer de limite de charge en raison de l'état de sa batterie.
