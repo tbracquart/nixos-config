@@ -74,5 +74,5 @@
         specialArgs = { inherit inputs myConfig; };
         modules = [ ./hosts/V145-15AST/configuration.nix ];
       };
-  };
+    };
 }
