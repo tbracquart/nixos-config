@@ -44,13 +44,23 @@
   outputs = { nixpkgs, ... }@inputs:
     let
       myConfig = import ./config.nix;
+      repoSource = nixpkgs.lib.cleanSourceWith {
+        src = ./.;
+        filter = path: type:
+          let
+            relativePath = nixpkgs.lib.removePrefix (toString ./. + "/") (toString path);
+          in
+          !nixpkgs.lib.hasPrefix ".github/" relativePath
+          && relativePath != "README.md"
+          && relativePath != ".gitignore";
+      };
     in {
     nixosConfigurations.installer = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       specialArgs = {
         inherit inputs;
         modulesPath = "${nixpkgs}/nixos/modules";
-        repoSource = ./.;
+        inherit repoSource;
       };
       modules = [ ./installer/iso.nix ];
     };
