@@ -49,8 +49,8 @@ jobs:
         with:
           name: ${{ inputs.flake-lock-artifact }}
 
-      # PR builds execute repository-controlled code, so they deliberately use
-      # the cache setup without receiving the Cachix write credential.
+      # PRs from this repository may push to the shared Cachix cache. PRs from
+      # forks never receive the Cachix secret and therefore remain read-only.
       - uses: ./.github/actions/setup-nix-cachix
         with:
           github-access-token: ${{ inputs.push-to-cachix && secrets.GITHUB_TOKEN || '' }}
