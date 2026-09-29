@@ -47,6 +47,7 @@ jobs:
               - 'profiles/**'
               - 'users/**/*.nix'
               - 'secrets/**'
+              - 'patches/**'
               - 'config.nix'
               - 'flake.nix'
               - 'flake.lock'
@@ -62,6 +63,8 @@ jobs:
               - 'flake.lock'
             flake:
               - 'hosts/**'
+              - 'installer/**'
+              - 'patches/**'
               - 'common/**'
               - 'modules/**'
               - 'profiles/**'
