@@ -67,8 +67,8 @@ jobs:
           set -eux
           nix build ".#nixosConfigurations.${HOST}.config.system.build.toplevel" -o result --no-update-lock-file --print-build-logs --accept-flake-config
 
-      - name: Push build to Cachix (obligatoire)
-        if: inputs.push-to-cachix
+      - name: Push build to Cachix
+        if: inputs.push-to-cachix && env.CACHIX_AUTH_TOKEN != ''
         env:
           CACHIX_AUTH_TOKEN: '${{ secrets.CACHIX_AUTH_TOKEN }}'
         run: |
