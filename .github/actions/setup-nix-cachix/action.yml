@@ -22,6 +22,7 @@ runs:
           experimental-features = nix-command flakes
 
     - name: Installer Cachix
+      shell: bash
       run: nix profile install nixpkgs#cachix
 
     - name: Activer le cache Cachix 📦
