@@ -1,9 +1,9 @@
-{ pkgs, ... }:
+{ myConfig, pkgs, ... }:
 
 {
-  users.users.thibaut = {
+  users.users.${myConfig.username} = {
     isNormalUser = true;
-    description = "Thibaut Bracquart";
+    description = myConfig.fullName;
     extraGroups = [ "networkmanager" "wheel" "uinput" ];
     shell = pkgs.fish;
   };

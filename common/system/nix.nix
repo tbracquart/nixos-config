@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ config, myConfig, pkgs, ... }:\n\nlet\n  cachixUrl = "https://${myConfig.cachix.name}.cachix.org";\n  cachixKey = "${myConfig.cachix.name}.cachix.org-1:${myConfig.cachix.publicKey}";\n  homeDirectory = config.users.users.${myConfig.username}.home;\nin
 
 {
   nixpkgs.config.allowUnfree = true;
@@ -15,7 +15,7 @@
       experimental-features = [ "nix-command" "flakes" ];
 
       substituters = [
-        "https://tbracquart.cachix.org"
+        cachixUrl
         "https://cache.nixos.org"
         "https://nix-community.cachix.org"
         "https://attic.xuyh0120.win/lantian"
@@ -24,7 +24,7 @@
       ];
 
       trusted-public-keys = [
-        "tbracquart.cachix.org-1:eTT16nwdreuvu4yagVFB1p+PeRg8ZCZsCA8648IJCZU="
+        cachixKey
         "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
         "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
         "lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc="
@@ -62,12 +62,12 @@
   system.activationScripts.cachixAuthtoken = {
     text = ''
       if [ -f /run/secrets/cachix-auth-token ]; then
-        if id -u thibaut >/dev/null 2>&1; then
-          mkdir -p /home/thibaut/.config/cachix
-          if ! cat /run/secrets/cachix-auth-token | runuser -u thibaut -- ${pkgs.cachix}/bin/cachix authtoken --stdin; then
-            echo "Avertissement : impossible d'activer le token Cachix pour thibaut." >&2
+        if id -u ${myConfig.username} >/dev/null 2>&1; then
+          mkdir -p ${homeDirectory}/.config/cachix
+          if ! cat /run/secrets/cachix-auth-token | runuser -u ${myConfig.username} -- ${pkgs.cachix}/bin/cachix authtoken --stdin; then
+            echo "Avertissement : impossible d'activer le token Cachix pour ${myConfig.username}." >&2
           fi
-          chown -R thibaut:users /home/thibaut/.config/cachix
+          chown -R ${myConfig.username}:users ${homeDirectory}/.config/cachix
         fi
       fi
     '';

@@ -1,16 +1,16 @@
 {
   description = "NixOS + Home Manager Flake pour ZenBook 13 et V145-15AST";
 
-  nixConfig = {
+  nixConfig = let myConfig = import ./config.nix; in {
     extra-substituters = [
-      "https://tbracquart.cachix.org"
+      "https://${myConfig.cachix.name}.cachix.org"
       "https://nix-community.cachix.org"
       "https://attic.xuyh0120.win/lantian"
       "https://freesmlauncher.cachix.org"
       "https://noctalia.cachix.org"
     ];
     extra-trusted-public-keys = [
-      "tbracquart.cachix.org-1:eTT16nwdreuvu4yagVFB1p+PeRg8ZCZsCA8648IJCZU="
+      "${myConfig.cachix.name}.cachix.org-1:${myConfig.cachix.publicKey}"
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       "lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc="
       "freesmlauncher.cachix.org-1:Jcp5Q9wiLL+EDv8Mh7c6L9xGk+lXr7/otpKxMOuBuDs="
@@ -43,7 +43,7 @@
     };
   };
 
-  outputs = { nixpkgs, ... }@inputs: {
+  outputs = { nixpkgs, ... }@inputs:\n  let\n    myConfig = import ./config.nix;\n  in {
     nixosConfigurations.installer = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       specialArgs = {
@@ -55,12 +55,12 @@
     };
 
     nixosConfigurations.ZenBook-13 = nixpkgs.lib.nixosSystem {
-      specialArgs = { inherit inputs; };
+      specialArgs = { inherit inputs myConfig; };
       modules = [ ./hosts/ZenBook-13/configuration.nix ];
     };
 
     nixosConfigurations.V145-15AST = nixpkgs.lib.nixosSystem {
-      specialArgs = { inherit inputs; };
+      specialArgs = { inherit inputs myConfig; };
       modules = [ ./hosts/V145-15AST/configuration.nix ];
     };
   };
