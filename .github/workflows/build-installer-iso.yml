@@ -4,21 +4,10 @@ on:
   push:
     branches:
       - main
-    paths:
-      - "flake.nix"
-      - "flake.lock"
-      - "config.nix"
-      - "installer/**"
-      - "common/**"
-      - "modules/**"
-      - "profiles/**"
-      - "hosts/**"
-      - "users/**"
-      - "secrets/**"
-      - "patches/**"
-      - ".sops.yaml"
-      - ".github/actions/setup-nix-cachix/**"
-      - ".github/workflows/build-installer-iso.yml"
+    paths-ignore:
+      - ".github/**"
+      - "README.md"
+      - ".gitignore"
   workflow_dispatch:
 
 concurrency:
