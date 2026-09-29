@@ -49,16 +49,12 @@ jobs:
         with:
           name: ${{ inputs.flake-lock-artifact }}
 
-      # PR builds execute repository-controlled code, so they deliberately use
-      # the cache setup without receiving the Cachix write credential.
+      # PRs from this repository may push to the shared Cachix cache. PRs from
+      # forks never receive the Cachix secret and therefore remain read-only.
       - uses: ./.github/actions/setup-nix-cachix
-        if: inputs.push-to-cachix == false
-
-      - uses: ./.github/actions/setup-nix-cachix
-        if: inputs.push-to-cachix
         with:
-          github-access-token: ${{ secrets.GITHUB_TOKEN }}
-          cachix-auth-token: ${{ secrets.CACHIX_AUTH_TOKEN }}
+          github-access-token: ${{ inputs.push-to-cachix && secrets.GITHUB_TOKEN || '' }}
+          cachix-auth-token: ${{ inputs.push-to-cachix && secrets.CACHIX_AUTH_TOKEN || '' }}
 
       - name: Build ${{ inputs.host }}
         env:
@@ -66,12 +62,3 @@ jobs:
         run: |
           set -eux
           nix build ".#nixosConfigurations.${HOST}.config.system.build.toplevel" -o result --no-update-lock-file --print-build-logs --accept-flake-config
-
-      - name: Push build to Cachix (obligatoire)
-        if: inputs.push-to-cachix
-        env:
-          CACHIX_AUTH_TOKEN: '${{ secrets.CACHIX_AUTH_TOKEN }}'
-        run: |
-          set -eux
-          echo "Pushing build outputs to cachix tbracquart"
-          cachix push tbracquart result

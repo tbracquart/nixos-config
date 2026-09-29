@@ -21,9 +21,9 @@ runs:
         extra_nix_config: |
           experimental-features = nix-command flakes
 
-    - name: Activer le cache Cachix 📦
-      if: inputs.cachix-auth-token != ''
-      uses: cachix/cachix-action@38b082610b782e7e93e209c35fd730d399dee866 # v17
+    # Cachix provides the persistent Nix binary cache. Without an auth token,
+    # the public cache is read-only; trusted workflows can also push to it.
+    - uses: cachix/cachix-action@38b082610b782e7e93e209c35fd730d399dee866 # v17
       with:
         name: tbracquart
         authToken: '${{ inputs.cachix-auth-token }}'
