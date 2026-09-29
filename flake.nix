@@ -2,6 +2,8 @@
   description = "NixOS + Home Manager Flake pour ZenBook 13 et V145-15AST";
 
   nixConfig = {
+    # Le cache personnel est configuré dans common/system/nix.nix via config.nix.
+    # nixConfig ne peut pas lire config.nix : il n'est donc actif qu'après activation du système.
     extra-substituters = [
       "https://nix-community.cachix.org"
       "https://attic.xuyh0120.win/lantian"
