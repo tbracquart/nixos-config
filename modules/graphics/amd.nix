@@ -58,5 +58,5 @@ in
 
     # Optionnel : débloquer overclocking / contrôle des ventilateurs
     # boot.kernelParams = [ "amdgpu.ppfeaturemask=0xffffffff" ];
-  }
+  };
 }
