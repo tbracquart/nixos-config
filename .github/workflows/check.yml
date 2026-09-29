@@ -202,6 +202,8 @@ jobs:
             needs.changes.outputs['ci-build'] == 'true' ||
             (needs['analyze-impact'].result == 'success' && contains(needs['analyze-impact'].outputs['build-hosts'], '\"V145-15AST\"')) ||
             (needs.changes.outputs.flake-lock == 'true' && needs.changes.outputs.flake-definition != 'true' && needs['analyze-impact'].result != 'success') }}
-      push-to-cachix: ${{ github.event_name == 'pull_request' }}
+      push-to-cachix: >-
+        ${{ github.event_name == 'pull_request' &&
+            github.event.pull_request.head.repo.full_name == github.repository }}
     secrets:
       CACHIX_AUTH_TOKEN: ${{ secrets.CACHIX_AUTH_TOKEN }}
