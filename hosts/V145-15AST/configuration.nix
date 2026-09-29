@@ -18,7 +18,7 @@
     useUserPackages = true;
     extraSpecialArgs = { inherit inputs myConfig; };
 
-    users.thibaut = {
+    users.${myConfig.username} = {
       imports = [
         ../../users/thibaut/base
       ];
