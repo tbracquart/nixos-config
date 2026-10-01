@@ -16,4 +16,9 @@
   ]) ++ [
     inputs.freesmlauncher.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
+
+  programs.helix = {
+    enable = true;
+    defaultEditor = true;
+  };
 }

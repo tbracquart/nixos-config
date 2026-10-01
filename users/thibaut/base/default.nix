@@ -5,7 +5,7 @@
   programs.home-manager.enable = true;
 
   home.sessionVariables = {
-    EDITOR = "vim";
+    EDITOR = "hx";
     NIXCFG = config.my.flakePath;
   };
 
