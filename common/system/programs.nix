@@ -6,8 +6,8 @@
     htop.enable = true;
     kdeconnect.enable = true;
 
-    firefox {
-      languagePacks = fr;
+    firefox = {
+      languagePacks = [ "fr" ];
     };
 
   };
