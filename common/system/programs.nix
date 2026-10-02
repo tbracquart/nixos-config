@@ -7,6 +7,7 @@
     kdeconnect.enable = true;
 
     firefox = {
+      enable = true;
       languagePacks = [ "fr" ];
     };
 
