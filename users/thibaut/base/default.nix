@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, pkgs, ... }:
 
 {
   home.stateVersion = "26.05";
@@ -9,6 +9,15 @@
     NIXCFG = config.my.flakePath;
   };
 
+  gtk = {
+    enable = true;
+
+    iconTheme = {
+      name = "Tela";
+      package = pkgs.tela-icon-theme;
+    };
+  };
+  
   imports = [
     ./00-options.nix
     ./01-packages.nix
