@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   home.stateVersion = "26.05";
@@ -17,7 +17,15 @@
       package = pkgs.tela-icon-theme;
     };
   };
-  
+
+  home.activation.setNixosConfigIcon = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    ${pkgs.glib}/bin/gio set \
+      -t string \
+      ${config.my.flakePath} \
+      metadata::custom-icon-name \
+      distributor-logo-nixos
+  '';
+
   imports = [
     ./00-options.nix
     ./01-packages.nix
