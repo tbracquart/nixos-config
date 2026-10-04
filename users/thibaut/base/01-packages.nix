@@ -4,7 +4,7 @@
   home.packages = (with pkgs; [
     alacritty
     btop
-    geany
+    xed-editor
     netflix
     ytmdesktop
     klavaro
