@@ -7,7 +7,7 @@ enable_sounds = true
 [bar.default]
 background_opacity = 0.59999998658895493
 capsule = true
-center = [ "notifications", "notes", "clock", "media", "clipboard" ]
+center = [ "notifications", "notes", "clock", "media", "clipboard", "bar", "widget_2" ]
 end = [ "tray", "group:g1", "screenshot", "session", "status" ]
 start = [ "launcher", "workspaces", "group:g3", "group:g2" ]
 
@@ -212,7 +212,8 @@ enabled = [
     "noctalia/notes",
     "liamwh/emoji-picker",
     "tphilippot/git_companion",
-    "nzlov/daily-wallpaper"
+    "nzlov/daily-wallpaper",
+    "oldirtty/color_picker"
 ]
 
 [shell]
@@ -367,6 +368,9 @@ transition_on_startup = true
     theme_mode = "auto"
     wallpaper_scheme = "vibrant"
 
+[widget.bar]
+type = "icefish/phone-connect:bar"
+
 [widget.battery]
 show_label = false
 
@@ -401,3 +405,7 @@ show_label = false
 
 [widget.widget]
 type = "tphilippot/git_companion:widget"
+
+[widget.widget_2]
+enabled = false
+type = "oldirtty/color_picker:widget"
