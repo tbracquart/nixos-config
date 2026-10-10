@@ -15,7 +15,7 @@ in
       # Keep password entry available while Howdy performs face recognition.
       # Howdy's input workaround sends Enter through /dev/uinput when the
       # face is recognized first.
-      settings.core.workaround = "input";
+      settings.core.workaround = "off";
 
       # Graphical PAM clients such as Noctalia can submit an empty password
       # to start authentication. Upstream Howdy 3.0.0 treats that empty
