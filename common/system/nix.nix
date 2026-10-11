@@ -23,6 +23,9 @@ in
     settings = {
       experimental-features = [ "nix-command" "flakes" ];
 
+      # Déduplique les fichiers identiques à chaque ajout au magasin.
+      auto-optimise-store = true;
+
       # Lance une collecte en cours de construction si l'espace devient faible.
       # Nix s'arrête dès que max-free est atteint ou qu'il n'y a plus de déchets.
       min-free = 5 * 1024 * 1024 * 1024;
@@ -55,12 +58,9 @@ in
     gc = {
       automatic = true;
       dates = "weekly";
-      # Conserve les possibilités de retour arrière pendant environ un mois.
-      options = "--delete-older-than 30d";
+      # Supprime les générations de plus de sept jours.
+      options = "--delete-older-than 7d";
     };
-
-    # Déduplique le magasin périodiquement, sans ralentir chaque installation.
-    optimise.automatic = true;
   };
 
   sops = {
