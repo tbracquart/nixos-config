@@ -23,6 +23,11 @@ in
     settings = {
       experimental-features = [ "nix-command" "flakes" ];
 
+      # Lance une collecte en cours de construction si l'espace devient faible.
+      # Nix s'arrête dès que max-free est atteint ou qu'il n'y a plus de déchets.
+      min-free = 5 * 1024 * 1024 * 1024;
+      max-free = 10 * 1024 * 1024 * 1024;
+
       substituters =
         [
           "https://cache.nixos.org"
@@ -50,9 +55,11 @@ in
     gc = {
       automatic = true;
       dates = "weekly";
-      options = "--delete-older-than 7d";
+      # Conserve les possibilités de retour arrière pendant environ un mois.
+      options = "--delete-older-than 30d";
     };
 
+    # Déduplique le magasin périodiquement, sans ralentir chaque installation.
     optimise.automatic = true;
   };
 
