@@ -11,6 +11,11 @@ in
   nixpkgs.overlays = [
     (final: prev: {
       buildGo125Module = final.buildGoModule;
+
+      # Contourne le renommage PEGTL incorrect de VTK 9.5.2 dans nixpkgs-unstable.
+      vtk_9_5 = prev.vtk_9_5.overrideAttrs (_: {
+        postPatch = "";
+      });
     })
   ];
 
