@@ -12,6 +12,7 @@
     vinegar
     nemo-with-extensions
     gimp
+    freefilesync
   ]) ++ [
     inputs.freesmlauncher.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
