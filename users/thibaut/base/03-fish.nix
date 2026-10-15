@@ -129,6 +129,10 @@
         and echo "🎉 Terminé !"
         or echo "❌ Upgrade interrompu."
       '';
+
+      Thibaut = ''
+        cd /run/media/thibaut/Thibaut
+      '';
     };
   };
 }
