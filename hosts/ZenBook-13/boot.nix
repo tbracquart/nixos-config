@@ -21,7 +21,7 @@
       timeout = 1;
     };
 
-    kernelPackages = pkgs.cachyosKernels.linuxPackages_zen;
+    kernelPackages = pkgs.cachyosKernels.linuxPackages_zen.x86-64-v3;
     kernelParams = [
       "i915.force_probe=!9a49"
       "xe.force_probe=9a49"
