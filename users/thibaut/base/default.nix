@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, inputs, ... }:
 
 {
   home.stateVersion = "26.05";
@@ -27,9 +27,11 @@
   '';
 
   imports = [
+    inputs.nix-openclaw.homeManagerModules.openclaw
     ./00-options.nix
     ./01-packages.nix
     ./02-git.nix
     ./03-fish.nix
+    ./04-openclaw.nix
   ];
 }

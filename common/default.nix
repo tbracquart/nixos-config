@@ -1,6 +1,8 @@
 { inputs, ... }:
 
 {
+  nixpkgs.overlays = [ inputs.nix-openclaw.overlays.default ];
+
   imports = [
     ./system/locale.nix
     ./system/networking.nix
