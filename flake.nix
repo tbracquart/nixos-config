@@ -19,6 +19,8 @@
   };
 
   inputs = {
+    flake-utils.url = "github:numtide/flake-utils";
+
     freesmlauncher.url = "github:FreesmTeam/FreesmLauncher/develop";
 
     home-manager = {
@@ -27,6 +29,16 @@
     };
 
 #    nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
+
+    nix-openclaw = {
+      url = "github:openclaw/nix-openclaw";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
+      inputs.flake-utils.follows = "flake-utils";
+      inputs.nix-openclaw-tools.inputs.nixpkgs.follows = "nixpkgs";
+      inputs.qmd.inputs.nixpkgs.follows = "nixpkgs";
+      inputs.qmd.inputs.flake-utils.follows = "flake-utils";
+    };
 
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
