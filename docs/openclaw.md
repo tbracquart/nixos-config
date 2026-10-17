@@ -2,7 +2,16 @@
 
 OpenClaw est installé de manière déclarative par Home Manager avec
 [nix-openclaw](https://github.com/openclaw/nix-openclaw). Son Gateway tourne
-comme service systemd utilisateur et n'écoute qu'en local.
+comme service systemd utilisateur et n'écoute qu'en local. Le plugin runtime
+`codex` est installé et activé par Nix pour permettre l'utilisation du moteur
+Codex avec l'authentification OAuth OpenAI.
+
+Le paquet Codex de la version verrouillée de `nix-openclaw` annonce encore
+`./index.ts` dans son manifeste alors que le paquet publié ne fournit que
+l'entrée compilée `./dist/index.js`. L'overlay dans `common/default.nix`
+corrige ce chemin dans le paquet construit, afin qu'OpenClaw ne le rejette pas
+avec `missing-extension-entry`. Retirer cet overlay lorsque le correctif
+amont sera intégré.
 
 ## Préparer les secrets
 
@@ -35,12 +44,15 @@ Après fusion de la PR :
    `openclaw models auth login --provider openai`.
 3. Vérifier l'accès avec `openclaw models status` et l'état du service avec
    `systemctl --user status openclaw-gateway`.
-4. Ouvrir l'interface locale avec `openclaw dashboard`.
+4. Ouvrir l'interface locale avec `openclaw dashboard` et envoyer un message
+   pour confirmer qu'une vraie réponse est générée.
 
-Le modèle configuré est `openai/gpt-6-astra`. L'authentification OAuth utilise
-le quota Codex éventuellement disponible avec le compte ChatGPT : elle ne crée
-pas de facturation API séparée. L'accès au modèle et le quota dépendent toutefois
-de l'éligibilité du compte. En cas d'indisponibilité, consulter
+Le modèle configuré est `openai/gpt-6-astra`. Le runtime Codex est installé
+déclarativement par `programs.openclaw.runtimePlugins`, qui active également
+son entrée de configuration. L'authentification OAuth utilise le quota Codex
+éventuellement disponible avec le compte ChatGPT : elle ne crée pas de
+facturation API séparée. L'accès au modèle et le quota dépendent toutefois de
+l'éligibilité du compte. En cas d'indisponibilité, consulter
 `openclaw models list --provider openai` avant de changer le modèle dans
 `users/thibaut/base/04-openclaw.nix`.
 
