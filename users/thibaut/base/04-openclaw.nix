@@ -26,8 +26,6 @@ in
         };
       };
 
-      plugins.entries.codex.enabled = true;
-
       agents.defaults.model.primary = "openai/gpt-6-astra";
 
       channels.telegram = {
