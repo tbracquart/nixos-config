@@ -2,14 +2,21 @@
   description = "NixOS + Home Manager Flake pour ZenBook 13 et V145-15AST";
 
   nixConfig = {
-    extra-substituters =
-      (import ./common/system/caches.nix {
-        myConfig = import ./config.nix;
-      }).substituters;
-    extra-trusted-public-keys =
-      (import ./common/system/caches.nix {
-        myConfig = import ./config.nix;
-      }).trusted-public-keys;
+    # Nix exige des valeurs littérales dans nixConfig : impossible d'importer
+    # caches.nix ou config.nix ici. Garder cette liste synchronisée avec
+    # common/system/caches.nix.
+    extra-substituters = [
+      "https://nix-community.cachix.org"
+      # "https://attic.xuyh0120.win/lantian"
+      "https://freesmlauncher.cachix.org"
+      "https://noctalia.cachix.org"
+    ];
+    extra-trusted-public-keys = [
+      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+      # "lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc="
+      "freesmlauncher.cachix.org-1:Jcp5Q9wiLL+EDv8Mh7c6L9xGk+lXr7/otpKxMOuBuDs="
+      "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="
+    ];
   };
 
   inputs = {
@@ -78,7 +85,6 @@
 
       nixosConfigurations.V145-15AST = nixpkgs.lib.nixosSystem {
         specialArgs = { inherit inputs myConfig; };
-        modules = [ ./hosts/V145-15AST/configuration.nix ];
       };
     };
 }
