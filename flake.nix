@@ -1,16 +1,16 @@
 {
   description = "NixOS + Home Manager Flake pour ZenBook 13 et V145-15AST";
 
-  nixConfig =
-    let
-      caches = import ./common/system/caches.nix {
+  nixConfig = {
+    extra-substituters =
+      (import ./common/system/caches.nix {
         myConfig = import ./config.nix;
-      };
-    in
-    {
-      extra-substituters = caches.substituters;
-      extra-trusted-public-keys = caches.trusted-public-keys;
-    };
+      }).substituters;
+    extra-trusted-public-keys =
+      (import ./common/system/caches.nix {
+        myConfig = import ./config.nix;
+      }).trusted-public-keys;
+  };
 
   inputs = {
     flake-utils.url = "github:numtide/flake-utils";
