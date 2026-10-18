@@ -36,7 +36,4 @@ in
   personalTrustedPublicKeys = toTrustedPublicKeys personalCaches;
   publicSubstituters = toSubstituters publicCaches;
   publicTrustedPublicKeys = toTrustedPublicKeys publicCaches;
-
-  substituters = toSubstituters (personalCaches ++ publicCaches);
-  trusted-public-keys = toTrustedPublicKeys (personalCaches ++ publicCaches);
 }
