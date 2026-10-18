@@ -32,14 +32,14 @@ in
       max-free = 10 * 1024 * 1024 * 1024;
 
       substituters =
-        [
+        lib.optional myConfig.cachix.enable "https://${myConfig.cachix.name}.cachix.org"
+        ++ [
           "https://cache.nixos.org"
           "https://nix-community.cachix.org"
 #          "https://attic.xuyh0120.win/lantian"
           "https://freesmlauncher.cachix.org"
           "https://noctalia.cachix.org"
-        ]
-        ++ lib.optional myConfig.cachix.enable "https://${myConfig.cachix.name}.cachix.org";
+        ];
 
       trusted-public-keys =
         [
