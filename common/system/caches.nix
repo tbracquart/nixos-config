@@ -28,9 +28,15 @@ let
       }
     ] else [];
 
-  caches = personalCaches ++ publicCaches;
+  toSubstituters = caches: map (cache: cache.substituter) caches;
+  toTrustedPublicKeys = caches: map (cache: cache.publicKey) caches;
 in
 {
-  substituters = map (cache: cache.substituter) caches;
-  trusted-public-keys = map (cache: cache.publicKey) caches;
+  personalSubstituters = toSubstituters personalCaches;
+  personalTrustedPublicKeys = toTrustedPublicKeys personalCaches;
+  publicSubstituters = toSubstituters publicCaches;
+  publicTrustedPublicKeys = toTrustedPublicKeys publicCaches;
+
+  substituters = toSubstituters (personalCaches ++ publicCaches);
+  trusted-public-keys = toTrustedPublicKeys (personalCaches ++ publicCaches);
 }
