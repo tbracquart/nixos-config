@@ -85,6 +85,7 @@
 
       nixosConfigurations.V145-15AST = nixpkgs.lib.nixosSystem {
         specialArgs = { inherit inputs myConfig; };
+        modules = [ ./hosts/V145-15AST/configuration.nix ];
       };
     };
 }
