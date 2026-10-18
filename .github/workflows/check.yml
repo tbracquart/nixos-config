@@ -118,7 +118,7 @@ jobs:
     permissions:
       contents: read
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 20
     steps:
       - name: Vérification non nécessaire
         if: needs.changes.outputs.flake != 'true' && needs.changes.outputs['ci-build'] != 'true'
@@ -132,9 +132,9 @@ jobs:
       - uses: ./.github/actions/setup-nix-cachix # zizmor: ignore[self-repository] actionlint 1.7.12 ne reconnaît pas encore $/
         if: needs.changes.outputs.flake == 'true' || needs.changes.outputs['ci-build'] == 'true'
 
-      - name: Vérification de la flake (évaluation seule, pas de build)
+      - name: Vérification de la flake
         if: needs.changes.outputs.flake == 'true' || needs.changes.outputs['ci-build'] == 'true'
-        run: nix flake check --no-build --no-update-lock-file --keep-going --accept-flake-config
+        run: nix flake check --no-update-lock-file --keep-going --accept-flake-config
 
   # For a PR changing only flake.lock, use the analyzer to avoid rebuilding
   # hosts whose configuration does not reference the changed inputs.
