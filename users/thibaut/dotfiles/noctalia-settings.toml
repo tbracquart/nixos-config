@@ -5,12 +5,12 @@ enable_overdrive = true
 enable_sounds = true
 
 [bar.default]
-background_opacity = 0.68
+background_opacity = 0.62
 border = "outline"
 border_width = 0.6
 capsule = true
 capsule_fill = "surface_variant"
-capsule_opacity = 0.78
+capsule_opacity = 0.72
 capsule_radius = 12.0
 capsule_thickness = 0.72
 center = [ "notifications", "clipboard", "clock", "media", "notes" ]
@@ -19,9 +19,9 @@ contact_shadow = false
 end = [ "tray", "group:g1", "screenshot", "session", "status" ]
 font_weight = 500
 margin_edge = 8
-margin_ends = 36
-padding = 12
-radius = 14
+margin_ends = 28
+padding = 10
+radius = 16
 reserve_space = true
 shadow = true
 start = [ "launcher", "workspaces", "group:g3", "group:g2" ]
@@ -79,7 +79,6 @@ schema_version = 2
 widget_order = [
     "desktop-widget-0000000000000001",
     "desktop-widget-0000000000000002",
-    "desktop-widget-0000000000000003",
     "desktop-widget-0000000000000004",
     "desktop-widget-0000000000000005"
 ]
@@ -101,10 +100,10 @@ widget_order = [
     type = "nzlov/daily-wallpaper:desktop"
 
     [desktop_widgets.widget.desktop-widget-0000000000000002]
-    box_height = 128.0
-    box_width = 256.0
-    cx = 900.0
-    cy = 172.0
+    box_height = 144.0
+    box_width = 320.0
+    cx = 960.0
+    cy = 174.0
     output = "eDP-1"
     placement_height = 1080.0
     placement_width = 1920.0
@@ -112,7 +111,7 @@ widget_order = [
     type = "clock"
 
         [desktop_widgets.widget.desktop-widget-0000000000000002.settings]
-        background = true
+        background = false
         background_color = "surface"
         background_opacity = 0.80000000000000004
         background_padding = 10
@@ -124,28 +123,14 @@ widget_order = [
         font_family = ""
         format = "{:%H:%M}"
         shadow = true
-        show_seconds = true
+        show_seconds = false
         timezone = "Europe/Paris"
-
-    [desktop_widgets.widget.desktop-widget-0000000000000003]
-    box_height = 128.0
-    box_width = 128.0
-    cx = 1116.0
-    cy = 172.0
-    output = "eDP-1"
-    placement_height = 1080.0
-    placement_width = 1920.0
-    rotation = 0.0
-    type = "clock"
-
-        [desktop_widgets.widget.desktop-widget-0000000000000003.settings]
-        clock_style = "analog"
 
     [desktop_widgets.widget.desktop-widget-0000000000000004]
     box_height = 0.0
     box_width = 0.0
-    cx = 964.0
-    cy = 300.0
+    cx = 960.0
+    cy = 320.0
     output = "eDP-1"
     placement_height = 1080.0
     placement_width = 1920.0
@@ -165,14 +150,14 @@ widget_order = [
 
 [dock]
 active_monitor_only = true
-background_opacity = 0.68
+background_opacity = 0.62
 border = "outline"
 border_width = 0.6
 enabled = true
-icon_size = 42
+icon_size = 40
 item_spacing = 6
 magnification = true
-magnification_scale = 1.18
+magnification_scale = 1.12
 main_axis_padding = 12
 margin_edge = 8
 pinned = [ "firefox", "nemo", "Alacritty", "xed" ]
@@ -217,8 +202,7 @@ schema_version = 2
 widget_order = [
     "lockscreen-login-box@winit",
     "lockscreen-login-box@eDP-1",
-    "lockscreen-widget-0000000000000001",
-    "lockscreen-widget-0000000000000002"
+    "lockscreen-widget-0000000000000001"
 ]
 
     [lockscreen_widgets.grid]
@@ -301,29 +285,13 @@ widget_order = [
         format = "{:%H:%M}"
         timezone = "Europe/Paris"
 
-    [lockscreen_widgets.widget.lockscreen-widget-0000000000000002]
-    box_height = 256.0
-    box_width = 256.0
-    cx = 1344.0
-    cy = 412.0
-    output = "eDP-1"
-    placement_height = 1080.0
-    placement_width = 1920.0
-    rotation = 0.0
-    type = "clock"
-
-        [lockscreen_widgets.widget.lockscreen-widget-0000000000000002.settings]
-        background = false
-        clock_style = "analog"
-        color = "surface"
-
 [notification]
-background_opacity = 0.72
+background_opacity = 0.68
 keep_dismissed_in_history = false
 position = "top_center"
 
 [osd]
-background_opacity = 0.72
+background_opacity = 0.68
 
 [plugin_settings."avivbintangaringga/nix-monitor"]
 clean_command = "sudo nix profile wipe-history --profile /nix/var/nix/profiles/system --older-than 14d && sudo nix store gc"
