@@ -31,30 +31,40 @@ end)
 -----------------------
 hl.config({
     general = {
-        gaps_in  = 5,
-        gaps_out = 10,
-        border_size = 1,
+        gaps_in  = 6,
+        gaps_out = 12,
+        border_size = 2,
         resize_on_border = false,
         allow_tearing = false,
         layout = "dwindle",
+        col = {
+            active_border = {
+                colors = { "rgba(36e0d0ff)", "rgba(63b8ffff)" },
+                angle = 45,
+            },
+            inactive_border = "rgba(303d4dff)",
+        },
     },
 
     decoration = {
-        rounding       = 20,
+        rounding = 16,
         rounding_power = 2,
-        active_opacity   = 0.8,
-        inactive_opacity = 0.7,
+        active_opacity = 1.0,
+        inactive_opacity = 0.90,
         shadow = {
-            enabled      = true,
-            range        = 4,
+            enabled = true,
+            range = 10,
             render_power = 3,
-            color        = 0xee1a1a1a,
+            color = 0x5536e0d0,
         },
         blur = {
-            enabled   = true,
-            size      = 6,
-            passes    = 3,
-            vibrancy  = 0.1696,
+            enabled = true,
+            size = 6,
+            passes = 3,
+            vibrancy = 0.20,
+            new_optimizations = true,
+            xray = true,
+            variant = "acrylic",
         },
     },
 
