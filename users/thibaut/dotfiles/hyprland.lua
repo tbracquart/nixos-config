@@ -31,18 +31,18 @@ end)
 -----------------------
 hl.config({
     general = {
-        gaps_in  = 6,
-        gaps_out = 12,
+        gaps_in  = 8,
+        gaps_out = 14,
         border_size = 2,
         resize_on_border = false,
         allow_tearing = false,
         layout = "dwindle",
         col = {
             active_border = {
-                colors = { "rgba(36e0d0ff)", "rgba(63b8ffff)" },
+                colors = { "rgba(55e6d2ff)", "rgba(6aa8ffff)" },
                 angle = 45,
             },
-            inactive_border = "rgba(303d4dff)",
+            inactive_border = "rgba(263746ff)",
         },
     },
 
@@ -53,15 +53,17 @@ hl.config({
         inactive_opacity = 1.0,
         shadow = {
             enabled = true,
-            range = 10,
+            range = 14,
             render_power = 3,
-            color = 0x5536e0d0,
+            color = 0x4436e0d0,
         },
         blur = {
             enabled = true,
-            size = 5,
-            passes = 2,
-            vibrancy = 0.20,
+            size = 7,
+            passes = 3,
+            brightness = 0.92,
+            contrast = 1.04,
+            vibrancy = 0.18,
             new_optimizations = true,
             xray = true,
         },
@@ -104,7 +106,7 @@ hl.config({
     scrolling = { fullscreen_on_one_column = true },
     misc = {
         force_default_wallpaper = -1,
-        disable_hyprland_logo   = false,
+        disable_hyprland_logo   = true,
     },
 })
 
