@@ -126,7 +126,7 @@ local mainMod = "SUPER"
 hl.bind(mainMod .. " + Q", hl.dsp.window.close())
 hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"))
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
-hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
+hl.bind(mainMod .. " + V", hl.dsp.exec_cmd("hyprctl dispatch togglefloating; sleep 0.1; if hyprctl activewindow -j | grep -q '\"floating\": true'; then hyprctl dispatch resizeactive exact 1536 864; hyprctl dispatch centerwindow; fi"))
 hl.bind(mainMod .. " + R", hl.dsp.exec_cmd(menu))
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
 hl.bind(mainMod .. " + J", hl.dsp.layout("togglesplit"))
