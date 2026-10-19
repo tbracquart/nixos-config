@@ -127,7 +127,7 @@ hl.bind(mainMod .. " + Q", hl.dsp.window.close())
 hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"))
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + V", function()
-    -- Conserver le raccourci natif et redimensionner uniquement en passant en flottant.
+    -- La fenêtre devient flottante et sa taille dépend de la proximité des bords.
     hl.dispatch(hl.dsp.window.float({ action = "toggle" }))
 
     local window = hl.get_active_window()
@@ -141,8 +141,19 @@ hl.bind(mainMod .. " + V", function()
         return
     end
 
-    local width = math.floor(monitor.width * 0.6)
-    local height = math.floor(monitor.height * 0.6)
+    -- Distance normalisée au bord le plus proche : 0 au bord, 0.5 au centre.
+    local x = math.max(0, math.min(1, cursor.x / monitor.width))
+    local y = math.max(0, math.min(1, cursor.y / monitor.height))
+    local edge_x = math.min(x, 1 - x) * 2
+    local edge_y = math.min(y, 1 - y) * 2
+    local scale = 0.25 + 0.35 * math.min(edge_x, edge_y)
+
+    local width = math.floor(monitor.width * scale)
+    local height = math.floor(monitor.height * scale)
+
+    -- Centrer autour du pointeur sans dépasser les limites de l'écran.
+    local pos_x = math.max(0, math.min(monitor.width - width, cursor.x - math.floor(width / 2)))
+    local pos_y = math.max(0, math.min(monitor.height - height, cursor.y - math.floor(height / 2)))
 
     hl.dispatch(hl.dsp.window.resize({
         x = width,
@@ -150,8 +161,8 @@ hl.bind(mainMod .. " + V", function()
         relative = false,
     }))
     hl.dispatch(hl.dsp.window.move({
-        x = math.max(0, cursor.x - math.floor(width / 2)),
-        y = math.max(0, cursor.y - math.floor(height / 2)),
+        x = pos_x,
+        y = pos_y,
         relative = false,
     }))
 end)
