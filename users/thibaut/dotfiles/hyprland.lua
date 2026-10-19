@@ -185,15 +185,15 @@ hl.bind(mainMod .. " + SHIFT + right", hl.dsp.window.move({ direction = "right" 
 hl.bind(mainMod .. " + SHIFT + up",    hl.dsp.window.move({ direction = "up" }))
 hl.bind(mainMod .. " + SHIFT + down",  hl.dsp.window.move({ direction = "down" }))
 
--- Déplacement libre des fenêtres par pas de 60 pixels.
-local windowMoveStep = 60
+-- Déplacement libre des fenêtres par pas de 100 pixels.
+local windowMoveStep = 100
 hl.bind(mainMod .. " + CTRL + left",  hl.dsp.window.move({ x = -windowMoveStep, y = 0, relative = true }), { repeating = true })
 hl.bind(mainMod .. " + CTRL + right", hl.dsp.window.move({ x = windowMoveStep, y = 0, relative = true }),  { repeating = true })
 hl.bind(mainMod .. " + CTRL + up",    hl.dsp.window.move({ x = 0, y = -windowMoveStep, relative = true }), { repeating = true })
 hl.bind(mainMod .. " + CTRL + down",  hl.dsp.window.move({ x = 0, y = windowMoveStep, relative = true }),  { repeating = true })
 
 -- Redimensionnement au clavier, également utilisable sur les fenêtres en mosaïque.
-local windowResizeStep = 60
+local windowResizeStep = 100
 hl.bind(mainMod .. " + ALT + left",  hl.dsp.window.resize({ x = -windowResizeStep, y = 0, relative = true }), { repeating = true })
 hl.bind(mainMod .. " + ALT + right", hl.dsp.window.resize({ x = windowResizeStep, y = 0, relative = true }),  { repeating = true })
 hl.bind(mainMod .. " + ALT + up",    hl.dsp.window.resize({ x = 0, y = -windowResizeStep, relative = true }), { repeating = true })
