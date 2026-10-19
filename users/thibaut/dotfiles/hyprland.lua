@@ -5,10 +5,20 @@
 ------------------
 ---- MONITORS ----
 ------------------
+-- Écran intégré du ZenBook, placé sous l'écran externe.
 hl.monitor({
     output   = "eDP-1",
     mode     = "1920x1080@60.00300",
-    position = "auto",
+    position = "0x0",
+    scale    = "1",
+})
+
+-- Écran HDMI placé au-dessus du portable.
+-- Le décalage suppose que l'écran externe utilise une hauteur de 1080 pixels.
+hl.monitor({
+    output   = "HDMI-A-1",
+    mode     = "preferred",
+    position = "0x-1080",
     scale    = "1",
 })
 
