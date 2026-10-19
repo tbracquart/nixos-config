@@ -31,39 +31,39 @@ end)
 -----------------------
 hl.config({
     general = {
-        gaps_in = 6,
-        gaps_out = 12,
+        gaps_in = 8,
+        gaps_out = 14,
         border_size = 2,
         resize_on_border = false,
         allow_tearing = false,
         layout = "dwindle",
         col = {
             active_border = {
-                colors = { "rgba(89b4faff)", "rgba(cba6f7ff)" },
+                colors = { "rgba(5de4c7ff)", "rgba(60a5faff)" },
                 angle = 45,
             },
-            inactive_border = "rgba(45475aff)",
+            inactive_border = "rgba(64748b99)",
         },
     },
 
     decoration = {
-        rounding = 12,
+        rounding = 16,
         rounding_power = 2,
         active_opacity = 1.0,
         inactive_opacity = 1.0,
         shadow = {
             enabled = true,
-            range = 8,
+            range = 12,
             render_power = 3,
-            color = 0x3311111b,
+            color = 0x4420c997,
         },
         blur = {
             enabled = true,
-            size = 5,
-            passes = 2,
+            size = 7,
+            passes = 3,
             brightness = 1.0,
-            contrast = 1.02,
-            vibrancy = 0.10,
+            contrast = 1.08,
+            vibrancy = 0.16,
             new_optimizations = true,
         },
     },
