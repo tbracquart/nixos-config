@@ -142,9 +142,13 @@ hl.bind(mainMod .. " + SHIFT + V", function()
         return
     end
 
+    -- Les coordonnées du curseur sont globales ; les convertir en coordonnées locales au moniteur.
+    local cursor_x = cursor.x - monitor.x
+    local cursor_y = cursor.y - monitor.y
+
     -- Distance normalisée au bord le plus proche : 0 au bord, 0.5 au centre.
-    local x = math.max(0, math.min(1, cursor.x / monitor.width))
-    local y = math.max(0, math.min(1, cursor.y / monitor.height))
+    local x = math.max(0, math.min(1, cursor_x / monitor.width))
+    local y = math.max(0, math.min(1, cursor_y / monitor.height))
     local edge_x = math.min(x, 1 - x) * 2
     local edge_y = math.min(y, 1 - y) * 2
     local scale = 0.20 + 0.50 * math.min(edge_x, edge_y)
@@ -152,9 +156,9 @@ hl.bind(mainMod .. " + SHIFT + V", function()
     local width = math.floor(monitor.width * scale)
     local height = math.floor(monitor.height * scale)
 
-    -- Centrer autour du pointeur sans dépasser les limites de l'écran.
-    local pos_x = math.max(0, math.min(monitor.width - width, cursor.x - math.floor(width / 2)))
-    local pos_y = math.max(0, math.min(monitor.height - height, cursor.y - math.floor(height / 2)))
+    -- Centrer autour du pointeur, en conservant les coordonnées globales du moniteur.
+    local pos_x = monitor.x + math.max(0, math.min(monitor.width - width, cursor_x - math.floor(width / 2)))
+    local pos_y = monitor.y + math.max(0, math.min(monitor.height - height, cursor_y - math.floor(height / 2)))
 
     hl.dispatch(hl.dsp.window.resize({
         x = width,
