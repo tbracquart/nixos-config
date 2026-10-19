@@ -355,11 +355,9 @@ settings_window_translucent = true
 
 [theme]
 builtin = "Noctalia"
-community_palette = "Oxocarbon"
-custom_palette = "wp12329556-nixos-wallpapers-vib"
-mode = "auto"
-source = "wallpaper"
-wallpaper_scheme = "faithful"
+custom_palette = "PraxisGlass"
+mode = "dark"
+source = "custom"
 
     [theme.templates]
     builtin_ids = [
