@@ -5,10 +5,6 @@
     config.lib.file.mkOutOfStoreSymlink
       "${config.my.flakePath}/users/thibaut/dotfiles/noctalia-settings.toml";
 
-  home.file.".config/noctalia/palettes/PraxisGlass.json".source =
-    config.lib.file.mkOutOfStoreSymlink
-      "${config.my.flakePath}/users/thibaut/dotfiles/noctalia-palette.json";
-
   home.file.".config/hypr/init.lua".source =
     config.lib.file.mkOutOfStoreSymlink
       "${config.my.flakePath}/users/thibaut/dotfiles/hyprland.lua";
