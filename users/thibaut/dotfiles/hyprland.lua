@@ -146,7 +146,7 @@ hl.bind(mainMod .. " + V", function()
     local y = math.max(0, math.min(1, cursor.y / monitor.height))
     local edge_x = math.min(x, 1 - x) * 2
     local edge_y = math.min(y, 1 - y) * 2
-    local scale = 0.25 + 0.35 * math.min(edge_x, edge_y)
+    local scale = 0.20 + 0.50 * math.min(edge_x, edge_y)
 
     local width = math.floor(monitor.width * scale)
     local height = math.floor(monitor.height * scale)
