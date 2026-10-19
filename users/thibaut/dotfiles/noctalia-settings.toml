@@ -5,7 +5,7 @@ enable_overdrive = true
 enable_sounds = true
 
 [bar.default]
-background_opacity = 0.74
+background_opacity = 0.68
 border = "outline"
 border_width = 0.6
 capsule = true
@@ -165,7 +165,7 @@ widget_order = [
 
 [dock]
 active_monitor_only = true
-background_opacity = 0.72
+background_opacity = 0.68
 border = "outline"
 border_width = 0.6
 enabled = true
@@ -357,7 +357,7 @@ settings_window_translucent = true
 
     [shell.shadow]
     direction = "down"
-    alpha = 0.28
+    alpha = 0.34
 
     [shell.launcher]
     pinned = [ "firefox", "nemo", "Alacritty", "org.x.editor", "btop" ]
@@ -369,8 +369,14 @@ settings_window_translucent = true
         global = true
 
     [shell.panel]
+    borders = true
+    border_color = "outline"
+    border_width = 0.8
+    shadow = true
+    list_item_background = false
     clipboard_placement = "attached"
-    launcher_placement = "attached"
+    launcher_placement = "floating"
+    launcher_position = "center"
     open_near_click_clipboard = true
     open_near_click_control_center = true
     open_near_click_launcher = true
