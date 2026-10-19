@@ -135,17 +135,25 @@ hl.bind(mainMod .. " + V", function()
         return
     end
 
-    local monitor = hl.get_active_monitor()
-    if not monitor then
+    local monitor = hl.get_monitor_at_cursor()
+    local cursor = hl.get_cursor_pos()
+    if not monitor or not cursor then
         return
     end
 
+    local width = math.floor(monitor.width * 0.6)
+    local height = math.floor(monitor.height * 0.6)
+
     hl.dispatch(hl.dsp.window.resize({
-        x = math.floor(monitor.width * 0.8),
-        y = math.floor(monitor.height * 0.8),
+        x = width,
+        y = height,
         relative = false,
     }))
-    hl.dispatch(hl.dsp.window.center())
+    hl.dispatch(hl.dsp.window.move({
+        x = math.max(0, cursor.x - math.floor(width / 2)),
+        y = math.max(0, cursor.y - math.floor(height / 2)),
+        relative = false,
+    }))
 end)
 hl.bind(mainMod .. " + R", hl.dsp.exec_cmd(menu))
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
