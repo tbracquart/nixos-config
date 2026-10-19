@@ -64,7 +64,6 @@ hl.config({
             vibrancy = 0.20,
             new_optimizations = true,
             xray = true,
-            variant = "acrylic",
         },
     },
 
