@@ -5,11 +5,27 @@ enable_overdrive = true
 enable_sounds = true
 
 [bar.default]
-background_opacity = 0.59999998658895493
+background_opacity = 0.56
 capsule = true
-center = [ "notifications", "clipboard", "clock", "widget_2", "media", "notes" ]
+capsule_fill = "surface_variant"
+capsule_opacity = 0.78
+capsule_radius = 12.0
+capsule_thickness = 0.72
+center = [ "notifications", "clock", "media" ]
+compositor_blur = true
+concave_edge_corners = false
+contact_shadow = true
 end = [ "tray", "group:g1", "screenshot", "session", "status" ]
-start = [ "launcher", "workspaces", "group:g3", "group:g2" ]
+font_weight = 500
+margin_edge = 8
+margin_ends = 14
+padding = 14
+radius = 14
+reserve_space = true
+shadow = true
+start = [ "launcher", "workspaces", "group:g3" ]
+thickness = 42
+widget_spacing = 8
 
     [bar.default.dead_zone.actions]
     middle = "settings-toggle"
@@ -62,7 +78,6 @@ schema_version = 2
 widget_order = [
     "desktop-widget-0000000000000001",
     "desktop-widget-0000000000000002",
-    "desktop-widget-0000000000000003",
     "desktop-widget-0000000000000004",
     "desktop-widget-0000000000000005"
 ]
@@ -86,8 +101,8 @@ widget_order = [
     [desktop_widgets.widget.desktop-widget-0000000000000002]
     box_height = 128.0
     box_width = 256.0
-    cx = 900.0
-    cy = 172.0
+    cx = 960.0
+    cy = 204.0
     output = "eDP-1"
     placement_height = 1080.0
     placement_width = 1920.0
@@ -95,40 +110,21 @@ widget_order = [
     type = "clock"
 
         [desktop_widgets.widget.desktop-widget-0000000000000002.settings]
-        background = true
-        background_color = "surface"
-        background_opacity = 0.80000000000000004
-        background_padding = 10
-        background_radius = 12
+        background = false
         center_text = true
-        circle = true
         clock_style = "digital"
         color = "on_surface"
         font_family = ""
         format = "{:%H:%M}"
         shadow = true
-        show_seconds = true
+        show_seconds = false
         timezone = "Europe/Paris"
-
-    [desktop_widgets.widget.desktop-widget-0000000000000003]
-    box_height = 128.0
-    box_width = 128.0
-    cx = 1116.0
-    cy = 172.0
-    output = "eDP-1"
-    placement_height = 1080.0
-    placement_width = 1920.0
-    rotation = 0.0
-    type = "clock"
-
-        [desktop_widgets.widget.desktop-widget-0000000000000003.settings]
-        clock_style = "analog"
 
     [desktop_widgets.widget.desktop-widget-0000000000000004]
     box_height = 0.0
     box_width = 0.0
     cx = 964.0
-    cy = 300.0
+    cy = 340.0
     output = "eDP-1"
     placement_height = 1080.0
     placement_width = 1920.0
@@ -148,9 +144,19 @@ widget_order = [
 
 [dock]
 active_monitor_only = true
-background_opacity = 0.59999998658895493
+background_opacity = 0.68
+border = "outline"
+border_width = 0.6
+concave_edge_corners = false
 enabled = true
-pinned = [ "firefox", "nemo", "Alacritty", "xed" ]
+icon_size = 44
+item_spacing = 8
+magnification = true
+magnification_scale = 1.3
+main_axis_padding = 14
+margin_edge = 8
+pinned = [ "firefox", "nemo", "Alacritty", "org.x.editor" ]
+radius = 18
 reserve_space = false
 show_dots = true
 smart_auto_hide = true
@@ -191,8 +197,7 @@ schema_version = 2
 widget_order = [
     "lockscreen-login-box@winit",
     "lockscreen-login-box@eDP-1",
-    "lockscreen-widget-0000000000000001",
-    "lockscreen-widget-0000000000000002"
+    "lockscreen-widget-0000000000000001"
 ]
 
     [lockscreen_widgets.grid]
@@ -259,8 +264,8 @@ widget_order = [
     [lockscreen_widgets.widget.lockscreen-widget-0000000000000001]
     box_height = 256.0
     box_width = 736.0
-    cx = 816.0
-    cy = 412.0
+    cx = 960.0
+    cy = 390.0
     output = "eDP-1"
     placement_height = 1080.0
     placement_width = 1920.0
@@ -271,7 +276,7 @@ widget_order = [
         background = false
         center_text = true
         clock_style = "digital"
-        color = "surface"
+        color = "on_surface"
         format = "{:%H:%M}"
         timezone = "Europe/Paris"
 
@@ -292,12 +297,12 @@ widget_order = [
         color = "surface"
 
 [notification]
-background_opacity = 0.59999998658895493
+background_opacity = 0.68
 keep_dismissed_in_history = false
 position = "top_center"
 
 [osd]
-background_opacity = 0.59999998658895493
+background_opacity = 0.68
 
 [plugin_settings."avivbintangaringga/nix-monitor"]
 clean_command = "sudo nix profile wipe-history --profile /nix/var/nix/profiles/system --older-than 14d && sudo nix store gc"
@@ -321,13 +326,21 @@ enabled = [
 ]
 
 [shell]
-corner_radius_scale = 1.5000000223517418
+corner_radius_scale = 1.35
 launch_apps_as_systemd_services = true
 panel_anchor_bar = "default"
 password_style = "random"
 polkit_agent = true
 screen_time_enabled = true
 settings_window_translucent = true
+
+    [shell.animation]
+    enabled = true
+    speed = 1.08
+
+    [shell.shadow]
+    direction = "down"
+    alpha = 0.42
 
     [shell.launcher]
     pinned = [ "firefox", "nemo", "Alacritty", "org.x.editor", "btop" ]
@@ -339,6 +352,9 @@ settings_window_translucent = true
         global = true
 
     [shell.panel]
+    borders = true
+    border_color = "outline"
+    border_width = 0.8
     clipboard_placement = "attached"
     launcher_placement = "attached"
     open_near_click_clipboard = true
