@@ -270,21 +270,6 @@ widget_order = [
         format = "{:%H:%M}"
         timezone = "Europe/Paris"
 
-    [lockscreen_widgets.widget.lockscreen-widget-0000000000000002]
-    box_height = 256.0
-    box_width = 256.0
-    cx = 1344.0
-    cy = 412.0
-    output = "eDP-1"
-    placement_height = 1080.0
-    placement_width = 1920.0
-    rotation = 0.0
-    type = "clock"
-
-        [lockscreen_widgets.widget.lockscreen-widget-0000000000000002.settings]
-        background = false
-        clock_style = "analog"
-        color = "surface"
 
 [notification]
 background_opacity = 0.68
