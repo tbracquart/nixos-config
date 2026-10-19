@@ -127,7 +127,7 @@ local mainMod = "SUPER"
 hl.bind(mainMod .. " + Q", hl.dsp.window.close())
 hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"))
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
-hl.bind(mainMod .. " + V", function()
+hl.bind(mainMod .. " + SHIFT + V", function()
     -- La fenêtre devient flottante et sa taille dépend de la proximité des bords.
     hl.dispatch(hl.dsp.window.float({ action = "toggle" }))
 
@@ -218,6 +218,7 @@ hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
 
 -- IPC Noctalia
 local ipc = "noctalia msg "
+hl.bind(mainMod .. " + V",     hl.dsp.exec_cmd(ipc .. "panel-toggle clipboard"))
 hl.bind(mainMod .. " + Space", hl.dsp.exec_cmd(ipc .. "panel-toggle launcher"))
 hl.bind(mainMod .. " + S",     hl.dsp.exec_cmd(ipc .. "panel-toggle control-center"))
 hl.bind(mainMod .. " + colon", hl.dsp.exec_cmd(ipc .. "settings-toggle"))
