@@ -31,41 +31,40 @@ end)
 -----------------------
 hl.config({
     general = {
-        gaps_in  = 8,
-        gaps_out = 14,
+        gaps_in = 6,
+        gaps_out = 12,
         border_size = 2,
         resize_on_border = false,
         allow_tearing = false,
         layout = "dwindle",
         col = {
             active_border = {
-                colors = { "rgba(55e6d2ff)", "rgba(6aa8ffff)" },
+                colors = { "rgba(89b4faff)", "rgba(cba6f7ff)" },
                 angle = 45,
             },
-            inactive_border = "rgba(263746ff)",
+            inactive_border = "rgba(45475aff)",
         },
     },
 
     decoration = {
-        rounding = 14,
+        rounding = 12,
         rounding_power = 2,
         active_opacity = 1.0,
         inactive_opacity = 1.0,
         shadow = {
             enabled = true,
-            range = 14,
+            range = 8,
             render_power = 3,
-            color = 0x4436e0d0,
+            color = 0x3311111b,
         },
         blur = {
             enabled = true,
-            size = 7,
-            passes = 3,
-            brightness = 0.92,
-            contrast = 1.04,
-            vibrancy = 0.18,
+            size = 5,
+            passes = 2,
+            brightness = 1.0,
+            contrast = 1.02,
+            vibrancy = 0.10,
             new_optimizations = true,
-            xray = true,
         },
     },
 
@@ -73,7 +72,6 @@ hl.config({
         enabled = true,
     },
 })
-
 -- Animations Caelestia
 hl.curve("specialWorkSwitch", { type = "bezier", points = { { 0.05, 0.7 }, { 0.1, 1 } } })
 hl.curve("emphasizedAccel",   { type = "bezier", points = { { 0.3, 0 },    { 0.8, 0.15 } } })
