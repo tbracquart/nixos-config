@@ -13,10 +13,10 @@ hl.monitor({
     scale    = "1",
 })
 
--- Écran HDMI placé au-dessus du portable.
--- Le décalage suppose que l'écran externe utilise une hauteur de 1080 pixels.
+-- Règle par défaut pour les écrans externes non configurés explicitement.
+-- Leur bord gauche est aligné sur celui du ZenBook, au-dessus de l'écran intégré.
 hl.monitor({
-    output   = "HDMI-A-1",
+    output   = "",
     mode     = "preferred",
     position = "0x-1080",
     scale    = "1",
@@ -77,7 +77,7 @@ hl.config({
 -- Animations Caelestia
 hl.curve("specialWorkSwitch", { type = "bezier", points = { { 0.05, 0.7 }, { 0.1, 1 } } })
 hl.curve("emphasizedAccel",   { type = "bezier", points = { { 0.3, 0 },    { 0.8, 0.15 } } })
-hl.curve("emphasizedDecel",   { type = "bezier", points = { { 0.05, 0.7 }, { 0.1, 1 } } })
+hl.curve("emphasizedDecel",  { type = "bezier", points = { { 0.05, 0.7 }, { 0.1, 1 } } })
 hl.curve("standard",          { type = "bezier", points = { { 0.2, 0 },    { 0, 1 } } })
 
 hl.animation({ leaf = "layersIn",  enabled = true, speed = 5, bezier = "emphasizedDecel", style = "slide" })
