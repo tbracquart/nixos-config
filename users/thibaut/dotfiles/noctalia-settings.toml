@@ -7,8 +7,14 @@ enable_sounds = true
 [bar.default]
 background_opacity = 0.59999998658895493
 capsule = true
+capsule_radius = 10
 center = [ "notifications", "clipboard", "clock", "widget_2", "media", "notes" ]
 end = [ "tray", "group:g1", "screenshot", "session", "status" ]
+radius = 0
+radius_bottom_left = 12
+radius_bottom_right = 12
+radius_top_left = 80
+radius_top_right = 80
 start = [ "launcher", "workspaces", "group:g3", "group:g2" ]
 
     [bar.default.dead_zone.actions]
@@ -321,7 +327,7 @@ enabled = [
 ]
 
 [shell]
-corner_radius_scale = 1.5000000223517418
+corner_radius_scale = 1.2500000186264515
 launch_apps_as_systemd_services = true
 panel_anchor_bar = "default"
 password_style = "random"
