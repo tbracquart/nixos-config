@@ -1,4 +1,4 @@
-config_version = 14
+config_version = 15
 
 [audio]
 enable_overdrive = true
@@ -361,13 +361,13 @@ directory = "~/Images/Fonds d'écran"
 transition_on_startup = true
 
     [wallpaper.default]
-    path = "/home/thibaut/Images/Fonds d'écran/daily-wallpaper/bing-fr-fr-2026-10-18.jpg"
+    path = "/home/thibaut/Images/Fonds d'écran/daily-wallpaper/bing-fr-fr-2026-10-20.jpg"
 
     [wallpaper.last]
-    path = "/home/thibaut/Images/Fonds d'écran/daily-wallpaper/bing-fr-fr-2026-10-18.jpg"
+    path = "/home/thibaut/Images/Fonds d'écran/daily-wallpaper/bing-fr-fr-2026-10-20.jpg"
 
     [wallpaper.monitors.eDP-1]
-    path = "/home/thibaut/Images/Fonds d'écran/daily-wallpaper/bing-fr-fr-2026-10-18.jpg"
+    path = "/home/thibaut/Images/Fonds d'écran/daily-wallpaper/bing-fr-fr-2026-10-20.jpg"
 
     [[wallpaper.favorite]]
     palette_source = "wallpaper"
