@@ -5,10 +5,20 @@
 ------------------
 ---- MONITORS ----
 ------------------
+-- Écran intégré du ZenBook, placé sous l'écran externe.
 hl.monitor({
     output   = "eDP-1",
     mode     = "1920x1080@60.00300",
-    position = "auto",
+    position = "0x0",
+    scale    = "1",
+})
+
+-- Règle par défaut pour les écrans externes non configurés explicitement.
+-- Leur bord gauche est aligné sur celui du ZenBook, au-dessus de l'écran intégré.
+hl.monitor({
+    output   = "",
+    mode     = "preferred",
+    position = "0x-1080",
     scale    = "1",
 })
 
@@ -34,14 +44,15 @@ hl.config({
         gaps_in  = 5,
         gaps_out = 10,
         border_size = 1,
-        resize_on_border = false,
+        resize_on_border = true,
+        extend_border_grab_area = 15,
         allow_tearing = false,
         layout = "dwindle",
     },
 
     decoration = {
-        rounding       = 20,
-        rounding_power = 2,
+        rounding       = 16,
+        rounding_power = 3,
         active_opacity   = 0.8,
         inactive_opacity = 0.7,
         shadow = {
@@ -66,7 +77,7 @@ hl.config({
 -- Animations Caelestia
 hl.curve("specialWorkSwitch", { type = "bezier", points = { { 0.05, 0.7 }, { 0.1, 1 } } })
 hl.curve("emphasizedAccel",   { type = "bezier", points = { { 0.3, 0 },    { 0.8, 0.15 } } })
-hl.curve("emphasizedDecel",   { type = "bezier", points = { { 0.05, 0.7 }, { 0.1, 1 } } })
+hl.curve("emphasizedDecel",  { type = "bezier", points = { { 0.05, 0.7 }, { 0.1, 1 } } })
 hl.curve("standard",          { type = "bezier", points = { { 0.2, 0 },    { 0, 1 } } })
 
 hl.animation({ leaf = "layersIn",  enabled = true, speed = 5, bezier = "emphasizedDecel", style = "slide" })
@@ -126,7 +137,50 @@ local mainMod = "SUPER"
 hl.bind(mainMod .. " + Q", hl.dsp.window.close())
 hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"))
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
-hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
+hl.bind(mainMod .. " + SHIFT + V", function()
+    -- La fenêtre devient flottante et sa taille dépend de la proximité des bords.
+    hl.dispatch(hl.dsp.window.float({ action = "toggle" }))
+
+    local window = hl.get_active_window()
+    if not window or not window.floating then
+        return
+    end
+
+    local monitor = hl.get_monitor_at_cursor()
+    local cursor = hl.get_cursor_pos()
+    if not monitor or not cursor then
+        return
+    end
+
+    -- Les coordonnées du curseur sont globales ; les convertir en coordonnées locales au moniteur.
+    local cursor_x = cursor.x - monitor.x
+    local cursor_y = cursor.y - monitor.y
+
+    -- Distance normalisée au bord le plus proche : 0 au bord, 0.5 au centre.
+    local x = math.max(0, math.min(1, cursor_x / monitor.width))
+    local y = math.max(0, math.min(1, cursor_y / monitor.height))
+    local edge_x = math.min(x, 1 - x) * 2
+    local edge_y = math.min(y, 1 - y) * 2
+    local scale = 0.20 + 0.50 * math.min(edge_x, edge_y)
+
+    local width = math.floor(monitor.width * scale)
+    local height = math.floor(monitor.height * scale)
+
+    -- Centrer autour du pointeur, en conservant les coordonnées globales du moniteur.
+    local pos_x = monitor.x + math.max(0, math.min(monitor.width - width, cursor_x - math.floor(width / 2)))
+    local pos_y = monitor.y + math.max(0, math.min(monitor.height - height, cursor_y - math.floor(height / 2)))
+
+    hl.dispatch(hl.dsp.window.resize({
+        x = width,
+        y = height,
+        relative = false,
+    }))
+    hl.dispatch(hl.dsp.window.move({
+        x = pos_x,
+        y = pos_y,
+        relative = false,
+    }))
+end)
 hl.bind(mainMod .. " + R", hl.dsp.exec_cmd(menu))
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
 hl.bind(mainMod .. " + J", hl.dsp.layout("togglesplit"))
@@ -146,6 +200,20 @@ hl.bind(mainMod .. " + SHIFT + right", hl.dsp.window.move({ direction = "right" 
 hl.bind(mainMod .. " + SHIFT + up",    hl.dsp.window.move({ direction = "up" }))
 hl.bind(mainMod .. " + SHIFT + down",  hl.dsp.window.move({ direction = "down" }))
 
+-- Déplacement libre des fenêtres par pas de 100 pixels.
+local windowMoveStep = 100
+hl.bind(mainMod .. " + CTRL + left",  hl.dsp.window.move({ x = -windowMoveStep, y = 0, relative = true }), { repeating = true })
+hl.bind(mainMod .. " + CTRL + right", hl.dsp.window.move({ x = windowMoveStep, y = 0, relative = true }),  { repeating = true })
+hl.bind(mainMod .. " + CTRL + up",    hl.dsp.window.move({ x = 0, y = -windowMoveStep, relative = true }), { repeating = true })
+hl.bind(mainMod .. " + CTRL + down",  hl.dsp.window.move({ x = 0, y = windowMoveStep, relative = true }),  { repeating = true })
+
+-- Redimensionnement au clavier, également utilisable sur les fenêtres en mosaïque.
+local windowResizeStep = 100
+hl.bind(mainMod .. " + ALT + left",  hl.dsp.window.resize({ x = -windowResizeStep, y = 0, relative = true }), { repeating = true })
+hl.bind(mainMod .. " + ALT + right", hl.dsp.window.resize({ x = windowResizeStep, y = 0, relative = true }),  { repeating = true })
+hl.bind(mainMod .. " + ALT + up",    hl.dsp.window.resize({ x = 0, y = -windowResizeStep, relative = true }), { repeating = true })
+hl.bind(mainMod .. " + ALT + down",  hl.dsp.window.resize({ x = 0, y = windowResizeStep, relative = true }),  { repeating = true })
+
 local keys = { "ampersand", "eacute", "quotedbl", "apostrophe", "parenleft", "minus", "egrave", "underscore", "ccedilla", "agrave" }
 for i, key in ipairs(keys) do
     hl.bind(mainMod .. " + " .. key,         hl.dsp.focus({ workspace = i }))
@@ -164,6 +232,7 @@ hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
 
 -- IPC Noctalia
 local ipc = "noctalia msg "
+hl.bind(mainMod .. " + V",     hl.dsp.exec_cmd(ipc .. "panel-toggle clipboard"))
 hl.bind(mainMod .. " + Space", hl.dsp.exec_cmd(ipc .. "panel-toggle launcher"))
 hl.bind(mainMod .. " + S",     hl.dsp.exec_cmd(ipc .. "panel-toggle control-center"))
 hl.bind(mainMod .. " + colon", hl.dsp.exec_cmd(ipc .. "settings-toggle"))
