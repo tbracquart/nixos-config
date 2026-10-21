@@ -13,7 +13,7 @@
     openssh.enable = true;
 
     udev.extraRules = ''
-      SUBSYSTEM=="usb", ATTR{idVendor}=="0483", ATTR{idProduct}=="a291", TAG+="uaccess"
+      SUBSYSTEM=="usb", ATTR{idVendor}=="0483", ATTR{idProduct}=="a291", MODE="0660", GROUP="wheel"
       SUBSYSTEM=="usb", ATTR{idVendor}=="0483", ATTR{idProduct}=="df11", TAG+="uaccess"
       SUBSYSTEM=="usb", ATTR{idVendor}=="0483", ATTR{idProduct}=="a51a", TAG+="uaccess"
     '';
