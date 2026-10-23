@@ -106,54 +106,6 @@
         "type": "github"
       }
     },
-    "nix-openclaw": {
-      "inputs": {
-        "flake-utils": [
-          "flake-utils"
-        ],
-        "home-manager": [
-          "home-manager"
-        ],
-        "nix-openclaw-tools": "nix-openclaw-tools",
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "qmd": "qmd"
-      },
-      "locked": {
-        "lastModified": 1792525824,
-        "narHash": "sha256-EysxYJbSZHPH3CetD4GlXZzKqZlHAmuk8j/0Dqr/NU4=",
-        "owner": "openclaw",
-        "repo": "nix-openclaw",
-        "rev": "6a0ffb95113fca574ab6f61cd86fc729cf529e04",
-        "type": "github"
-      },
-      "original": {
-        "owner": "openclaw",
-        "repo": "nix-openclaw",
-        "type": "github"
-      }
-    },
-    "nix-openclaw-tools": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1790151707,
-        "narHash": "sha256-buJkQpTHNMawudMv2p00KwPAIuHMtK4CZXk7DgfHkx0=",
-        "owner": "openclaw",
-        "repo": "nix-openclaw-tools",
-        "rev": "8b674893eb3dfddc55ac76fa532a3b11b4330575",
-        "type": "github"
-      },
-      "original": {
-        "owner": "openclaw",
-        "repo": "nix-openclaw-tools",
-        "type": "github"
-      }
-    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1788614874,
@@ -206,37 +158,12 @@
         "type": "github"
       }
     },
-    "qmd": {
-      "inputs": {
-        "flake-utils": [
-          "flake-utils"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1786919312,
-        "narHash": "sha256-/7Z94r/9rXqzKlz/YkB6/nToSCPamV4Dnxm8EhelTDo=",
-        "owner": "tobi",
-        "repo": "qmd",
-        "rev": "facd35e01359e59d938bc9418e93fb9318addee3",
-        "type": "github"
-      },
-      "original": {
-        "owner": "tobi",
-        "ref": "v2.8.3",
-        "repo": "qmd",
-        "type": "github"
-      }
-    },
     "root": {
       "inputs": {
         "flake-utils": "flake-utils",
         "freesmlauncher": "freesmlauncher",
         "home-manager": "home-manager",
         "multiverse": "multiverse",
-        "nix-openclaw": "nix-openclaw",
         "nixpkgs": "nixpkgs_2",
         "omnibin": "omnibin",
         "sops-nix": "sops-nix"
