@@ -12,13 +12,6 @@ in
 
     programs.hyprland.enable = true;
 
-    xdg.portal = {
-      enable = true;
-      extraPortals = [
-        pkgs.xdg-desktop-portal-hyprland
-      ];
-    };
-
     programs.noctalia = {
       enable = true;
       systemd.enable = true;
