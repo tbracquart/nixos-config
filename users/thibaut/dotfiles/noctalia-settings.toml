@@ -586,4 +586,4 @@ enabled = false
 type = "nzlov/daily-wallpaper:widget"
 
 [widget.workspaces]
-style = "focus_hint"
+style = "focus_hint" 
