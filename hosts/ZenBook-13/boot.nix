@@ -39,8 +39,6 @@
 
     initrd = {
       kernelModules = [ "xe" ];
-      systemd.enable = true;
-      verbose = false;
       luks.devices."luks-a0f369c9-319a-4e22-ac5f-7b5a191b22e8".device =
         "/dev/disk/by-uuid/a0f369c9-319a-4e22-ac5f-7b5a191b22e8";
     };
