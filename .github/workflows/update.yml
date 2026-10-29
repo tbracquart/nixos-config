@@ -2,7 +2,7 @@ name: Update flake
 
 on:
   schedule:
-    - cron: '17 6 * * *'  # tous les jours à 6h17 en Europe/Paris
+    - cron: '0 0 * * *'  # tous les jours à minuit en Europe/Paris
       timezone: 'Europe/Paris'
   workflow_dispatch:
 
