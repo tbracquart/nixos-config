@@ -1,4 +1,4 @@
-{ pkgs, lib, inputs, ... }:
+{ pkgs, inputs, ... }:
 
 let
   textMimeTypes = [
@@ -72,12 +72,13 @@ in
     mimeType = textMimeTypes;
   };
 
-  # Mettre Helix par défaut sans faire gérer mimeapps.list par Home Manager :
-  # xdg-mime modifie les associations existantes et conserve les autres choix
-  # de l'utilisateur (navigateur, archives, images, etc.).
-  home.activation.setHelixMimeDefaults = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
-    for mime_type in ${lib.escapeShellArgs textMimeTypes}; do
-      ${pkgs.xdg-utils}/bin/xdg-mime default helix.desktop "$mime_type"
-    done
-  '';
+  # Les associations MIME sont déclarées dans la configuration et gérées
+  # par Home Manager, plutôt que modifiées impérativement à l'activation.
+  xdg.mimeApps = {
+    enable = true;
+    defaultApplications = builtins.listToAttrs (map (mimeType: {
+      name = mimeType;
+      value = [ "helix.desktop" ];
+    }) textMimeTypes);
+  };
 }
