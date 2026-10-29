@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 
 {
   programs = {
@@ -10,6 +10,13 @@
       enable = true;
       languagePacks = [ "fr" ];
     };
-
   };
+
+  environment.systemPackages = with pkgs; [
+    file
+    pciutils
+    sops
+    ssh-to-age
+    usbutils
+  ];
 }
