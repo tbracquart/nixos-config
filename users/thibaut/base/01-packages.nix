@@ -18,6 +18,14 @@ let
     "application/toml"
     "application/yaml"
   ];
+
+  helixWithDockAppId = pkgs.helix.overrideAttrs (old: {
+    postInstall = (old.postInstall or "") + ''
+      substituteInPlace "$out/share/applications/Helix.desktop" \
+        --replace-fail "Exec=hx %F" \
+        "Exec=${pkgs.alacritty}/bin/alacritty --class Helix -e hx %F"
+    '';
+  });
 in
 {
   home.packages = (with pkgs; [
@@ -46,20 +54,7 @@ in
   programs.helix = {
     enable = true;
     defaultEditor = true;
-  };
-
-  # Remplace l'entrée native Helix en conservant son identifiant et son icône,
-  # mais lance Helix dans Alacritty avec un app_id distinct pour le dock.
-  xdg.desktopEntries."Helix" = {
-    name = "Helix";
-    genericName = "Éditeur de texte";
-    comment = "Éditer des fichiers texte avec Helix";
-    exec = "${pkgs.alacritty}/bin/alacritty --class Helix -e ${pkgs.helix}/bin/hx %F";
-    terminal = false;
-    type = "Application";
-    icon = "helix";
-    categories = [ "Utility" "TextEditor" "ConsoleOnly" ];
-    mimeType = textMimeTypes;
+    package = helixWithDockAppId;
   };
 
   # Fresh reste une entrée distincte, lancée dans Alacritty.
