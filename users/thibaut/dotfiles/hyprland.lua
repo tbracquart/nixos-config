@@ -251,15 +251,9 @@ hl.bind("XF86AudioPause",        hl.dsp.exec_cmd("playerctl play-pause"), { lock
 hl.bind("XF86AudioPlay",         hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
 hl.bind("XF86AudioPrev",         hl.dsp.exec_cmd("playerctl previous"),   { locked = true })
 
---------------------------------
----- WINDOWS AND WORKSPACES ----
---------------------------------
-
-hl.workspace_rule({ workspace = "1", monitor = "eDP-1", persistent = true, default_name = "web" })
-hl.workspace_rule({ workspace = "2", monitor = "eDP-1", persistent = true, default_name = "code" })
-hl.workspace_rule({ workspace = "3", monitor = "eDP-1", persistent = true, default_name = "chat" })
-hl.workspace_rule({ workspace = "4", monitor = "eDP-1", persistent = true, default_name = "game" })
-hl.workspace_rule({ workspace = "5", monitor = "eDP-1", persistent = true, default_name = "design" })
+-----------------
+---- WINDOWS ----
+-----------------
 
 hl.window_rule({
     name  = "fix-xwayland-drags",
