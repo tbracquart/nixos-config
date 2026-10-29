@@ -1,4 +1,4 @@
-{ pkgs, inputs, ... }:
+{ pkgs, lib, inputs, ... }:
 
 let
   textMimeTypes = [
@@ -72,15 +72,12 @@ in
     mimeType = textMimeTypes;
   };
 
-  # Helix est l'éditeur par défaut pour les fichiers texte ; Fresh reste
-  # disponible dans « Ouvrir avec » comme alternative à Xed.
-  xdg.mimeApps = {
-    enable = true;
-    defaultApplications = builtins.listToAttrs (map
-      (mimeType: {
-        name = mimeType;
-        value = "helix.desktop";
-      })
-      textMimeTypes);
-  };
+  # Mettre Helix par défaut sans faire gérer mimeapps.list par Home Manager :
+  # xdg-mime modifie les associations existantes et conserve les autres choix
+  # de l'utilisateur (navigateur, archives, images, etc.).
+  home.activation.setHelixMimeDefaults = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
+    for mime_type in ${lib.escapeShellArgs textMimeTypes}; do
+      ${pkgs.xdg-utils}/bin/xdg-mime default helix.desktop "$mime_type"
+    done
+  '';
 }
