@@ -50,17 +50,6 @@ in
 
   # Les éditeurs en terminal doivent être lancés dans un vrai terminal
   # lorsqu'ils sont ouverts depuis Nemo ou un autre explorateur de fichiers.
-  xdg.desktopEntries.helix = {
-    name = "Helix";
-    genericName = "Éditeur de texte";
-    comment = "Ouvrir des fichiers avec Helix dans Alacritty";
-    exec = "${pkgs.alacritty}/bin/alacritty -e ${pkgs.helix}/bin/hx %F";
-    terminal = false;
-    type = "Application";
-    categories = [ "Development" "TextEditor" "Utility" ];
-    mimeType = textMimeTypes;
-  };
-
   xdg.desktopEntries."fresh-editor" = {
     name = "Fresh Editor";
     genericName = "Éditeur de texte";
@@ -78,7 +67,7 @@ in
     enable = true;
     defaultApplications = builtins.listToAttrs (map (mimeType: {
       name = mimeType;
-      value = [ "helix.desktop" ];
+      value = [ "Helix.desktop" ];
     }) textMimeTypes);
   };
 }
