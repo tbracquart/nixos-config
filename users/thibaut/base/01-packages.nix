@@ -48,8 +48,21 @@ in
     defaultEditor = true;
   };
 
-  # Les éditeurs en terminal doivent être lancés dans un vrai terminal
-  # lorsqu'ils sont ouverts depuis Nemo ou un autre explorateur de fichiers.
+  # Remplace l'entrée native Helix en conservant son identifiant et son icône,
+  # mais lance Helix dans Alacritty avec un app_id distinct pour le dock.
+  xdg.desktopEntries."Helix" = {
+    name = "Helix";
+    genericName = "Éditeur de texte";
+    comment = "Éditer des fichiers texte avec Helix";
+    exec = "${pkgs.alacritty}/bin/alacritty --class Helix -e ${pkgs.helix}/bin/hx %F";
+    terminal = false;
+    type = "Application";
+    icon = "helix";
+    categories = [ "Utility" "TextEditor" "ConsoleOnly" ];
+    mimeType = textMimeTypes;
+  };
+
+  # Fresh reste une entrée distincte, lancée dans Alacritty.
   xdg.desktopEntries."fresh-editor" = {
     name = "Fresh Editor";
     genericName = "Éditeur de texte";
