@@ -20,10 +20,13 @@ let
   ];
 
   helixWithDockAppId = pkgs.helix.overrideAttrs (old: {
-    postInstall = (old.postInstall or "") + ''
-      substituteInPlace "$out/share/applications/Helix.desktop" \
+    postBuild = (old.postBuild or "") + ''
+      desktop="$out/share/applications/Helix.desktop"
+      cp "$desktop" "$TMPDIR/Helix.desktop"
+      substituteInPlace "$TMPDIR/Helix.desktop" \
         --replace-fail "Exec=hx %F" \
         "Exec=${pkgs.alacritty}/bin/alacritty --class Helix -e hx %F"
+      cp --remove-destination "$TMPDIR/Helix.desktop" "$desktop"
     '';
   });
 in
