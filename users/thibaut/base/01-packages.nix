@@ -1,7 +1,7 @@
-{ pkgs, inputs, ... }:
+{ pkgs, lib, inputs, ... }:
 
 let
-  textMimeTypes = [
+  editorMimeTypes = [
     "text/plain"
     "text/markdown"
     "text/x-nix"
@@ -18,6 +18,11 @@ let
     "application/toml"
     "application/yaml"
   ];
+
+  freshEditorIcon = pkgs.runCommand "fresh-editor-icon" { } ''
+    install -Dm644 ${pkgs.fresh-editor.src}/docs/icons/linux/hicolor/256x256/apps/fresh.png \
+      "$out/share/icons/hicolor/256x256/apps/fresh.png"
+  '';
 in
 {
   home.packages = (with pkgs; [
@@ -48,37 +53,38 @@ in
     defaultEditor = true;
   };
 
-  # Les éditeurs en terminal doivent être lancés dans un vrai terminal
-  # lorsqu'ils sont ouverts depuis Nemo ou un autre explorateur de fichiers.
-  xdg.desktopEntries.helix = {
+  # Remplace l'entrée Helix fournie par le paquet sans modifier celui-ci.
+  xdg.desktopEntries."Helix" = {
     name = "Helix";
     genericName = "Éditeur de texte";
     comment = "Ouvrir des fichiers avec Helix dans Alacritty";
-    exec = "${pkgs.alacritty}/bin/alacritty -e ${pkgs.helix}/bin/hx %F";
+    exec = "${pkgs.alacritty}/bin/alacritty --class Helix -e ${pkgs.helix}/bin/hx %F";
+    icon = "helix";
     terminal = false;
     type = "Application";
+    settings.StartupWMClass = "Helix";
     categories = [ "Development" "TextEditor" "Utility" ];
-    mimeType = textMimeTypes;
+    mimeType = editorMimeTypes;
   };
 
+  # Fresh utilise uniquement son icône officielle, extraite des sources du paquet.
   xdg.desktopEntries."fresh-editor" = {
     name = "Fresh Editor";
     genericName = "Éditeur de texte";
     comment = "Ouvrir des fichiers avec Fresh dans Alacritty";
-    exec = "${pkgs.alacritty}/bin/alacritty -e ${pkgs.fresh-editor}/bin/fresh %F";
+    exec = "${pkgs.alacritty}/bin/alacritty --class Fresh -e ${pkgs.fresh-editor}/bin/fresh %F";
+    icon = "${freshEditorIcon}/share/icons/hicolor/256x256/apps/fresh.png";
     terminal = false;
     type = "Application";
+    settings.StartupWMClass = "Fresh";
     categories = [ "Development" "TextEditor" "Utility" ];
-    mimeType = textMimeTypes;
+    mimeType = editorMimeTypes;
   };
 
   # Les associations MIME sont déclarées dans la configuration et gérées
   # par Home Manager, plutôt que modifiées impérativement à l'activation.
   xdg.mimeApps = {
     enable = true;
-    defaultApplications = builtins.listToAttrs (map (mimeType: {
-      name = mimeType;
-      value = [ "helix.desktop" ];
-    }) textMimeTypes);
+    defaultApplications = lib.genAttrs editorMimeTypes (_: [ "Helix.desktop" ]);
   };
 }
