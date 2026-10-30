@@ -1,7 +1,7 @@
 { pkgs, lib, inputs, ... }:
 
 let
-  textMimeTypes = [
+  editorMimeTypes = [
     "text/plain"
     "text/markdown"
     "text/x-nix"
@@ -18,6 +18,11 @@ let
     "application/toml"
     "application/yaml"
   ];
+
+  freshEditorIcon = pkgs.runCommand "fresh-editor-icon" { } ''
+    install -Dm644 ${pkgs.fresh-editor.src}/docs/icons/linux/hicolor/256x256/apps/fresh.png \
+      "$out/share/icons/hicolor/256x256/apps/fresh.png"
+  '';
 in
 {
   home.packages = (with pkgs; [
@@ -59,27 +64,27 @@ in
     type = "Application";
     settings.StartupWMClass = "Helix";
     categories = [ "Development" "TextEditor" "Utility" ];
-    mimeType = textMimeTypes;
+    mimeType = editorMimeTypes;
   };
 
-  # Fresh utilise directement son icône officielle depuis ses sources.
+  # Fresh utilise uniquement son icône officielle, extraite des sources du paquet.
   xdg.desktopEntries."fresh-editor" = {
     name = "Fresh Editor";
     genericName = "Éditeur de texte";
     comment = "Ouvrir des fichiers avec Fresh dans Alacritty";
     exec = "${pkgs.alacritty}/bin/alacritty --class Fresh -e ${pkgs.fresh-editor}/bin/fresh %F";
-    icon = "${pkgs.fresh-editor.src}/docs/icons/linux/hicolor/256x256/apps/fresh.png";
+    icon = "${freshEditorIcon}/share/icons/hicolor/256x256/apps/fresh.png";
     terminal = false;
     type = "Application";
     settings.StartupWMClass = "Fresh";
     categories = [ "Development" "TextEditor" "Utility" ];
-    mimeType = textMimeTypes;
+    mimeType = editorMimeTypes;
   };
 
   # Les associations MIME sont déclarées dans la configuration et gérées
   # par Home Manager, plutôt que modifiées impérativement à l'activation.
   xdg.mimeApps = {
     enable = true;
-    defaultApplications = lib.genAttrs textMimeTypes (_: [ "Helix.desktop" ]);
+    defaultApplications = lib.genAttrs editorMimeTypes (_: [ "Helix.desktop" ]);
   };
 }
