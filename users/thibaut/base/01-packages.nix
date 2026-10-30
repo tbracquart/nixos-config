@@ -27,6 +27,7 @@ in
     celluloid
     fastfetch
     freefilesync
+    fresh-editor
     gimp
     libreoffice
     nemo-with-extensions
@@ -37,7 +38,6 @@ in
     udiskie
     ytmdesktop
   ]) ++ [
-    pkgs.fresh-editor
     inputs.freesmlauncher.packages.${pkgs.stdenv.hostPlatform.system}.default
     inputs.omnibin.packages.${pkgs.stdenv.hostPlatform.system}.omnibin-shell
     inputs.multiverse.packages.${pkgs.stdenv.hostPlatform.system}.mvs
