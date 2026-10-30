@@ -20,7 +20,7 @@ let
   ];
 
   helixWithDockAppId = pkgs.helix.overrideAttrs (old: {
-    postBuild = (old.postBuild or "") + ''
+    buildCommand = (old.buildCommand or "") + ''
       desktop="$out/share/applications/Helix.desktop"
       cp "$desktop" "$TMPDIR/Helix.desktop"
       substituteInPlace "$TMPDIR/Helix.desktop" \
