@@ -26,6 +26,10 @@ let
       substituteInPlace "$TMPDIR/Helix.desktop" \
         --replace-fail "Exec=hx %F" \
         "Exec=${pkgs.alacritty}/bin/alacritty --class Helix -e hx %F"
+      if ! grep -q '^StartupWMClass=' "$TMPDIR/Helix.desktop"; then
+        grep -q '^Type=Application$' "$TMPDIR/Helix.desktop"
+        sed -i '/^Type=Application$/a StartupWMClass=Helix' "$TMPDIR/Helix.desktop"
+      fi
       cp --remove-destination "$TMPDIR/Helix.desktop" "$desktop"
     '';
   });
