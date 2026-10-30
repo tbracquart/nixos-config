@@ -36,15 +36,14 @@ let
     '';
   });
 
-  freshEditorWithDockIcon = pkgs.fresh-editor.overrideAttrs (old: {
-    postInstall = (old.postInstall or "") + ''
-      for size in 16 22 24 32 48 64 128 256 512; do
-        icon="docs/icons/linux/hicolor/''${size}x''${size}/apps/fresh.png"
-        test -f "$icon"
-        install -Dm644 "$icon" "$out/share/icons/hicolor/''${size}x''${size}/apps/fresh.png"
-      done
-    '';
-  });
+  # Les icônes sont séparées du binaire : Fresh reste fourni par le cache Nix.
+  freshEditorIcons = pkgs.runCommand "fresh-editor-icons" { } ''
+    for size in 16 22 24 32 48 64 128 256 512; do
+      icon="docs/icons/linux/hicolor/${size}x${size}/apps/fresh.png"
+      install -Dm644 "${pkgs.fresh-editor.src}/$icon" \
+        "$out/share/icons/hicolor/${size}x${size}/apps/fresh.png"
+    done
+  '';
 in
 {
   home.packages = (with pkgs; [
@@ -64,7 +63,8 @@ in
     udiskie
     ytmdesktop
   ]) ++ [
-    freshEditorWithDockIcon
+    freshEditorIcons
+    pkgs.fresh-editor
     inputs.freesmlauncher.packages.${pkgs.stdenv.hostPlatform.system}.default
     inputs.omnibin.packages.${pkgs.stdenv.hostPlatform.system}.omnibin-shell
     inputs.multiverse.packages.${pkgs.stdenv.hostPlatform.system}.mvs
@@ -81,7 +81,7 @@ in
     name = "Fresh Editor";
     genericName = "Éditeur de texte";
     comment = "Ouvrir des fichiers avec Fresh dans Alacritty";
-    exec = "${pkgs.alacritty}/bin/alacritty --class Fresh -e ${freshEditorWithDockIcon}/bin/fresh %F";
+    exec = "${pkgs.alacritty}/bin/alacritty --class Fresh -e ${pkgs.fresh-editor}/bin/fresh %F";
     icon = "fresh";
     terminal = false;
     type = "Application";
