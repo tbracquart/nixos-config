@@ -53,6 +53,10 @@ Résout # <!-- Indiquez le numéro de l'issue si existante, sinon laissez vide -
 - [ ] Les modifications s'appliquent correctement à la session utilisateur et le comportement attendu est validé.
 - [ ] Aucun plantage ou blocage constaté lors de l'application directe de la configuration.
 
+#### ⚙️ Option C : Changements d'automatisation (CI / Workflows GitHub)
+- [ ] **Vérification syntaxique :** La structure des fichiers YAML est validée (via un linter ou l'outil d'analyse).
+- [ ] **Test d'exécution :** Le flux de travail s'est déclenché et évalué avec succès sur la branche de test.
+
 ### 📝 Notes de test
 <!-- Optionnel : Précisez ici comment vous avez validé les changements (ex: testé en direct sur le ZenBook-13, ajustement des widgets Noctalia, etc.) -->
 
