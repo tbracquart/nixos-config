@@ -61,4 +61,3 @@ Résout # <!-- Indiquez le numéro de l'issue si existante, sinon laissez vide -
 - [ ] La structure logique a été respectée (séparation stricte entre `common/`, `modules/`, `profiles/` et `hosts/`).
 - [ ] La configuration reste entièrement déclarative et reproductible.
 - [ ] J'ai appliqué les labels appropriés sur la PR (`area:*`, `host:*`, `dependencies`, etc.).
-
