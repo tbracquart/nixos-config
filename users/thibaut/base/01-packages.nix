@@ -25,8 +25,8 @@ let
       cp "$desktop" "$TMPDIR/Helix.desktop"
       grep -q '^Terminal=true$' "$TMPDIR/Helix.desktop"
       sed -i 's/^Terminal=true$/Terminal=false/' "$TMPDIR/Helix.desktop"
-      substituteInPlace "$TMPDIR/Helix.desktop" \
-        --replace-fail "Exec=hx %F" \
+      substituteInPlace "$TMPDIR/Helix.desktop" \\
+        --replace-fail "Exec=hx %F" \\
         "Exec=${pkgs.alacritty}/bin/alacritty --class Helix -e hx %F"
       if ! grep -q '^StartupWMClass=' "$TMPDIR/Helix.desktop"; then
         grep -q '^Type=Application$' "$TMPDIR/Helix.desktop"
@@ -35,15 +35,6 @@ let
       cp --remove-destination "$TMPDIR/Helix.desktop" "$desktop"
     '';
   });
-
-  # Les icônes sont séparées du binaire : Fresh reste fourni par le cache Nix.
-  freshEditorIcons = pkgs.runCommand "fresh-editor-icons" { } ''
-    for size in 16 22 24 32 48 64 128 256 512; do
-      icon="docs/icons/linux/hicolor/''${size}x''${size}/apps/fresh.png"
-      install -Dm644 "${pkgs.fresh-editor.src}/$icon" \
-        "$out/share/icons/hicolor/''${size}x''${size}/apps/fresh.png"
-    done
-  '';
 in
 {
   home.packages = (with pkgs; [
@@ -63,7 +54,6 @@ in
     udiskie
     ytmdesktop
   ]) ++ [
-    freshEditorIcons
     pkgs.fresh-editor
     inputs.freesmlauncher.packages.${pkgs.stdenv.hostPlatform.system}.default
     inputs.omnibin.packages.${pkgs.stdenv.hostPlatform.system}.omnibin-shell
@@ -76,13 +66,13 @@ in
     package = helixWithDockAppId;
   };
 
-  # Fresh dispose d'une entrée distincte, avec son icône officielle.
+  # Fresh utilise directement son icône officielle depuis ses sources.
   xdg.desktopEntries."fresh-editor" = {
     name = "Fresh Editor";
     genericName = "Éditeur de texte";
     comment = "Ouvrir des fichiers avec Fresh dans Alacritty";
     exec = "${pkgs.alacritty}/bin/alacritty --class Fresh -e ${pkgs.fresh-editor}/bin/fresh %F";
-    icon = "fresh";
+    icon = "${pkgs.fresh-editor.src}/docs/icons/linux/hicolor/256x256/apps/fresh.png";
     terminal = false;
     type = "Application";
     settings.StartupWMClass = "Fresh";
