@@ -35,6 +35,16 @@ let
       cp --remove-destination "$TMPDIR/Helix.desktop" "$desktop"
     '';
   });
+
+  freshEditorWithDockIcon = pkgs.fresh-editor.overrideAttrs (old: {
+    postInstall = (old.postInstall or "") + ''
+      for size in 16 22 24 32 48 64 128 256 512; do
+        icon="docs/icons/linux/hicolor/${size}x${size}/apps/fresh.png"
+        test -f "$icon"
+        install -Dm644 "$icon" "$out/share/icons/hicolor/${size}x${size}/apps/fresh.png"
+      done
+    '';
+  });
 in
 {
   home.packages = (with pkgs; [
@@ -44,7 +54,6 @@ in
     celluloid
     fastfetch
     freefilesync
-    fresh-editor
     gimp
     libreoffice
     nemo-with-extensions
@@ -55,6 +64,7 @@ in
     udiskie
     ytmdesktop
   ]) ++ [
+    freshEditorWithDockIcon
     inputs.freesmlauncher.packages.${pkgs.stdenv.hostPlatform.system}.default
     inputs.omnibin.packages.${pkgs.stdenv.hostPlatform.system}.omnibin-shell
     inputs.multiverse.packages.${pkgs.stdenv.hostPlatform.system}.mvs
@@ -66,14 +76,16 @@ in
     package = helixWithDockAppId;
   };
 
-  # Fresh reste une entrée distincte, lancée dans Alacritty.
+  # Fresh dispose d'une entrée distincte, avec son icône officielle.
   xdg.desktopEntries."fresh-editor" = {
     name = "Fresh Editor";
     genericName = "Éditeur de texte";
     comment = "Ouvrir des fichiers avec Fresh dans Alacritty";
-    exec = "${pkgs.alacritty}/bin/alacritty -e ${pkgs.fresh-editor}/bin/fresh %F";
+    exec = "${pkgs.alacritty}/bin/alacritty --class Fresh -e ${freshEditorWithDockIcon}/bin/fresh %F";
+    icon = "fresh";
     terminal = false;
     type = "Application";
+    startupWMClass = "Fresh";
     categories = [ "Development" "TextEditor" "Utility" ];
     mimeType = textMimeTypes;
   };
