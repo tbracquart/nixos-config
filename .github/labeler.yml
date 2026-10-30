@@ -1,0 +1,49 @@
+"host: zenbook-13":
+  - changed-files:
+      - any-glob-to-any-file: 'hosts/ZenBook-13/**'
+
+"host: v145-15ast":
+  - changed-files:
+      - any-glob-to-any-file: 'hosts/V145-15AST/**'
+
+"area: desktop":
+  - changed-files:
+      - any-glob-to-any-file: 'modules/desktop/**'
+      - any-glob-to-any-file: 'users/*/dotfiles/**'
+
+"area: shell":
+  - changed-files:
+      - any-glob-to-any-file: 'common/system/shell.nix'
+      - any-glob-to-any-file: 'users/*/base/*fish*'
+
+"area: secrets":
+  - changed-files:
+      - any-glob-to-any-file: 'secrets/**'
+      - any-glob-to-any-file: '.sops.yaml'
+
+"area: installer":
+  - changed-files:
+      - any-glob-to-any-file: 'installer/**'
+
+"area: ci":
+  - changed-files:
+      - any-glob-to-any-file: '.github/**'
+
+"area: nix":
+  - changed-files:
+      - any-glob-to-any-file: 'common/system/!(shell.nix)'
+      - any-glob-to-any-file: 'common/default.nix'
+      - any-glob-to-any-file: 'modules/!(desktop)/**'
+      - any-glob-to-any-file: 'profiles/**'
+      - any-glob-to-any-file: 'patches/**'
+      - any-glob-to-any-file: 'flake.nix'
+      - any-glob-to-any-file: 'config.nix'
+
+"dependencies":
+  - changed-files:
+      - any-glob-to-any-file: 'flake.lock'
+
+"type: documentation":
+  - changed-files:
+      - any-glob-to-any-file: 'README.md'
+      - any-glob-to-any-file: 'docs/**'

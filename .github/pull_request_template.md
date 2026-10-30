@@ -8,6 +8,8 @@
 <!-- Qu'avez-vous modifié concrètement ? -->
 - 
 
+<!-- S'il s'agit d'un changement visuel (Modifications du shell graphique Noctalia, widgets, configuration Hyprland), incluez une capture d'écran ou un GIF ci-dessous -->
+
 ## 🔗 Ticket & Contexte
 
 Résout # <!-- Indiquez le numéro de l'issue si existante, sinon laissez vide -->
@@ -59,3 +61,4 @@ Résout # <!-- Indiquez le numéro de l'issue si existante, sinon laissez vide -
 - [ ] La structure logique a été respectée (séparation stricte entre `common/`, `modules/`, `profiles/` et `hosts/`).
 - [ ] La configuration reste entièrement déclarative et reproductible.
 - [ ] J'ai appliqué les labels appropriés sur la PR (`area:*`, `host:*`, `dependencies`, etc.).
+
