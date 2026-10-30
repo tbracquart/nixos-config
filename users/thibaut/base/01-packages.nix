@@ -25,8 +25,8 @@ let
       cp "$desktop" "$TMPDIR/Helix.desktop"
       grep -q '^Terminal=true$' "$TMPDIR/Helix.desktop"
       sed -i 's/^Terminal=true$/Terminal=false/' "$TMPDIR/Helix.desktop"
-      substituteInPlace "$TMPDIR/Helix.desktop" \\
-        --replace-fail "Exec=hx %F" \\
+      substituteInPlace "$TMPDIR/Helix.desktop" \
+        --replace-fail "Exec=hx %F" \
         "Exec=${pkgs.alacritty}/bin/alacritty --class Helix -e hx %F"
       if ! grep -q '^StartupWMClass=' "$TMPDIR/Helix.desktop"; then
         grep -q '^Type=Application$' "$TMPDIR/Helix.desktop"
