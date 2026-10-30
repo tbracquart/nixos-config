@@ -18,23 +18,6 @@ let
     "application/toml"
     "application/yaml"
   ];
-
-  helixWithDockAppId = pkgs.helix.overrideAttrs (old: {
-    buildCommand = (old.buildCommand or "") + ''
-      desktop="$out/share/applications/Helix.desktop"
-      cp "$desktop" "$TMPDIR/Helix.desktop"
-      grep -q '^Terminal=true$' "$TMPDIR/Helix.desktop"
-      sed -i 's/^Terminal=true$/Terminal=false/' "$TMPDIR/Helix.desktop"
-      substituteInPlace "$TMPDIR/Helix.desktop" \
-        --replace-fail "Exec=hx %F" \
-        "Exec=${pkgs.alacritty}/bin/alacritty --class Helix -e hx %F"
-      if ! grep -q '^StartupWMClass=' "$TMPDIR/Helix.desktop"; then
-        grep -q '^Type=Application$' "$TMPDIR/Helix.desktop"
-        sed -i '/^Type=Application$/a StartupWMClass=Helix' "$TMPDIR/Helix.desktop"
-      fi
-      cp --remove-destination "$TMPDIR/Helix.desktop" "$desktop"
-    '';
-  });
 in
 {
   home.packages = (with pkgs; [
@@ -63,7 +46,20 @@ in
   programs.helix = {
     enable = true;
     defaultEditor = true;
-    package = helixWithDockAppId;
+  };
+
+  # Remplace l'entrée Helix fournie par le paquet sans modifier celui-ci.
+  xdg.desktopEntries."Helix" = {
+    name = "Helix";
+    genericName = "Éditeur de texte";
+    comment = "Ouvrir des fichiers avec Helix dans Alacritty";
+    exec = "${pkgs.alacritty}/bin/alacritty --class Helix -e ${pkgs.helix}/bin/hx %F";
+    icon = "helix";
+    terminal = false;
+    type = "Application";
+    settings.StartupWMClass = "Helix";
+    categories = [ "Development" "TextEditor" "Utility" ];
+    mimeType = textMimeTypes;
   };
 
   # Fresh utilise directement son icône officielle depuis ses sources.
