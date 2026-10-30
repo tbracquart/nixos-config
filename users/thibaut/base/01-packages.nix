@@ -23,6 +23,8 @@ let
     buildCommand = (old.buildCommand or "") + ''
       desktop="$out/share/applications/Helix.desktop"
       cp "$desktop" "$TMPDIR/Helix.desktop"
+      grep -q '^Terminal=true$' "$TMPDIR/Helix.desktop"
+      sed -i 's/^Terminal=true$/Terminal=false/' "$TMPDIR/Helix.desktop"
       substituteInPlace "$TMPDIR/Helix.desktop" \
         --replace-fail "Exec=hx %F" \
         "Exec=${pkgs.alacritty}/bin/alacritty --class Helix -e hx %F"
