@@ -85,7 +85,7 @@ in
     icon = "fresh";
     terminal = false;
     type = "Application";
-    startupWMClass = "Fresh";
+    settings.StartupWMClass = "Fresh";
     categories = [ "Development" "TextEditor" "Utility" ];
     mimeType = textMimeTypes;
   };
