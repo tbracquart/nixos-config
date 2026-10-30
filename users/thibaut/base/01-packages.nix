@@ -39,9 +39,9 @@ let
   freshEditorWithDockIcon = pkgs.fresh-editor.overrideAttrs (old: {
     postInstall = (old.postInstall or "") + ''
       for size in 16 22 24 32 48 64 128 256 512; do
-        icon="docs/icons/linux/hicolor/${size}x${size}/apps/fresh.png"
+        icon="docs/icons/linux/hicolor/''${size}x''${size}/apps/fresh.png"
         test -f "$icon"
-        install -Dm644 "$icon" "$out/share/icons/hicolor/${size}x${size}/apps/fresh.png"
+        install -Dm644 "$icon" "$out/share/icons/hicolor/''${size}x''${size}/apps/fresh.png"
       done
     '';
   });
