@@ -156,7 +156,7 @@ widget_order = [
 active_monitor_only = true
 background_opacity = 0.59999998658895493
 enabled = true
-pinned = [ "firefox", "nemo", "Alacritty", "Helix", "fresh-editor" ]
+pinned = [ "firefox", "nemo", "Alacritty", "Helix", "fresh-editor", "netflix-via-google-chrome" ]
 reserve_space = false
 show_dots = true
 smart_auto_hide = true
@@ -394,7 +394,7 @@ screen_time_enabled = true
 settings_window_translucent = true
 
     [shell.launcher]
-    pinned = [ "firefox", "nemo", "Alacritty", "org.x.editor", "btop", "Helix", "fresh-editor" ]
+    pinned = [ "firefox", "nemo", "Alacritty", "org.x.editor", "btop", "Helix", "fresh-editor", "netflix-via-google-chrome" ]
 
         [shell.launcher.providers.panels]
         global = false
