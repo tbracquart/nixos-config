@@ -1,4 +1,4 @@
-{ pkgs, inputs, ... }:
+{ pkgs, lib, inputs, ... }:
 
 let
   textMimeTypes = [
@@ -80,9 +80,6 @@ in
   # par Home Manager, plutôt que modifiées impérativement à l'activation.
   xdg.mimeApps = {
     enable = true;
-    defaultApplications = builtins.listToAttrs (map (mimeType: {
-      name = mimeType;
-      value = [ "Helix.desktop" ];
-    }) textMimeTypes);
+    defaultApplications = lib.genAttrs textMimeTypes (_: [ "Helix.desktop" ]);
   };
 }
