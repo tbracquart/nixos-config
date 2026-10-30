@@ -39,9 +39,9 @@ let
   # Les icônes sont séparées du binaire : Fresh reste fourni par le cache Nix.
   freshEditorIcons = pkgs.runCommand "fresh-editor-icons" { } ''
     for size in 16 22 24 32 48 64 128 256 512; do
-      icon="docs/icons/linux/hicolor/${size}x${size}/apps/fresh.png"
+      icon="docs/icons/linux/hicolor/''${size}x''${size}/apps/fresh.png"
       install -Dm644 "${pkgs.fresh-editor.src}/$icon" \
-        "$out/share/icons/hicolor/${size}x${size}/apps/fresh.png"
+        "$out/share/icons/hicolor/''${size}x''${size}/apps/fresh.png"
     done
   '';
 in
