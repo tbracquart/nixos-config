@@ -532,16 +532,16 @@ directory = "~/Images/Fonds d'écran"
 transition_on_startup = true
 
     [wallpaper.default]
-    path = "/home/thibaut/Images/Fonds d'écran/daily-wallpaper/bing-fr-fr-2026-10-31.jpg"
+    path = "/home/thibaut/Images/Fonds d'écran/daily-wallpaper/bing-fr-fr-2026-11-01.jpg"
 
     [wallpaper.last]
-    path = "/home/thibaut/Images/Fonds d'écran/daily-wallpaper/bing-fr-fr-2026-10-31.jpg"
+    path = "/home/thibaut/Images/Fonds d'écran/daily-wallpaper/bing-fr-fr-2026-11-01.jpg"
 
     [wallpaper.monitors.WAYLAND-1]
     path = "/home/thibaut/Images/Fonds d'écran/daily-wallpaper/bing-fr-fr-2026-10-31.jpg"
 
     [wallpaper.monitors.eDP-1]
-    path = "/home/thibaut/Images/Fonds d'écran/daily-wallpaper/bing-fr-fr-2026-10-31.jpg"
+    path = "/home/thibaut/Images/Fonds d'écran/daily-wallpaper/bing-fr-fr-2026-11-01.jpg"
 
     [[wallpaper.favorite]]
     palette_source = "wallpaper"
