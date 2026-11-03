@@ -1,4 +1,4 @@
-{ inputs, myConfig, ... }:
+{ config, inputs, myConfig, ... }:
 
 {
   imports = [
@@ -38,6 +38,8 @@
     enable = true;
     layout = "up5401ea";
     wayland = true;
+    runtimeDir = "/run/user/${toString config.users.users.${myConfig.username}.uid}/";
+    dbusSessionBusAddress = "unix:path=/run/user/${toString config.users.users.${myConfig.username}.uid}/bus";
     # Do not hard-code WAYLAND_DISPLAY: it may differ between sessions.
     ignoreWaylandDisplayEnv = true;
   };
