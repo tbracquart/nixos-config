@@ -2,11 +2,19 @@
 
 {
   imports = [
+    inputs.asus-numberpad-driver.nixosModules.default
     ./hardware-configuration.nix
     ./boot.nix
     ../../common
     ../../users/thibaut/storage.nix
   ];
+
+  nixpkgs.overlays = [
+    inputs.asus-numberpad-driver.overlays.default
+  ];
+
+  # The driver needs access to the I²C and input devices.
+  users.users.${myConfig.username}.extraGroups = [ "i2c" "input" ];
 
   networking.hostName = "ZenBook-13";
   system.stateVersion = "26.05";
@@ -24,6 +32,14 @@
         ../../users/thibaut/variants/zenbook.nix
       ];
     };
+  };
+
+  hardware.asus-numberpad-driver = {
+    enable = true;
+    layout = "up5401ea";
+    wayland = true;
+    # Do not hard-code WAYLAND_DISPLAY: it may differ between sessions.
+    ignoreWaylandDisplayEnv = true;
   };
 
   my.profile = "laptop";
