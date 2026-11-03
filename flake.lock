@@ -1,5 +1,26 @@
 {
   "nodes": {
+    "asus-numberpad-driver": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1791739725,
+        "narHash": "sha256-kRKumM0/lPbmzMaOv0/8VhLGTPY7rotk+Hnv/390/ak=",
+        "owner": "asus-linux-drivers",
+        "repo": "asus-numberpad-driver",
+        "rev": "f4583761b65eafcae004d644fc8c8f9b3ed9e23a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "asus-linux-drivers",
+        "ref": "v7.3.0",
+        "repo": "asus-numberpad-driver",
+        "type": "github"
+      }
+    },
     "flake-utils": {
       "inputs": {
         "systems": "systems"
@@ -160,6 +181,7 @@
     },
     "root": {
       "inputs": {
+        "asus-numberpad-driver": "asus-numberpad-driver",
         "flake-utils": "flake-utils",
         "freesmlauncher": "freesmlauncher",
         "home-manager": "home-manager",
