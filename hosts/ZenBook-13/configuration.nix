@@ -43,6 +43,7 @@
     dbusSessionBusAddress = "unix:path=%t/bus";
     # Do not hard-code WAYLAND_DISPLAY: it may differ between sessions.
     ignoreWaylandDisplayEnv = true;
+    defaultConfig.main.activation_time = "0.25";
   };
 
   my.profile = "laptop";
