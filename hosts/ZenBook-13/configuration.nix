@@ -7,15 +7,12 @@ let
       install -Dm644 ${./numberpad-layout.py} $out/share/asus-numberpad-driver/layouts/up5401ea.py
     '';
 
-    # Keep the gesture's internal level in sync when activation resets brightness.
+    # Reset the driver's brightness index whenever the default level is applied.
     postPatch = (old.postPatch or "") + ''
       substituteInPlace numberpad.py \
         --replace-fail \
-        '        if default_backlight_level != "0x01":
-            send_value_to_touchpad(default_backlight_level)' \
-        '        if default_backlight_level != "0x01":
-            brightness = backlight_levels.index(default_backlight_level)
-            send_value_to_touchpad(default_backlight_level)'
+        'send_value_to_touchpad(default_backlight_level)' \
+        'brightness = backlight_levels.index(default_backlight_level); send_value_to_touchpad(default_backlight_level)'
     '';
   });
 in
