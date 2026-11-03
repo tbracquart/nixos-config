@@ -38,8 +38,9 @@
     enable = true;
     layout = "up5401ea";
     wayland = true;
-    runtimeDir = "/run/user/${toString config.users.users.${myConfig.username}.uid}/";
-    dbusSessionBusAddress = "unix:path=/run/user/${toString config.users.users.${myConfig.username}.uid}/bus";
+    # %t resolves to the current user's runtime directory in systemd.
+    runtimeDir = "%t/";
+    dbusSessionBusAddress = "unix:path=%t/bus";
     # Do not hard-code WAYLAND_DISPLAY: it may differ between sessions.
     ignoreWaylandDisplayEnv = true;
   };
