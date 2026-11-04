@@ -20,7 +20,7 @@ let
   ];
 
   freshEditorIcon = pkgs.runCommand "fresh-editor-icon" { } ''
-    install -Dm644 ${pkgs.fresh-editor.src}/docs/icons/linux/hicolor/256x256/apps/fresh.png \\
+    install -Dm644 ${pkgs.fresh-editor.src}/docs/icons/linux/hicolor/256x256/apps/fresh.png \
       "$out/share/icons/hicolor/256x256/apps/fresh.png"
   '';
 in
