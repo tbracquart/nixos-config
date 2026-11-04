@@ -30,6 +30,7 @@ in
     btop
     cachix
     celluloid
+    devenv
     fastfetch
     freefilesync
     fresh-editor
