@@ -23,6 +23,7 @@
     defaultConfig.main = {
       activation_time = "0.25";
       default_backlight_level = "0x41";
+      enabled_touchpad_pointer = "0";
     };
   };
 }
