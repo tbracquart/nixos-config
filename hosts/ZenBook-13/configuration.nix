@@ -6,7 +6,7 @@ let
       ./numberpad.patch
     ];
 
-    # Use four brightness levels instead of the eight in the upstream layout.
+    # Use three brightness levels instead of the eight in the upstream layout.
     postInstall = (old.postInstall or "") + ''
       install -Dm644 ${./numberpad-layout.py} $out/share/asus-numberpad-driver/layouts/up5401ea.py
     '';
