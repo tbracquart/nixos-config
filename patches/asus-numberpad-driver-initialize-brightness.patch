@@ -6,7 +6,7 @@
 -            send_value_to_touchpad(default_backlight_level)
 -        else:
 -            try:
--                # brightness may not be defined yet
+-                # brightness may be not defined yet
 -                if len(backlight_levels) > brightness:
 -                    send_value_to_touchpad(backlight_levels[brightness])
 -            except:
@@ -16,7 +16,7 @@
 +                send_value_to_touchpad(backlight_levels[brightness])
 +        except:
 +            pass
-@@ -2081,13 +2081,17 @@
+@@ -2081,13 +2077,17 @@
      default_backlight_level = config_get(CONFIG_DEFAULT_BACKLIGHT_LEVEL, CONFIG_DEFAULT_BACKLIGHT_LEVEL_DEFAULT)
 -    if default_backlight_level == "0x01":
 -        try:
@@ -42,5 +42,17 @@
 +                brightness = backlight_levels.index(default_backlight_level)
 +            except ValueError:
 +                log.warning("Default backlight level %s is not supported by this layout", default_backlight_level)
- 
-     top_left_icon_brightness_func_disabled = config_get(CONFIG_TOP_LEFT_ICON_BRIGHTNESS_FUNC_DISABLED, CONFIG_TOP_LEFT_ICON_BRIGHTNESS_FUNC_DISABLED_DEFAULT)
+
+--- a/layouts/up5401ea.py
++++ b/layouts/up5401ea.py
+@@ -15,10 +15,5 @@
+ backlight_levels = [
+     "0x41",
+-    "0x42",
+-    "0x43",
+     "0x44",
+-    "0x45",
+-    "0x46",
+-    "0x47",
+     "0x48"
+ ]
