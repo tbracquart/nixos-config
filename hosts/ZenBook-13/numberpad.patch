@@ -16,7 +16,7 @@ diff --git a/numberpad.py b/numberpad.py
          top_left_icon_touch_start_time = 0
          log.info("Un-touched top_left_icon area in time: %s", time())
          set_none_to_current_mt_slot()
-@@ -2129,9 +2132,10 @@
+@@ -2129,8 +2132,9 @@
  # equal to multi finger maximum
  support_for_maximum_abs_mt_slots: int = 1
  unsupported_abs_mt_slot: bool = False
@@ -42,7 +42,7 @@ diff --git a/numberpad.py b/numberpad.py
  
      press_duration = time() - top_left_icon_touch_start_time
  
-@@ -2613,9 +2617,7 @@
+@@ -2613,10 +2617,8 @@
                   time() - top_left_icon_touch_start_time)
          log.info("Activation time: %s", top_left_icon_activation_time)
  
