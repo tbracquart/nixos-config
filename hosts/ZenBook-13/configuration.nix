@@ -1,4 +1,4 @@
-{ config, inputs, myConfig, pkgs, ... }:
+{ inputs, myConfig, ... }:
 
 {
   imports = [
@@ -26,7 +26,6 @@
       ];
     };
   };
-
 
   my.profile = "laptop";
   my.authentication.howdy.ir.enable = true;
