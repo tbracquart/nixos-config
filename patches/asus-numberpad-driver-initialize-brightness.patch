@@ -42,7 +42,9 @@
 +                brightness = backlight_levels.index(default_backlight_level)
 +            except ValueError:
 +                log.warning("Default backlight level %s is not supported by this layout", default_backlight_level)
-
+ 
+     top_left_icon_brightness_func_disabled = config_get(CONFIG_TOP_LEFT_ICON_BRIGHTNESS_FUNC_DISABLED, CONFIG_TOP_LEFT_ICON_BRIGHTNESS_FUNC_DISABLED_DEFAULT)
+ 
 --- a/layouts/up5401ea.py
 +++ b/layouts/up5401ea.py
 @@ -15,10 +15,5 @@
