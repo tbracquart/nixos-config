@@ -96,7 +96,7 @@ diff --git a/numberpad.py b/numberpad.py
  
      press_duration = time() - top_left_icon_touch_start_time
  
-@@ -2613,10 +2634,8 @@
+@@ -2613,11 +2634,9 @@
                   time() - top_left_icon_touch_start_time)
          log.info("Activation time: %s", top_left_icon_activation_time)
  
