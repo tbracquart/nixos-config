@@ -19,6 +19,7 @@
     runtimeDir = "%t/";
     dbusSessionBusAddress = "unix:path=%t/bus";
     ignoreWaylandDisplayEnv = true;
+    # Seeds the user configuration on first launch; an existing numberpad_dev is preserved.
     defaultConfig.main = {
       activation_time = "0.25";
       default_backlight_level = "0x41";
