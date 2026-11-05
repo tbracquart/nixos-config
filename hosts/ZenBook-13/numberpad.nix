@@ -1,4 +1,4 @@
-{ inputs, myConfig, pkgs, ... }:
+{ inputs, myConfig, ... }:
 
 {
   imports = [
@@ -14,7 +14,6 @@
 
   hardware.asus-numberpad-driver = {
     enable = true;
-    package = pkgs.asus-numberpad-driver;
     layout = "up5401ea";
     wayland = true;
     runtimeDir = "%t/";
