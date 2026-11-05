@@ -4,6 +4,7 @@
   imports = [
     ./hardware-configuration.nix
     ./boot.nix
+    ./numberpad.nix
     ../../common
     ../../users/thibaut/storage.nix
   ];

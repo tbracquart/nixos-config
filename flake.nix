@@ -20,6 +20,11 @@
   };
 
   inputs = {
+    asus-numberpad-driver = {
+      url = "github:asus-linux-drivers/asus-numberpad-driver/v7.3.0";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     flake-utils.url = "github:numtide/flake-utils";
 
     freesmlauncher.url = "github:FreesmTeam/FreesmLauncher/develop";

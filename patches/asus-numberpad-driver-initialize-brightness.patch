@@ -1,0 +1,59 @@
+--- a/numberpad.py
++++ b/numberpad.py
+@@ -1882,10 +1882,6 @@
+     if not top_left_icon_brightness_func_disabled:
+-        if default_backlight_level != "0x01":
+-            send_value_to_touchpad(default_backlight_level)
+-        else:
+-            try:
+-                # brightness may be not defined yet
+-                if len(backlight_levels) > brightness:
+-                    send_value_to_touchpad(backlight_levels[brightness])
+-            except:
+-                pass
++        try:
++            if len(backlight_levels) > brightness:
++                send_value_to_touchpad(backlight_levels[brightness])
++        except:
++            pass
+@@ -2081,13 +2077,17 @@
+     default_backlight_level = config_get(CONFIG_DEFAULT_BACKLIGHT_LEVEL, CONFIG_DEFAULT_BACKLIGHT_LEVEL_DEFAULT)
+-    if default_backlight_level == "0x01":
+-        try:
+-            brightness = backlight_levels.index(config.get(CONFIG_SECTION, CONFIG_LAST_BRIGHTNESS))
+-        except:
+-            # idle functionality needs (if possible) to set up previous state of brightness and because I do not know at this moment how to read current brightness,
+-            # we know only how to set up that so is necessary set default value to config if does not exist (and brightness levels are supported!!)
+-            #
+-            if len(backlight_levels) > 0:
+-                brightness = len(backlight_levels) - 1
+-                config_set(CONFIG_LAST_BRIGHTNESS, backlight_levels[brightness], True, True)
++    brightness = 0
++    try:
++        brightness = backlight_levels.index(config.get(CONFIG_SECTION, CONFIG_LAST_BRIGHTNESS))
++    except (configparser.Error, ValueError):
++        if default_backlight_level == "0x01":
++            # Preserve the upstream fallback when no previous brightness is saved.
++            if backlight_levels:
++                brightness = len(backlight_levels) - 1
++                config_set(CONFIG_LAST_BRIGHTNESS, backlight_levels[brightness], True, True)
++        else:
++            try:
++                brightness = backlight_levels.index(default_backlight_level)
++            except ValueError:
++                log.warning("Default backlight level %s is not supported by this layout", default_backlight_level)
+ 
+     top_left_icon_brightness_func_disabled = config_get(CONFIG_TOP_LEFT_ICON_BRIGHTNESS_FUNC_DISABLED, CONFIG_TOP_LEFT_ICON_BRIGHTNESS_FUNC_DISABLED_DEFAULT)
+--- a/layouts/up5401ea.py
++++ b/layouts/up5401ea.py
+@@ -15,10 +15,5 @@
+ backlight_levels = [
+     "0x41",
+-    "0x42",
+-    "0x43",
+     "0x44",
+-    "0x45",
+-    "0x46",
+-    "0x47",
+     "0x48"
+ ]

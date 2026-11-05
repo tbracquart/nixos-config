@@ -1,5 +1,26 @@
 {
   "nodes": {
+    "asus-numberpad-driver": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1791739725,
+        "narHash": "sha256-oo03iCtWnt7TmnY9oYltS74CXAdmqVAhSebFaHniR20=",
+        "owner": "asus-linux-drivers",
+        "repo": "asus-numberpad-driver",
+        "rev": "f4583761b65eafcae004d644fc8c8f9b3ed9e23a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "asus-linux-drivers",
+        "ref": "v7.3.0",
+        "repo": "asus-numberpad-driver",
+        "type": "github"
+      }
+    },
     "flake-utils": {
       "inputs": {
         "systems": "systems"
@@ -78,11 +99,11 @@
     },
     "multiverse": {
       "locked": {
-        "lastModified": 1793666226,
-        "narHash": "sha256-y71uqy+VaOI347vvGyo2apQAflTheA7N007zCE68tc4=",
+        "lastModified": 1793812214,
+        "narHash": "sha256-F7pRFPe4tHt3RbfZC1x++HnvD2ZMqZQ0sTZas/eur80=",
         "owner": "fzakaria",
         "repo": "nixpkgs-multiverse",
-        "rev": "85c2ce5d67d4f061796a363b958ab6963ef419b0",
+        "rev": "1e48e02336ab1b26061e8df8e80eaf3d749477f4",
         "type": "github"
       },
       "original": {
@@ -124,11 +145,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1793540411,
-        "narHash": "sha256-fiPJ88izTVucjeo2EQ3jk4aWmLg03I1D4vxnX2QjEgE=",
+        "lastModified": 1793726008,
+        "narHash": "sha256-jQp1wKvbwWdLBASTXkSi/VYmDJ5AbBi1WvcMt9HWJC8=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "0bb2eedc20e4739f29e8045034f2828ad7054f8f",
+        "rev": "1d060086d60cb76a40cf37109f979d88a5bd6396",
         "type": "github"
       },
       "original": {
@@ -145,11 +166,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1793727675,
-        "narHash": "sha256-ICjKFrERJ8lRgoVgM2W1+XFCav7FZANH5i87j+1Dhj8=",
+        "lastModified": 1793902951,
+        "narHash": "sha256-n3fBtW7/p1BTBPp7OezJAXAy+tGZXEFJwqXuNosylHs=",
         "owner": "fzakaria",
         "repo": "omnibin",
-        "rev": "471d6a1d87cdaed7d9da83ed1febce028f9dafd3",
+        "rev": "33736740ba0fb74b7215f94ca84fee9e4c268c39",
         "type": "github"
       },
       "original": {
@@ -160,6 +181,7 @@
     },
     "root": {
       "inputs": {
+        "asus-numberpad-driver": "asus-numberpad-driver",
         "flake-utils": "flake-utils",
         "freesmlauncher": "freesmlauncher",
         "home-manager": "home-manager",
