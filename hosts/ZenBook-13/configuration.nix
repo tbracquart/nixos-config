@@ -1,21 +1,5 @@
 { config, inputs, myConfig, pkgs, ... }:
 
-let
-  numberpadDriver = pkgs.asus-numberpad-driver.overrideAttrs (old: {
-    patches = (old.patches or []) ++ [
-      ./numberpad.patch
-    ];
-
-    # Reset the driver's brightness index whenever the default level is applied.
-    postPatch = (old.postPatch or "") + ''
-      substituteInPlace numberpad.py \
-        --replace-fail \
-        'send_value_to_touchpad(default_backlight_level)' \
-        'brightness = backlight_levels.index(default_backlight_level); send_value_to_touchpad(default_backlight_level)'
-    '';
-  });
-in
-
 {
   imports = [
     inputs.asus-numberpad-driver.nixosModules.default
@@ -52,7 +36,7 @@ in
 
   hardware.asus-numberpad-driver = {
     enable = true;
-    package = numberpadDriver;
+    package = pkgs.asus-numberpad-driver;
     layout = "up5401ea";
     wayland = true;
     # %t resolves to the current user's runtime directory in systemd.
