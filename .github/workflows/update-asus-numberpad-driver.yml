@@ -1,0 +1,92 @@
+name: Update ASUS NumberPad driver
+
+on:
+  schedule:
+    - cron: '30 0 * * *'
+      timezone: 'Europe/Paris'
+  workflow_dispatch:
+
+concurrency:
+  group: update-asus-numberpad-driver
+  cancel-in-progress: true
+
+permissions: {}
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          token: ${{ secrets.GH_PAT }}
+          persist-credentials: false
+
+      - uses: ./.github/actions/setup-nix-cachix
+        with:
+          github-access-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Récupérer la dernière release stable
+        id: release
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          latest_tag=$(curl --fail --silent --show-error --location \
+            -H 'Accept: application/vnd.github+json' \
+            https://api.github.com/repos/asus-linux-drivers/asus-numberpad-driver/releases/latest \
+            | jq --exit-status --raw-output '.tag_name')
+
+          if [[ ! "$latest_tag" =~ ^v[0-9]+\.[0-9]+\.[0-9]+([.-][A-Za-z0-9.-]+)?$ ]]; then
+            echo "::error::Tag de release inattendu : $latest_tag"
+            exit 1
+          fi
+
+          current_tag=$(sed -nE \
+            's|.*github:asus-linux-drivers/asus-numberpad-driver/([^"]+)".*|\1|p' \
+            flake.nix)
+
+          if [[ -z "$current_tag" ]]; then
+            echo "::error::Impossible de trouver l'input asus-numberpad-driver dans flake.nix"
+            exit 1
+          fi
+
+          echo "current-tag=$current_tag" >> "$GITHUB_OUTPUT"
+          echo "latest-tag=$latest_tag" >> "$GITHUB_OUTPUT"
+
+          if [[ "$current_tag" == "$latest_tag" ]]; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "Le pilote est déjà sur la dernière release ($latest_tag)."
+            exit 0
+          fi
+
+          sed -i \
+            "s|github:asus-linux-drivers/asus-numberpad-driver/$current_tag|github:asus-linux-drivers/asus-numberpad-driver/$latest_tag|" \
+            flake.nix
+
+          nix flake lock --update-input asus-numberpad-driver --accept-flake-config
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+
+      - name: Ouvrir une PR de mise à jour
+        if: steps.release.outputs.changed == 'true'
+        uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1
+        with:
+          token: ${{ secrets.GH_PAT }}
+          commit-message: "Mettre à jour le pilote ASUS NumberPad vers ${{ steps.release.outputs.latest-tag }}"
+          title: "Mettre à jour le pilote ASUS NumberPad vers ${{ steps.release.outputs.latest-tag }}"
+          body: |
+            Mise à jour automatique vers la dernière release stable publiée par les développeurs.
+
+            - Version précédente : ` ${{ steps.release.outputs.current-tag }} `
+            - Nouvelle version : ` ${{ steps.release.outputs.latest-tag }} `
+
+            La flake et son verrouillage sont mis à jour ensemble. Les checks NixOS valideront la modification.
+          branch: auto/asus-numberpad-driver-release
+          delete-branch: true
+          labels: |
+            type: maintenance
+            area: nix
+            host: zenbook-13
