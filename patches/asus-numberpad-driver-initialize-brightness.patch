@@ -6,7 +6,7 @@
 -            send_value_to_touchpad(default_backlight_level)
 -        else:
 -            try:
--                # brightness may not be defined yet
+-                # brightness may be not defined yet
 -                if len(backlight_levels) > brightness:
 -                    send_value_to_touchpad(backlight_levels[brightness])
 -            except:
