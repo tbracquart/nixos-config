@@ -2,18 +2,12 @@
 
 let
   numberpadDriver = pkgs.asus-numberpad-driver.overrideAttrs (old: {
-    # Use three brightness levels instead of the eight in the upstream layout.
+    # Install the four-level layout and apply the targeted upstream fixes.
     postInstall = (old.postInstall or "") + ''
       install -Dm644 ${./numberpad-layout.py} $out/share/asus-numberpad-driver/layouts/up5401ea.py
     '';
 
-    # Reset the driver's brightness index whenever the default level is applied.
-    postPatch = (old.postPatch or "") + ''
-      substituteInPlace numberpad.py \
-        --replace-fail \
-        'send_value_to_touchpad(default_backlight_level)' \
-        'brightness = backlight_levels.index(default_backlight_level); send_value_to_touchpad(default_backlight_level)'
-    '';
+    patches = (old.patches or []) ++ [ ./numberpad.patch ];
   });
 in
 
