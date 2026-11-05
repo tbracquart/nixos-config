@@ -1,14 +1,15 @@
 --- a/numberpad.py
 +++ b/numberpad.py
-@@ -2080,13 +2080,20 @@
- 
+@@ -2081,13 +2081,19 @@
      default_backlight_level = config_get(CONFIG_DEFAULT_BACKLIGHT_LEVEL, CONFIG_DEFAULT_BACKLIGHT_LEVEL_DEFAULT)
 +    brightness = 0
      if default_backlight_level == "0x01":
          try:
              brightness = backlight_levels.index(config.get(CONFIG_SECTION, CONFIG_LAST_BRIGHTNESS))
          except:
-@@ -2089,6 +2096,11 @@
+             # idle functionality needs (if possible) to set up previous state of brightness and because I do not know at this moment how to read current brightness,
+             # we know only how to set up that so is necessary set default value to config if does not exist (and brightness levels are supported!!)
+             #
              if len(backlight_levels) > 0:
                  brightness = len(backlight_levels) - 1
                  config_set(CONFIG_LAST_BRIGHTNESS, backlight_levels[brightness], True, True)
