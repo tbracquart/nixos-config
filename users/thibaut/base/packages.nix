@@ -37,7 +37,6 @@ in
     gimp
     libreoffice
     nemo-with-extensions
-    netflix
     peazip
     ripgrep
     tree
