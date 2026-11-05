@@ -28,3 +28,19 @@
 +                log.warning("Default backlight level %s is not supported by this layout", default_backlight_level)
  
      top_left_icon_brightness_func_disabled = config_get(CONFIG_TOP_LEFT_ICON_BRIGHTNESS_FUNC_DISABLED, CONFIG_TOP_LEFT_ICON_BRIGHTNESS_FUNC_DISABLED_DEFAULT)
+@@ -1882,10 +1882,6 @@
+     if not top_left_icon_brightness_func_disabled:
+-        if default_backlight_level != "0x01":
+-            send_value_to_touchpad(default_backlight_level)
+-        else:
+-            try:
+-                # brightness may not be defined yet
+-                if len(backlight_levels) > brightness:
+-                    send_value_to_touchpad(backlight_levels[brightness])
+-            except:
+-                pass
++        try:
++            if len(backlight_levels) > brightness:
++                send_value_to_touchpad(backlight_levels[brightness])
++        except:
++            pass
