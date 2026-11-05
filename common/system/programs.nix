@@ -8,7 +8,7 @@
 
     firefox = {
       enable = true;
-      languagePacks = [ "fr" ];
+      policies.Preferences."browser.taskbarTabs.enabled" = { Value = true; Status = "locked"; };
     };
   };
 
