@@ -11,12 +11,14 @@ right_offset = 200
 left_offset = 200
 bottom_offset = 80
 
-# Three brightness levels: minimum, medium, maximum.
+# Four brightness levels: minimum, low, medium, maximum.
 backlight_levels = [
     "0x41",
-    "0x44",
-    "0x48"
+    "0x43",
+    "0x45",
+    "0x48",
 ]
+default_backlight_level = "0x41"
 
 keys = [
     ["7", "8", "9", "slash", "BackSpace"],
