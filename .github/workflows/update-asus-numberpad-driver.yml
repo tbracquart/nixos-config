@@ -80,8 +80,8 @@ jobs:
           body: |
             Mise à jour automatique vers la dernière release stable publiée par les développeurs.
 
-            - Version précédente : ` ${{ steps.release.outputs.current-tag }} `
-            - Nouvelle version : ` ${{ steps.release.outputs.latest-tag }} `
+            - Version précédente : `${{ steps.release.outputs.current-tag }}`
+            - Nouvelle version : `${{ steps.release.outputs.latest-tag }}`
 
             La flake et son verrouillage sont mis à jour ensemble. Les checks NixOS valideront la modification.
           branch: auto/asus-numberpad-driver-release
