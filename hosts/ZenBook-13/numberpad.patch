@@ -1,8 +1,9 @@
 diff --git a/numberpad.py b/numberpad.py
-index 10cd013..40800aa 100755
 --- a/numberpad.py
 +++ b/numberpad.py
-@@ -1691,12 +1691,14 @@ def reset_mt_slot(index):
+@@ -1689,14 +1689,16 @@
+     abs_mt_slot_y_previous_values[index] = -1
+ 
  
  def set_none_to_current_mt_slot():
      global abs_mt_slot_value, numlock_touch_start_time, top_left_icon_touch_start_time, top_right_icon_touch_start_time
@@ -17,7 +18,9 @@ index 10cd013..40800aa 100755
  
  
  def set_none_to_all_mt_slots():
-@@ -1713,8 +1715,10 @@ def set_none_to_all_mt_slots():
+@@ -1711,11 +1713,13 @@
+     abs_mt_slot_y_previous_values[:] = -1
+ 
  
  def pressed_touchpad_top_left_icon(e):
      global top_left_icon_touch_start_time, abs_mt_slot_numpad_key, abs_mt_slot_value
@@ -28,19 +31,23 @@ index 10cd013..40800aa 100755
          top_left_icon_touch_start_time = time()
          log.info("Touched top_left_icon area in time: %s", time())
          abs_mt_slot_numpad_key[abs_mt_slot_value] = EV_KEY_TOP_LEFT_ICON
-@@ -2078,7 +2082,10 @@ def load_all_config_values():
+     elif e.value == 0:
+@@ -2078,19 +2082,35 @@
      else:
        backlight_levels = getattr(model_layout, "backlight_levels", [])
  
--    default_backlight_level = config_get(CONFIG_DEFAULT_BACKLIGHT_LEVEL, CONFIG_DEFAULT_BACKLIGHT_LEVEL_DEFAULT)
 +    default_backlight_level = config_get(
 +        CONFIG_DEFAULT_BACKLIGHT_LEVEL,
 +        getattr(model_layout, "default_backlight_level", CONFIG_DEFAULT_BACKLIGHT_LEVEL_DEFAULT),
 +    )
+-    default_backlight_level = config_get(CONFIG_DEFAULT_BACKLIGHT_LEVEL, CONFIG_DEFAULT_BACKLIGHT_LEVEL_DEFAULT)
      if default_backlight_level == "0x01":
          try:
              brightness = backlight_levels.index(config.get(CONFIG_SECTION, CONFIG_LAST_BRIGHTNESS))
-@@ -2089,6 +2096,19 @@ def load_all_config_values():
+         except:
+             # idle functionality needs (if possible) to set up previous state of brightness and because I do not know at this moment how to read current brightness,
+             # we know only how to set up that so is necessary set default value to config if does not exist (and brightness levels are supported!!)
+             #
              if len(backlight_levels) > 0:
                  brightness = len(backlight_levels) - 1
                  config_set(CONFIG_LAST_BRIGHTNESS, backlight_levels[brightness], True, True)
@@ -59,7 +66,12 @@ index 10cd013..40800aa 100755
 +            )
  
      top_left_icon_brightness_func_disabled = config_get(CONFIG_TOP_LEFT_ICON_BRIGHTNESS_FUNC_DISABLED, CONFIG_TOP_LEFT_ICON_BRIGHTNESS_FUNC_DISABLED_DEFAULT)
-@@ -2131,6 +2151,7 @@ support_for_maximum_abs_mt_slots: int = 1
+     if not backlight_levels or not top_left_icon_height or not top_left_icon_width:
+         top_left_icon_brightness_func_disabled_new = True
+         if top_left_icon_brightness_func_disabled is not top_left_icon_brightness_func_disabled_new:
+@@ -2129,9 +2149,10 @@
+ # equal to multi finger maximum
+ support_for_maximum_abs_mt_slots: int = 1
  unsupported_abs_mt_slot: bool = False
  numlock_touch_start_time = 0
  top_left_icon_touch_start_time = 0
@@ -67,33 +79,32 @@ index 10cd013..40800aa 100755
  top_right_icon_touch_start_time = 0
  last_event_time = 0
  key_pointer_button_is_touched = None
-@@ -2598,10 +2619,10 @@ def is_slided_from_top_left_icon():
+ 
+@@ -2597,12 +2618,12 @@
+         return False
  
  
  def takes_top_left_icon_touch_longer_then_set_up_activation_time():
--    global top_left_icon_activation_time,\
--        top_left_icon_touch_start_time
 +    global top_left_icon_activation_time, top_left_icon_touch_start_time
 +    global top_left_icon_brightness_triggered
+-    global top_left_icon_activation_time,\
+-        top_left_icon_touch_start_time
  
--    if top_left_icon_touch_start_time == 0:
 +    if top_left_icon_touch_start_time == 0 or top_left_icon_brightness_triggered:
+-    if top_left_icon_touch_start_time == 0:
          return False
  
      press_duration = time() - top_left_icon_touch_start_time
  
-     if (abs_mt_slot_numpad_key[abs_mt_slot_value] == EV_KEY_TOP_LEFT_ICON and\
-         press_duration > top_left_icon_activation_time):
- 
-         log.info("The top_left_icon was pressed longer than the activation time: %s",
--                 time() - top_left_icon_touch_start_time)
-+                 press_duration)
+@@ -2613,10 +2634,8 @@
+                  time() - top_left_icon_touch_start_time)
          log.info("Activation time: %s", top_left_icon_activation_time)
  
++        top_left_icon_brightness_triggered = True
 -        # start cycle again (smooth change of brightness)
 -        top_left_icon_touch_start_time = time()
 -
-+        top_left_icon_brightness_triggered = True
          return True
      else:
          return False
+ 
