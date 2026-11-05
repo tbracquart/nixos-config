@@ -16,44 +16,7 @@ diff --git a/numberpad.py b/numberpad.py
          top_left_icon_touch_start_time = 0
          log.info("Un-touched top_left_icon area in time: %s", time())
          set_none_to_current_mt_slot()
-@@ -2078,19 +2081,35 @@
-     else:
-       backlight_levels = getattr(model_layout, "backlight_levels", [])
- 
-+    default_backlight_level = config_get(
-+        CONFIG_DEFAULT_BACKLIGHT_LEVEL,
-+        getattr(model_layout, "default_backlight_level", CONFIG_DEFAULT_BACKLIGHT_LEVEL_DEFAULT),
-+    )
--    default_backlight_level = config_get(CONFIG_DEFAULT_BACKLIGHT_LEVEL, CONFIG_DEFAULT_BACKLIGHT_LEVEL_DEFAULT)
-     if default_backlight_level == "0x01":
-         try:
-             brightness = backlight_levels.index(config.get(CONFIG_SECTION, CONFIG_LAST_BRIGHTNESS))
-         except:
-             # idle functionality needs (if possible) to set up previous state of brightness and because I do not know at this moment how to read current brightness,
-             # we know only how to set up that so is necessary to set default value to config if does not exist (and brightness levels are supported!!)
-             #
-             if len(backlight_levels) > 0:
-                 brightness = len(backlight_levels) - 1
-                 config_set(CONFIG_LAST_BRIGHTNESS, backlight_levels[brightness], True, True)
-+    elif backlight_levels:
-+        try:
-+            brightness = backlight_levels.index(default_backlight_level)
-+        except ValueError:
-+            configured_default_backlight_level = default_backlight_level
-+            brightness = len(backlight_levels) - 1
-+            default_backlight_level = backlight_levels[brightness]
-+            log.warning(
-+                "Configured default backlight level '%s' is not supported; "
-+                "falling back to '%s'",
-+                configured_default_backlight_level,
-+                default_backlight_level,
-+            )
- 
-     top_left_icon_brightness_func_disabled = config_get(CONFIG_TOP_LEFT_ICON_BRIGHTNESS_FUNC_DISABLED, CONFIG_TOP_LEFT_ICON_BRIGHTNESS_FUNC_DISABLED_DEFAULT)
-     if not backlight_levels or not top_left_icon_height or not top_left_icon_width:
-         top_left_icon_brightness_func_disabled_new = True
-         if top_left_icon_brightness_func_disabled is not top_left_icon_brightness_func_disabled_new:
-@@ -2129,9 +2148,10 @@
+@@ -2129,9 +2132,10 @@
  # equal to multi finger maximum
  support_for_maximum_abs_mt_slots: int = 1
  unsupported_abs_mt_slot: bool = False
@@ -63,8 +26,7 @@ diff --git a/numberpad.py b/numberpad.py
  top_right_icon_touch_start_time = 0
  last_event_time = 0
  key_pointer_button_is_touched = None
- 
-@@ -2597,12 +2616,12 @@
+@@ -2597,12 +2601,12 @@
          return False
  
  
@@ -80,7 +42,7 @@ diff --git a/numberpad.py b/numberpad.py
  
      press_duration = time() - top_left_icon_touch_start_time
  
-@@ -2613,9 +2632,7 @@
+@@ -2613,9 +2617,7 @@
                   time() - top_left_icon_touch_start_time)
          log.info("Activation time: %s", top_left_icon_activation_time)
  
@@ -91,4 +53,3 @@ diff --git a/numberpad.py b/numberpad.py
          return True
      else:
          return False
-
