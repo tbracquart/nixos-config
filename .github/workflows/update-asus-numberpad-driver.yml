@@ -25,7 +25,7 @@ jobs:
           token: ${{ secrets.GH_PAT }}
           persist-credentials: false
 
-      - uses: $/.github/actions/setup-nix-cachix
+      - uses: ./.github/actions/setup-nix-cachix
         with:
           github-access-token: ${{ secrets.GITHUB_TOKEN }}
 
