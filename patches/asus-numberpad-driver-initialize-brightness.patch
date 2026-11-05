@@ -1,6 +1,6 @@
 --- a/numberpad.py
 +++ b/numberpad.py
-@@ -2081,13 +2081,22 @@
+@@ -2081,13 +2081,17 @@
      default_backlight_level = config_get(CONFIG_DEFAULT_BACKLIGHT_LEVEL, CONFIG_DEFAULT_BACKLIGHT_LEVEL_DEFAULT)
 -    if default_backlight_level == "0x01":
 -        try:
