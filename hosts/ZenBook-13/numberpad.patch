@@ -1,23 +1,20 @@
 diff --git a/numberpad.py b/numberpad.py
 --- a/numberpad.py
 +++ b/numberpad.py
-@@ -1689,14 +1689,16 @@
-     abs_mt_slot_y_previous_values[index] = -1
+@@ -1711,11 +1711,12 @@
  
+ def pressed_touchpad_top_left_icon(e):
+     global top_left_icon_touch_start_time, abs_mt_slot_numpad_key, abs_mt_slot_value
+     global top_left_icon_brightness_triggered
  
- def set_none_to_current_mt_slot():
-     global abs_mt_slot_value, numlock_touch_start_time, top_left_icon_touch_start_time, top_right_icon_touch_start_time
-+    global top_left_icon_brightness_triggered
- 
-     reset_mt_slot(abs_mt_slot_value)
- 
-     numlock_touch_start_time = 0
-     top_left_icon_touch_start_time = 0
-     top_right_icon_touch_start_time = 0
-+    top_left_icon_brightness_triggered = False
- 
- 
- def set_none_to_all_mt_slots():
+     if e.value == 1:
+         top_left_icon_brightness_triggered = False
+         top_left_icon_touch_start_time = time()
+         log.info("Touched top_left_icon area in time: %s", time())
+         abs_mt_slot_numpad_key[abs_mt_slot_value] = EV_KEY_TOP_LEFT_ICON
+     elif e.value == 0:
++        top_left_icon_brightness_triggered = False
+         top_left_icon_touch_start_time = 0
 @@ -1711,11 +1713,13 @@
      abs_mt_slot_y_previous_values[:] = -1
  
