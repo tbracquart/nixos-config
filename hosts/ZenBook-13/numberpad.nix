@@ -7,6 +7,13 @@
 
   nixpkgs.overlays = [
     inputs.asus-numberpad-driver.overlays.default
+    (final: prev: {
+      asus-numberpad-driver = prev.asus-numberpad-driver.overrideAttrs (old: {
+        patches = (old.patches or [ ]) ++ [
+          ../../patches/asus-numberpad-driver-initialize-brightness.patch
+        ];
+      });
+    })
   ];
 
   # The driver needs access to the I²C and input devices.
