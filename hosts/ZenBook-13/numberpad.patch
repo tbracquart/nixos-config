@@ -1,24 +1,7 @@
 diff --git a/numberpad.py b/numberpad.py
 --- a/numberpad.py
 +++ b/numberpad.py
-@@ -1711,11 +1711,12 @@
- 
- def pressed_touchpad_top_left_icon(e):
-     global top_left_icon_touch_start_time, abs_mt_slot_numpad_key, abs_mt_slot_value
-     global top_left_icon_brightness_triggered
- 
-     if e.value == 1:
-         top_left_icon_brightness_triggered = False
-         top_left_icon_touch_start_time = time()
-         log.info("Touched top_left_icon area in time: %s", time())
-         abs_mt_slot_numpad_key[abs_mt_slot_value] = EV_KEY_TOP_LEFT_ICON
-     elif e.value == 0:
-+        top_left_icon_brightness_triggered = False
-         top_left_icon_touch_start_time = 0
-@@ -1711,11 +1713,13 @@
-     abs_mt_slot_y_previous_values[:] = -1
- 
- 
+@@ -1714,11 +1714,14 @@
  def pressed_touchpad_top_left_icon(e):
      global top_left_icon_touch_start_time, abs_mt_slot_numpad_key, abs_mt_slot_value
 +    global top_left_icon_brightness_triggered
@@ -29,7 +12,11 @@ diff --git a/numberpad.py b/numberpad.py
          log.info("Touched top_left_icon area in time: %s", time())
          abs_mt_slot_numpad_key[abs_mt_slot_value] = EV_KEY_TOP_LEFT_ICON
      elif e.value == 0:
-@@ -2078,19 +2082,35 @@
++        top_left_icon_brightness_triggered = False
+         top_left_icon_touch_start_time = 0
+         log.info("Un-touched top_left_icon area in time: %s", time())
+         set_none_to_current_mt_slot()
+@@ -2078,19 +2081,35 @@
      else:
        backlight_levels = getattr(model_layout, "backlight_levels", [])
  
@@ -43,7 +30,7 @@ diff --git a/numberpad.py b/numberpad.py
              brightness = backlight_levels.index(config.get(CONFIG_SECTION, CONFIG_LAST_BRIGHTNESS))
          except:
              # idle functionality needs (if possible) to set up previous state of brightness and because I do not know at this moment how to read current brightness,
-             # we know only how to set up that so is necessary set default value to config if does not exist (and brightness levels are supported!!)
+             # we know only how to set up that so is necessary to set default value to config if does not exist (and brightness levels are supported!!)
              #
              if len(backlight_levels) > 0:
                  brightness = len(backlight_levels) - 1
@@ -66,7 +53,7 @@ diff --git a/numberpad.py b/numberpad.py
      if not backlight_levels or not top_left_icon_height or not top_left_icon_width:
          top_left_icon_brightness_func_disabled_new = True
          if top_left_icon_brightness_func_disabled is not top_left_icon_brightness_func_disabled_new:
-@@ -2129,9 +2149,10 @@
+@@ -2129,9 +2148,10 @@
  # equal to multi finger maximum
  support_for_maximum_abs_mt_slots: int = 1
  unsupported_abs_mt_slot: bool = False
@@ -77,7 +64,7 @@ diff --git a/numberpad.py b/numberpad.py
  last_event_time = 0
  key_pointer_button_is_touched = None
  
-@@ -2597,12 +2618,12 @@
+@@ -2597,12 +2616,12 @@
          return False
  
  
@@ -93,7 +80,7 @@ diff --git a/numberpad.py b/numberpad.py
  
      press_duration = time() - top_left_icon_touch_start_time
  
-@@ -2613,11 +2634,9 @@
+@@ -2613,9 +2632,7 @@
                   time() - top_left_icon_touch_start_time)
          log.info("Activation time: %s", top_left_icon_activation_time)
  
@@ -104,5 +91,4 @@ diff --git a/numberpad.py b/numberpad.py
          return True
      else:
          return False
- 
- 
+
