@@ -156,7 +156,7 @@ widget_order = [
 active_monitor_only = true
 background_opacity = 0.59999998658895493
 enabled = true
-pinned = [ "firefox", "nemo", "Alacritty", "Helix", "fresh-editor" ]
+pinned = [ "firefox", "nemo", "Alacritty", "Helix", "fresh-editor", "firefox.webapp-e6764fec-2ff6-4b9e-9500-cf8a26cc4e92" ]
 reserve_space = false
 show_dots = true
 smart_auto_hide = true
@@ -532,16 +532,16 @@ directory = "~/Images/Fonds d'écran"
 transition_on_startup = true
 
     [wallpaper.default]
-    path = "/home/thibaut/Images/Fonds d'écran/daily-wallpaper/bing-fr-fr-2026-11-07.jpg"
+    path = "/home/thibaut/Images/Fonds d'écran/daily-wallpaper/bing-fr-fr-2026-11-08.jpg"
 
     [wallpaper.last]
-    path = "/home/thibaut/Images/Fonds d'écran/daily-wallpaper/bing-fr-fr-2026-11-07.jpg"
+    path = "/home/thibaut/Images/Fonds d'écran/daily-wallpaper/bing-fr-fr-2026-11-08.jpg"
 
     [wallpaper.monitors.WAYLAND-1]
     path = "/home/thibaut/Images/Fonds d'écran/daily-wallpaper/bing-fr-fr-2026-10-04.jpg"
 
     [wallpaper.monitors.eDP-1]
-    path = "/home/thibaut/Images/Fonds d'écran/daily-wallpaper/bing-fr-fr-2026-11-07.jpg"
+    path = "/home/thibaut/Images/Fonds d'écran/daily-wallpaper/bing-fr-fr-2026-11-08.jpg"
 
     [[wallpaper.favorite]]
     palette_source = "wallpaper"
