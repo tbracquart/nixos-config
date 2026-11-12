@@ -19,21 +19,6 @@ let
     "application/yaml"
   ];
 
-  # Correctif provisoire : le paquet Omnibin amont oublie SQLite au linkage.
-  # À retirer dès que la correction est intégrée et que l'input est mis à jour.
-  omnibinData = import (inputs.omnibin.outPath + "/nix/data.nix") {
-    inherit pkgs;
-    system = pkgs.stdenv.hostPlatform.system;
-  };
-  omnibin = import ./omnibin-local.nix {
-    inherit pkgs;
-    srcRoot = inputs.omnibin.sourceInfo.outPath;
-    database = omnibinData.database;
-  };
-  omnibinShell = import (inputs.omnibin.outPath + "/nix/omnibin-shell.nix") {
-    inherit pkgs omnibin;
-  };
-
   freshEditorIcon = pkgs.runCommand "fresh-editor-icon" { } ''
     install -Dm644 ${pkgs.fresh-editor.src}/docs/icons/linux/hicolor/256x256/apps/fresh.png \
       "$out/share/icons/hicolor/256x256/apps/fresh.png"
@@ -59,7 +44,6 @@ in
     ytmdesktop
   ]) ++ [
     inputs.freesmlauncher.packages.${pkgs.stdenv.hostPlatform.system}.default
-    omnibinShell
     inputs.multiverse.packages.${pkgs.stdenv.hostPlatform.system}.mvs
   ];
 
