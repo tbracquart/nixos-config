@@ -21,7 +21,7 @@
       timeout = 1;
     };
 
-    kernelPackages = pkgs.linuxPackages_zen;
+    kernelPackages = pkgs.linuxPackages;
     kernelParams = [
       "i915.force_probe=!9a49"
       "xe.force_probe=9a49"
