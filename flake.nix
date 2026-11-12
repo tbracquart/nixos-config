@@ -38,11 +38,6 @@
 
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
-    omnibin = {
-      url = "github:fzakaria/omnibin";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     multiverse.url = "github:fzakaria/nixpkgs-multiverse";
 
     sops-nix = {

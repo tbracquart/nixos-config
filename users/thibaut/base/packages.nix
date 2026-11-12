@@ -44,7 +44,6 @@ in
     ytmdesktop
   ]) ++ [
     inputs.freesmlauncher.packages.${pkgs.stdenv.hostPlatform.system}.default
-    inputs.omnibin.packages.${pkgs.stdenv.hostPlatform.system}.omnibin-shell
     inputs.multiverse.packages.${pkgs.stdenv.hostPlatform.system}.mvs
   ];
 
