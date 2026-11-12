@@ -27,7 +27,7 @@ let
   };
   omnibin = import ./omnibin-local.nix {
     inherit pkgs;
-    srcRoot = builtins.toPath inputs.omnibin.outPath;
+    srcRoot = inputs.omnibin;
     database = omnibinData.database;
   };
   omnibinShell = import (inputs.omnibin.outPath + "/nix/omnibin-shell.nix") {
