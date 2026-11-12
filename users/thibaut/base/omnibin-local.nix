@@ -15,14 +15,9 @@ let
     pname = "omnibin";
     version = "0.1.0";
 
-    src = lib.fileset.toSource {
-      root = srcRoot;
-      fileset = lib.fileset.unions [
-        (srcRoot + "/Cargo.toml")
-        (srcRoot + "/Cargo.lock")
-        (srcRoot + "/src")
-      ];
-    };
+    # L'entrée Flake est déjà une source dans le store. buildRustPackage
+    # accepte directement son chemin sous forme de chaîne avec contexte.
+    src = srcRoot;
     cargoLock.lockFile = srcRoot + "/Cargo.lock";
 
     nativeBuildInputs = [ pkgs.pkg-config ];
