@@ -159,26 +159,6 @@
         "type": "github"
       }
     },
-    "omnibin": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1793902951,
-        "narHash": "sha256-n3fBtW7/p1BTBPp7OezJAXAy+tGZXEFJwqXuNosylHs=",
-        "owner": "fzakaria",
-        "repo": "omnibin",
-        "rev": "33736740ba0fb74b7215f94ca84fee9e4c268c39",
-        "type": "github"
-      },
-      "original": {
-        "owner": "fzakaria",
-        "repo": "omnibin",
-        "type": "github"
-      }
-    },
     "root": {
       "inputs": {
         "asus-numberpad-driver": "asus-numberpad-driver",
@@ -187,7 +167,6 @@
         "home-manager": "home-manager",
         "multiverse": "multiverse",
         "nixpkgs": "nixpkgs_2",
-        "omnibin": "omnibin",
         "sops-nix": "sops-nix"
       }
     },
