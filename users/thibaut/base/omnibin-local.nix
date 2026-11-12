@@ -5,6 +5,7 @@
 # ne modifiant que cette dépendance de compilation.
 {
   pkgs,
+  srcRoot,
   database ? null,
 }:
 let
@@ -15,14 +16,14 @@ let
     version = "0.1.0";
 
     src = lib.fileset.toSource {
-      root = ../.;
+      root = srcRoot;
       fileset = lib.fileset.unions [
-        ../Cargo.toml
-        ../Cargo.lock
-        ../src
+        (srcRoot + "/Cargo.toml")
+        (srcRoot + "/Cargo.lock")
+        (srcRoot + "/src")
       ];
     };
-    cargoLock.lockFile = ../Cargo.lock;
+    cargoLock.lockFile = srcRoot + "/Cargo.lock";
 
     nativeBuildInputs = [ pkgs.pkg-config ];
     buildInputs = [
