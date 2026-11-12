@@ -53,7 +53,7 @@ pkgs.runCommand "omnibin"
   }
   ''
     mkdir -p $out/bin
-    makeWrapper ${unwrapped}/bin/omnibin $out/bin/omnibin \\
-      --prefix PATH : ${lib.makeBinPath runtimeTools} \\
+    makeWrapper ${unwrapped}/bin/omnibin $out/bin/omnibin \
+      --prefix PATH : ${lib.makeBinPath runtimeTools} \
       ${lib.optionalString (database != null) "--set-default OMNIBIN_DB ${database}"}
   ''
