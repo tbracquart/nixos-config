@@ -51,6 +51,7 @@ hl.config({
     },
 
     decoration = {
+        screen_shader  = "/home/thibaut/.config/hypr/shaders/custom-style.frag",
         rounding       = 16,
         rounding_power = 3,
         active_opacity   = 0.8,

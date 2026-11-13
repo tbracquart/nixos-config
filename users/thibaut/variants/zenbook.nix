@@ -9,6 +9,10 @@
     config.lib.file.mkOutOfStoreSymlink
       "${config.my.flakePath}/users/thibaut/dotfiles/hyprland.lua";
 
+  home.file.".config/hypr/shaders/custom-style.frag".source =
+    config.lib.file.mkOutOfStoreSymlink
+      "${config.my.flakePath}/users/thibaut/dotfiles/shaders/custom-style.frag";
+
   wayland.windowManager.hyprland = {
     enable = true;
     configType = "lua";
