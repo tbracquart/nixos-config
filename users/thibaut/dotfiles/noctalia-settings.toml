@@ -190,6 +190,7 @@ auto_locate = true
 
 [lockscreen]
 allow_empty_password = true
+blur_intensity = 0.29999999329447746
 
 [lockscreen_widgets]
 enabled = true
