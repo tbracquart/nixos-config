@@ -191,6 +191,7 @@ auto_locate = true
 [lockscreen]
 allow_empty_password = true
 blur_intensity = 0.29999999329447746
+blurred_desktop = true
 
 [lockscreen_widgets]
 enabled = true
