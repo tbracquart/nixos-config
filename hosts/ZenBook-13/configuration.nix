@@ -12,8 +12,6 @@
   networking.hostName = "ZenBook-13";
   system.stateVersion = "26.05";
 
-#  nixpkgs.overlays = [ inputs.nix-cachyos-kernel.overlays.pinned ];
-
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;

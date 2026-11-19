@@ -25,10 +25,7 @@
     kernelParams = [
       "i915.force_probe=!9a49"
       "xe.force_probe=9a49"
-      "loglevel=3"
-      "rd.systemd.show_status=false"
     ];
-    consoleLogLevel = 3;
 
     resumeDevice = "/dev/mapper/luks-a0f369c9-319a-4e22-ac5f-7b5a191b22e8";
 
