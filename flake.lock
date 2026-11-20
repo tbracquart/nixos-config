@@ -46,11 +46,11 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1794825573,
-        "narHash": "sha256-vQdlrjxx/bCahYuE8fG2UelQnnLHr6B4sH4f8VamziQ=",
+        "lastModified": 1795097048,
+        "narHash": "sha256-jnNqgOB4BLDQF7B4bsbkO34BISIhUHg9t7z/5+nh6Tw=",
         "owner": "FreesmTeam",
         "repo": "FreesmLauncher",
-        "rev": "65f4f14a4952e2186101920c9fa8de471e229bb3",
+        "rev": "dedc3969b2ba726b5fbab3c7e57d84e1d13bd965",
         "type": "github"
       },
       "original": {
@@ -99,11 +99,11 @@
     },
     "multiverse": {
       "locked": {
-        "lastModified": 1795019436,
-        "narHash": "sha256-w2/eJdcKyrv3gTm/RMKusvtNWqOtTTI1aA8mjai4aIg=",
+        "lastModified": 1795130755,
+        "narHash": "sha256-irQFntIvwozY4ikZtTZYakf3rkQDkBWgFJJtaIWmyiQ=",
         "owner": "fzakaria",
         "repo": "nixpkgs-multiverse",
-        "rev": "775a72ca88bb85da0d813f1f2590a2b912b7d2ad",
+        "rev": "c705ba657fcfa6b4df58e033e4d039c0f5ce902e",
         "type": "github"
       },
       "original": {
